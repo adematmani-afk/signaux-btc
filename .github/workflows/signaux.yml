@@ -1,32 +1,49 @@
 name: Signaux en direct
 
+# Un seul job reste allumé pendant la séance et vérifie chaque minute.
+# Le planificateur de GitHub sert seulement à démarrer la séance ; si le job atteint
+# sa limite de temps avant la clôture, il relance lui-même un nouveau job.
 on:
   schedule:
-    # Toutes les 5 min, lun-ven, de 13h à 21h59 UTC (couvre 9h30-16h à Toronto, heure d'été ou d'hiver).
-    - cron: "*/5 13-21 * * 1-5"
+    - cron: "20 13 * * 1-5"   # 9 h 20 à Toronto en heure d'été
+    - cron: "20 14 * * 1-5"   # 9 h 20 à Toronto en heure d'hiver (ou relance si la 1re a raté)
   workflow_dispatch:
 
 permissions:
   contents: write
+  actions: write
 
 concurrency:
   group: signaux
   cancel-in-progress: false
 
 jobs:
-  live:
+  seance:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 355
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
       - run: pip install -r requirements.txt
-      - run: python signals.py live
+      - name: Vérifier chaque minute
+        env:
+          NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
+        run: python signals.py loop 340
       - name: Sauvegarder l'état
+        if: always()
         run: |
           git config user.name "signaux-bot"
           git config user.email "signaux-bot@users.noreply.github.com"
           git add state/
-          git diff --cached --quiet || (git commit -m "Mise à jour de l'état" && git push)
+          git diff --cached --quiet || (git commit -m "Mise à jour de l'état" && git pull --rebase -q && git push)
+      - name: Relancer si la séance n'est pas finie
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          now=$(TZ=America/Toronto date +%H%M)
+          dow=$(TZ=America/Toronto date +%u)
+          if [ "$dow" -le 5 ] && [ "$now" -lt 1600 ]; then
+            gh workflow run signaux.yml --ref main
+          fi
