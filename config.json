@@ -1,0 +1,21 @@
+{
+  "ticker": "BTCC-B.TO",
+  "ticker_label": "BTCC.B (Purpose Bitcoin ETF, CAD)",
+  "ntfy_topic": "signaux-btc-0a31db6c80eb3cec",
+  "timezone": "America/Toronto",
+  "starting_equity": 100,
+  "pause_below_equity": 50,
+  "max_entries_per_day": 4,
+  "opening_range_minutes": 30,
+  "no_entry_after": "15:00",
+  "force_exit_at": "15:45",
+  "vwap_reclaim_after": "10:30",
+  "volume_factor": 1.2,
+  "stop_pct": 1.25,
+  "target1_pct": 3.0,
+  "target2_pct": 5.0,
+  "breakeven_after_t1": true,
+  "round_trip_cost_pct": 0.2,
+  "signal_valid_minutes": 10,
+  "alerts_enabled": false
+}
