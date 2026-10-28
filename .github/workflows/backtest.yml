@@ -2,6 +2,9 @@ name: Backtest
 
 on:
   workflow_dispatch:
+    inputs:
+      watchlist:
+        default: ""
   push:
     paths: ["signals.py", "config.json"]
 
@@ -18,3 +21,5 @@ jobs:
       - run: python signals.py backtest
       - run: python signals.py sweep
       - run: python signals.py alternatives
+      - if: ${{ inputs.watchlist != '' }}
+        run: python signals.py watchlist ${{ inputs.watchlist }}

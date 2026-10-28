@@ -326,6 +326,29 @@ def run_sweep(tickers):
         open(os.environ["GITHUB_STEP_SUMMARY"], "a").write(report + "\n")
 
 
+def run_watchlist(tickers):
+    """Même stratégie et mêmes réglages sur plusieurs titres, sans réglage au cas par cas."""
+    out = [f"## Liste de surveillance : stratégie {CFG.get('strategy')} (compte final sur 100 $ : 1re moitié / 2e moitié / total, nb de trades)"]
+    for tk in tickers:
+        try:
+            days = by_day(fetch_bars(tk, range_="60d"))
+        except Exception as ex:
+            out.append(f"- {tk} : données indisponibles ({ex})")
+            continue
+        keys = sorted(days)
+        if len(keys) < 20:
+            out.append(f"- {tk} : trop peu de données")
+            continue
+        first, second = {d: days[d] for d in keys[: len(keys) // 2]}, {d: days[d] for d in keys[len(keys) // 2:]}
+        full = simulate(days)
+        value = sum(b["c"] * b["v"] for d in keys for b in days[d]) / len(keys)
+        out.append(f"- {tk} : {simulate(first)[0]:.2f} / {simulate(second)[0]:.2f} / {full[0]:.2f} ({len(full[2])} trades, ~{value:,.0f} $ échangés/jour)")
+    report = "\n".join(out)
+    print(report)
+    if os.environ.get("GITHUB_STEP_SUMMARY"):
+        open(os.environ["GITHUB_STEP_SUMMARY"], "a").write(report + "\n")
+
+
 def run_alternatives(tickers):
     """Compare d'autres familles de stratégies, mêmes règles : choix sur la 1re moitié, vérification sur la 2e."""
     base = dict(CFG)
@@ -358,6 +381,8 @@ if __name__ == "__main__":
     cmd = sys.argv[1] if len(sys.argv) > 1 else "live"
     if cmd == "backtest":
         run_backtest(sys.argv[2:] or [CFG["ticker"], "FBTC.TO"])
+    elif cmd == "watchlist":
+        run_watchlist(sys.argv[2:])
     elif cmd == "alternatives":
         run_alternatives(sys.argv[2:] or [CFG["ticker"], "FBTC.TO"])
     elif cmd == "sweep":
