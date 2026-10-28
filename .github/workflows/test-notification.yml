@@ -1,15 +1,27 @@
-name: Notification de test
+name: Notification manuelle
 
 on:
   workflow_dispatch:
+    inputs:
+      title:
+        default: "Test signaux-btc"
+      message:
+        default: "Si tu lis ceci, les alertes arrivent bien sur ton iPhone."
 
 jobs:
-  test:
+  notify:
     runs-on: ubuntu-latest
     timeout-minutes: 2
     steps:
       - uses: actions/checkout@v4
-      - run: |
-          TOPIC=$(python3 -c "import json;print(json.load(open('config.json'))['ntfy_topic'])")
-          curl -sS -H "Content-Type: application/json" https://ntfy.sh/ \
-            -d "{\"topic\":\"$TOPIC\",\"title\":\"Test signaux-btc\",\"message\":\"Si tu lis ceci, les alertes arrivent bien sur ton iPhone.\",\"priority\":5}"
+      - env:
+          TITLE: ${{ inputs.title }}
+          MESSAGE: ${{ inputs.message }}
+        run: |
+          python3 - <<'PY'
+          import json, os, urllib.request
+          topic = json.load(open("config.json"))["ntfy_topic"]
+          body = json.dumps({"topic": topic, "title": os.environ["TITLE"], "message": os.environ["MESSAGE"], "priority": 4}).encode()
+          req = urllib.request.Request("https://ntfy.sh/", data=body, headers={"Content-Type": "application/json"})
+          print(urllib.request.urlopen(req, timeout=20).status)
+          PY
