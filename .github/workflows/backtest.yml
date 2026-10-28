@@ -16,3 +16,4 @@ jobs:
           python-version: "3.12"
       - run: pip install -r requirements.txt
       - run: python signals.py backtest
+      - run: python signals.py sweep

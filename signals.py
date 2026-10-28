@@ -144,34 +144,27 @@ def exit_event(bar, pos, price, reason, equity):
 # ---------------------------------------------------------------- messages
 
 def fmt(e):
+    """Notification courte : quoi faire, à quel prix, avec quel montant."""
     p = e["pos"]
-    when = e["t"].strftime("%H:%M")
+    tk = CFG["ticker_label"].split()[0]
     if e["type"] == "entry":
-        qty = e["equity"] / e["price"]
-        rr = (p["t1"] - p["entry"]) / (p["entry"] - p["stop"])
         expiry = (e["t"] + timedelta(minutes=5 + CFG["signal_valid_minutes"])).strftime("%H:%M")
-        return ("ACHAT " + CFG["ticker_label"].split()[0], 5, [
-            f"Setup : {p['setup']} (bougie 5 min de {when})",
-            f"Prix : {e['price']:.2f} $  |  VWAP {p['vwap']:.2f}  |  Haut du range {p['or_high']:.2f}",
-            f"Entrée : au marché, seulement si le prix est <= {p['entry'] * 1.003:.2f} $",
-            f"Stop : {p['stop']:.2f} $  (-{CFG['stop_pct']} %)",
-            f"Objectif 1 : {p['t1']:.2f} $ (vends la moitié, stop remonté au prix d'entrée)",
-            f"Objectif 2 : {p['t2']:.2f} $",
-            f"Ratio gain/risque : {rr:.1f}",
-            f"Taille : ~{e['equity']:.0f} $ (~{qty:.2f} parts)",
-            f"Valable jusqu'à {expiry}. Après, ignore le signal.",
-            "Rien n'est garanti : vends quoi qu'il arrive avant 15 h 45.",
+        return (f"ACHÈTE {tk} maintenant", 5, [
+            f"Montant : {e['equity']:.0f} $ (~{e['equity'] / e['price']:.2f} parts) au marché",
+            f"Prix : {e['price']:.2f} $ (max {p['entry'] * 1.003:.2f} $)",
+            f"Stop : {p['stop']:.2f} $",
+            f"Objectif 1 : {p['t1']:.2f} $  |  Objectif 2 : {p['t2']:.2f} $",
+            f"Valable jusqu'à {expiry}",
         ])
     if e["type"] == "t1":
-        return ("OBJECTIF 1 atteint", 4, [
-            f"Prix {e['price']:.2f} $ à {when}. Vends la moitié de la position.",
-            f"Nouveau stop : {p['stop']:.2f} $ (prix d'entrée). Objectif 2 : {p['t2']:.2f} $.",
+        return (f"VENDS LA MOITIÉ {tk} maintenant", 5, [
+            f"Prix : {e['price']:.2f} $",
+            f"Nouveau stop pour le reste : {p['stop']:.2f} $",
         ])
-    labels = {"stop": "STOP touché, VENDS tout", "t2": "OBJECTIF 2 atteint, VENDS tout",
-              "fin_de_seance": "Fin de séance, VENDS tout"}
-    return (labels[e["reason"]], 5, [
-        f"Prix {e['price']:.2f} $ à {when}.",
-        f"Résultat estimé du trade : {e['ret_pct']:+.2f} %  ->  compte ~{e['equity_after']:.2f} $",
+    reason = {"stop": "stop touché", "t2": "objectif 2 atteint", "fin_de_seance": "fin de séance"}[e["reason"]]
+    return (f"VENDS TOUT {tk} maintenant", 5, [
+        f"Prix : {e['price']:.2f} $ ({reason})",
+        f"Résultat : {e['ret_pct']:+.2f} %, compte ~{e['equity_after']:.2f} $",
     ])
 
 
@@ -211,8 +204,7 @@ def run_live():
             and b["t"] + timedelta(minutes=5) <= now]
     paused = s["equity"] <= CFG["pause_below_equity"]
     if paused and not s["pause_sent"]:
-        notify("PAUSE : compte sous 50 $", 4, [f"Compte estimé : {s['equity']:.2f} $.",
-                                               "Plus de signaux d'achat. On revoit la méthode ensemble."])
+        notify("PAUSE : plus de signaux d'achat", 4, [f"Compte estimé sous {CFG['pause_below_equity']} $ : {s['equity']:.2f} $"])
         s["pause_sent"] = True
 
     for i, bar in enumerate(bars):
@@ -226,11 +218,6 @@ def run_live():
                                      "exit": e["price"], "reason": e["reason"], "ret_pct": round(e["ret_pct"], 3)})
         s["last_bar"] = bar["t"].isoformat()
 
-    if now.time() >= CLOSE and s["summary_sent"] != today:
-        trades = [j for j in s["journal"] if j["date"] == today]
-        lines = [f"{j['setup']} : {j['ret_pct']:+.2f} % ({j['reason']})" for j in trades] or ["Aucun signal aujourd'hui."]
-        notify("Bilan du jour", 3, lines + [f"Compte estimé : {s['equity']:.2f} $ (départ {CFG['starting_equity']} $)"])
-        s["summary_sent"] = today
     save_state(s)
 
 
@@ -295,9 +282,34 @@ def run_backtest(tickers):
         open(os.environ["GITHUB_STEP_SUMMARY"], "a").write(report + "\n")
 
 
+def run_sweep(tickers):
+    """Teste quelques réglages : choisis sur la 1re moitié, jugés sur la 2e (hors échantillon)."""
+    out = ["## Comparaison de réglages (choix sur la 1re moitié, vérification sur la 2e)"]
+    grid = [(sl, t1, t2) for sl in (0.75, 1.25) for t1 in (1.0, 1.5, 3.0) for t2 in (2.0, 3.0, 5.0) if t2 > t1]
+    base = dict(CFG)
+    for tk in tickers:
+        days = by_day(fetch_bars(tk, range_="60d"))
+        keys = sorted(days)
+        first, second = {d: days[d] for d in keys[: len(keys) // 2]}, {d: days[d] for d in keys[len(keys) // 2:]}
+        rows = []
+        for sl, t1, t2 in grid:
+            CFG.update(stop_pct=sl, target1_pct=t1, target2_pct=t2)
+            rows.append((simulate(first)[0], simulate(second)[0], simulate(days)[0], sl, t1, t2))
+        CFG.clear(); CFG.update(base)
+        rows.sort(reverse=True)
+        out.append(f"\n**{tk}** (compte final sur 100 $ : 1re moitié / 2e moitié / total)")
+        out += [f"- stop {sl} %, obj. {t1} % / {t2} % : {a:.2f} / {b:.2f} / {c:.2f}" for a, b, c, sl, t1, t2 in rows]
+    report = "\n".join(out)
+    print(report)
+    if os.environ.get("GITHUB_STEP_SUMMARY"):
+        open(os.environ["GITHUB_STEP_SUMMARY"], "a").write(report + "\n")
+
+
 if __name__ == "__main__":
     cmd = sys.argv[1] if len(sys.argv) > 1 else "live"
     if cmd == "backtest":
         run_backtest(sys.argv[2:] or [CFG["ticker"], "FBTC.TO"])
+    elif cmd == "sweep":
+        run_sweep(sys.argv[2:] or [CFG["ticker"], "FBTC.TO"])
     else:
         run_live()
