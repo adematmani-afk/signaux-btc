@@ -1,0 +1,15 @@
+name: Notification de test
+
+on:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - uses: actions/checkout@v4
+      - run: |
+          TOPIC=$(python3 -c "import json;print(json.load(open('config.json'))['ntfy_topic'])")
+          curl -sS -H "Content-Type: application/json" https://ntfy.sh/ \
+            -d "{\"topic\":\"$TOPIC\",\"title\":\"Test signaux-btc\",\"message\":\"Si tu lis ceci, les alertes arrivent bien sur ton iPhone.\",\"priority\":5}"
