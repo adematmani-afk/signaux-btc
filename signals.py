@@ -164,8 +164,8 @@ def fmt(e):
     if e["type"] == "entry":
         expiry = (e["t"] + timedelta(minutes=5 + CFG["signal_valid_minutes"])).strftime("%H:%M")
         return (f"ACHÈTE {tk} maintenant", 5, [
-            f"Montant : {e['equity']:.0f} $ (~{e['equity'] / e['price']:.2f} parts) au marché",
-            f"Prix : {e['price']:.2f} $ (max {p['entry'] * 1.003:.2f} $)",
+            f"Montant : {e['equity']:.0f} $ = {int(e['equity'] // (p['entry'] * 1.003))} parts",
+            f"Ordre à cours limité : {p['entry'] * 1.003:.2f} $ (prix actuel {e['price']:.2f} $)",
             f"Stop : {p['stop']:.2f} $",
             f"Objectif : {p['t1']:.2f} $" if p["t1"] == p["t2"] else f"Objectif 1 : {p['t1']:.2f} $  |  Objectif 2 : {p['t2']:.2f} $",
             f"Valable jusqu'à {expiry}",
