@@ -5,9 +5,9 @@
   "position": null,
   "entries": 0,
   "orb_used": false,
-  "prev_close_below_vwap": true
+  "prev_close_below_vwap": false
  },
- "last_bar": "2026-10-28T10:35:00-04:00",
+ "last_bar": "2026-10-28T11:20:00-04:00",
  "journal": [],
  "summary_sent": null,
  "pause_sent": false
