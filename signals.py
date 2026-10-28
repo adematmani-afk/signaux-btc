@@ -211,7 +211,7 @@ def save_state(s):
 def run_live():
     now = datetime.now(TZ)
     s = load_state()
-    if not CFG.get("alerts_enabled") or now.weekday() >= 5:
+    if not CFG.get("alerts_enabled") or now.weekday() >= 5 or not time(9, 30) <= now.time() <= time(16, 20):
         return
     today = now.date().isoformat()
     if s["day"] != today:
