@@ -285,7 +285,8 @@ def run_backtest(tickers):
 def run_sweep(tickers):
     """Teste quelques réglages : choisis sur la 1re moitié, jugés sur la 2e (hors échantillon)."""
     out = ["## Comparaison de réglages (choix sur la 1re moitié, vérification sur la 2e)"]
-    grid = [(sl, t1, t2) for sl in (0.75, 1.25) for t1 in (1.0, 1.5, 3.0) for t2 in (2.0, 3.0, 5.0) if t2 > t1]
+    # stop à 99 % = pas de stop, seulement la vente de fin de séance
+    grid = [(sl, t1, t2) for sl in (1.25, 2.0, 3.0, 99.0) for t1 in (1.0, 2.0, 3.0) for t2 in (2.0, 3.0, 5.0) if t2 > t1]
     base = dict(CFG)
     for tk in tickers:
         days = by_day(fetch_bars(tk, range_="60d"))

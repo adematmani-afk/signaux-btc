@@ -5,7 +5,7 @@
   "timezone": "America/Toronto",
   "starting_equity": 100,
   "pause_below_equity": 50,
-  "max_entries_per_day": 4,
+  "max_entries_per_day": 99,
   "opening_range_minutes": 30,
   "no_entry_after": "15:00",
   "force_exit_at": "15:45",
