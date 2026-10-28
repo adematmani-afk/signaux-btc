@@ -3,7 +3,7 @@
   "ticker_label": "BTCC.B (Purpose Bitcoin ETF, CAD)",
   "ntfy_topic": "signaux-btc-0a31db6c80eb3cec",
   "timezone": "America/Toronto",
-  "starting_equity": 100,
+  "starting_equity": 103.9,
   "pause_below_equity": 50,
   "max_entries_per_day": 99,
   "opening_range_minutes": 30,
