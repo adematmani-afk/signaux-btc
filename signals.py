@@ -189,7 +189,8 @@ def notify(title, priority, lines):
     print(f"\n[{title}]\n" + "\n".join(lines))
     if os.environ.get("NO_NOTIFY"):
         return
-    requests.post("https://ntfy.sh/", json={"topic": CFG["ntfy_topic"], "title": title,
+    topic = os.environ.get("NTFY_TOPIC") or CFG["ntfy_topic"]
+    requests.post("https://ntfy.sh/", json={"topic": topic, "title": title,
                                            "message": "\n".join(lines), "priority": priority,
                                            "tags": ["chart_with_upwards_trend"]}, timeout=20)
 
@@ -396,12 +397,29 @@ def run_alternatives(tickers):
         open(os.environ["GITHUB_STEP_SUMMARY"], "a").write(report + "\n")
 
 
+def run_loop(max_minutes):
+    """Vérifie chaque minute pendant la séance, jusqu'à 16 h 20 ou max_minutes."""
+    import time as _time
+    start = _time.monotonic()
+    while _time.monotonic() - start < max_minutes * 60:
+        now = datetime.now(TZ)
+        if now.time() > time(16, 20):
+            break
+        try:
+            run_live()
+        except Exception as ex:  # une erreur réseau ne doit pas arrêter la séance
+            print(f"{now:%H:%M} erreur : {ex}")
+        _time.sleep(60)
+
+
 if __name__ == "__main__":
     cmd = sys.argv[1] if len(sys.argv) > 1 else "live"
     if cmd == "backtest":
         run_backtest(sys.argv[2:] or [CFG["ticker"], "FBTC.TO"])
     elif cmd == "watchlist":
         run_watchlist(sys.argv[2:])
+    elif cmd == "loop":
+        run_loop(int(sys.argv[2]) if len(sys.argv) > 2 else 340)
     elif cmd == "alternatives":
         run_alternatives(sys.argv[2:] or [CFG["ticker"], "FBTC.TO"])
     elif cmd == "sweep":
