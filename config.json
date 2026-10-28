@@ -17,6 +17,6 @@
   "breakeven_after_t1": true,
   "round_trip_cost_pct": 0.2,
   "signal_valid_minutes": 10,
-  "alerts_enabled": false,
+  "alerts_enabled": true,
   "simulation": true
 }

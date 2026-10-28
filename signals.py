@@ -213,8 +213,11 @@ def run_live():
     for i, bar in enumerate(bars):
         if s["last_bar"] and bar["t"].isoformat() <= s["last_bar"]:
             continue
+        # On rejoue toujours la journée pour garder l'état juste, mais on ne notifie que les bougies récentes.
+        fresh = now - bar["t"] <= timedelta(minutes=20)
         for e in step(bar, context(bars, i), s["day_state"], s["equity"], paused):
-            notify(*fmt(e))
+            if fresh:
+                notify(*fmt(e))
             if e["type"] == "exit":
                 s["equity"] = round(e["equity_after"], 4)
                 s["journal"].append({"date": today, "setup": e["pos"]["setup"], "entry": e["pos"]["entry"],
