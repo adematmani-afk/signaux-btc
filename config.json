@@ -20,5 +20,19 @@
   "alerts_enabled": true,
   "simulation": true,
   "strategy": "reversion",
-  "reversion_dev_pct": 1.0
+  "reversion_dev_pct": 1.0,
+  "tickers": [
+    "BTCC-B.TO",
+    "BTCX-B.TO",
+    "FBTC.TO",
+    "ETHX-B.TO",
+    "SU.TO",
+    "ENB.TO",
+    "CNQ.TO",
+    "TSLA.NE",
+    "MSFT.NE",
+    "AMZN.NE",
+    "META.NE",
+    "NVDA.NE"
+  ]
 }

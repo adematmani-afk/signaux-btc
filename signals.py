@@ -160,7 +160,7 @@ def exit_event(bar, pos, price, reason, equity):
 def fmt(e):
     """Notification courte : quoi faire, à quel prix, avec quel montant."""
     p = e["pos"]
-    tk = CFG["ticker_label"].split()[0]
+    tk = display(e.get("ticker", CFG["ticker"]))
     if e["type"] == "entry":
         expiry = (e["t"] + timedelta(minutes=5 + CFG["signal_valid_minutes"])).strftime("%H:%M")
         return (f"ACHÈTE {tk} maintenant", 5, [
@@ -208,36 +208,55 @@ def save_state(s):
     json.dump(s, open(STATE_PATH, "w"), indent=1, ensure_ascii=False, default=str)
 
 
+def display(tk):
+    return tk.replace(".TO", "").replace("-", ".")
+
+
 def run_live():
     now = datetime.now(TZ)
     s = load_state()
     if not CFG.get("alerts_enabled") or now.weekday() >= 5 or not time(9, 30) <= now.time() <= time(16, 20):
         return
     today = now.date().isoformat()
-    if s["day"] != today:
-        s.update(day=today, day_state=new_day_state(), last_bar=None)
+    tickers = CFG.get("tickers") or [CFG["ticker"]]
+    if s["day"] != today or not isinstance(s.get("day_state"), dict) or "position" in s["day_state"]:
+        s.update(day=today, day_state={}, last_bar={})
+    for tk in tickers:
+        s["day_state"].setdefault(tk, new_day_state())
 
-    bars = [b for b in fetch_bars(CFG["ticker"]) if b["t"].date() == now.date()
-            and b["t"] + timedelta(minutes=5) <= now]
     paused = s["equity"] <= CFG["pause_below_equity"]
     if paused and not s["pause_sent"]:
         notify("PAUSE : plus de signaux d'achat", 4, [f"Compte estimé sous {CFG['pause_below_equity']} $ : {s['equity']:.2f} $"])
         s["pause_sent"] = True
 
-    for i, bar in enumerate(bars):
-        if s["last_bar"] and bar["t"].isoformat() <= s["last_bar"]:
-            continue
-        # On rejoue toujours la journée pour garder l'état juste, mais on ne notifie que les bougies récentes.
-        fresh = now - bar["t"] <= timedelta(minutes=20)
-        for e in step(bar, context(bars, i), s["day_state"], s["equity"], paused):
-            if fresh:
-                notify(*fmt(e))
-            if e["type"] == "exit":
-                s["equity"] = round(e["equity_after"], 4)
-                s["journal"].append({"date": today, "setup": e["pos"]["setup"], "entry": e["pos"]["entry"],
-                                     "exit": e["price"], "reason": e["reason"], "ret_pct": round(e["ret_pct"], 3)})
-        s["last_bar"] = bar["t"].isoformat()
-
+    bars = {}
+    for tk in tickers:
+        try:
+            bars[tk] = [b for b in fetch_bars(tk) if b["t"].date() == now.date() and b["t"] + timedelta(minutes=5) <= now]
+        except Exception as ex:
+            print(f"{tk} : données indisponibles ({ex})")
+    # Une seule position à la fois, tous titres confondus : on avance bougie par bougie dans l'ordre du temps.
+    times = sorted({b["t"] for tk in bars for b in bars[tk]})
+    for t in times:
+        for tk in tickers:
+            if tk not in bars:
+                continue
+            idx = next((i for i, b in enumerate(bars[tk]) if b["t"] == t), None)
+            last = s["last_bar"].get(tk)
+            if idx is None or (last and t.isoformat() <= last):
+                continue
+            busy = any(st["position"] for k, st in s["day_state"].items() if k != tk)
+            fresh = now - t <= timedelta(minutes=20)
+            for e in step(bars[tk][idx], context(bars[tk], idx), s["day_state"][tk], s["equity"], paused or busy):
+                e["ticker"] = tk
+                if fresh:
+                    notify(*fmt(e))
+                if e["type"] == "exit":
+                    s["equity"] = round(e["equity_after"], 4)
+                    s["journal"].append({"date": today, "ticker": tk, "setup": e["pos"]["setup"], "entry": e["pos"]["entry"],
+                                         "exit": e["price"], "reason": e["reason"], "ret_pct": round(e["ret_pct"], 3),
+                                         "alert_sent": fresh})
+            s["last_bar"][tk] = t.isoformat()
     save_state(s)
 
 
@@ -318,7 +337,7 @@ def run_sweep(tickers):
             rows.append((simulate(first)[0], simulate(second)[0], simulate(days)[0], sl, t1, t2))
         CFG.clear(); CFG.update(base)
         rows.sort(reverse=True)
-        out.append(f"\n**{tk}** (compte final sur 100 $ : 1re moitié / 2e moitié / total)")
+        out.append(f"\n**{tk}** (compte final, départ {CFG['starting_equity']} $ : 1re moitié / 2e moitié / total)")
         out += [f"- stop {sl} %, obj. {t1} % / {t2} % : {a:.2f} / {b:.2f} / {c:.2f}" for a, b, c, sl, t1, t2 in rows]
     report = "\n".join(out)
     print(report)
@@ -328,7 +347,7 @@ def run_sweep(tickers):
 
 def run_watchlist(tickers):
     """Même stratégie et mêmes réglages sur plusieurs titres, sans réglage au cas par cas."""
-    out = [f"## Liste de surveillance : stratégie {CFG.get('strategy')} (compte final sur 100 $ : 1re moitié / 2e moitié / total, nb de trades)"]
+    out = [f"## Liste de surveillance : stratégie {CFG.get('strategy')} (compte final, départ {CFG['starting_equity']} $ : 1re moitié / 2e moitié / total, nb de trades)"]
     for tk in tickers:
         try:
             days = by_day(fetch_bars(tk, range_="60d"))
@@ -356,7 +375,7 @@ def run_alternatives(tickers):
     variants += [("reversion", {"reversion_dev_pct": d, "stop_pct": sl}) for d in (0.5, 0.75, 1.0, 1.5) for sl in (1.0, 2.0, 99.0)]
     variants += [("trend", {"trend_check_at": c, "trend_min_pct": m, "stop_pct": sl, "target1_pct": 3.0, "target2_pct": 5.0})
                  for c in ("10:30", "11:30") for m in (0.0, 0.5, 1.0) for sl in (1.0, 2.0, 99.0)]
-    out = ["## Autres approches (compte final sur 100 $ : 1re moitié / 2e moitié / total, nb de trades)"]
+    out = [f"## Autres approches (compte final, départ {CFG['starting_equity']} $ : 1re moitié / 2e moitié / total, nb de trades)"]
     for tk in tickers:
         days = by_day(fetch_bars(tk, range_="60d"))
         keys = sorted(days)
