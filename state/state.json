@@ -2,12 +2,93 @@
  "equity": 103.9,
  "day": "2026-10-28",
  "day_state": {
-  "position": null,
-  "entries": 0,
-  "orb_used": false,
-  "prev_close_below_vwap": false
+  "BTCC-B.TO": {
+   "position": null,
+   "entries": 0,
+   "orb_used": false,
+   "prev_close_below_vwap": true
+  },
+  "BTCX-B.TO": {
+   "position": null,
+   "entries": 0,
+   "orb_used": false,
+   "prev_close_below_vwap": true
+  },
+  "FBTC.TO": {
+   "position": null,
+   "entries": 0,
+   "orb_used": false,
+   "prev_close_below_vwap": true
+  },
+  "ETHX-B.TO": {
+   "position": null,
+   "entries": 0,
+   "orb_used": false,
+   "prev_close_below_vwap": true
+  },
+  "SU.TO": {
+   "position": null,
+   "entries": 0,
+   "orb_used": false,
+   "prev_close_below_vwap": false
+  },
+  "ENB.TO": {
+   "position": null,
+   "entries": 0,
+   "orb_used": false,
+   "prev_close_below_vwap": false
+  },
+  "CNQ.TO": {
+   "position": null,
+   "entries": 0,
+   "orb_used": false,
+   "prev_close_below_vwap": false
+  },
+  "TSLA.NE": {
+   "position": null,
+   "entries": 0,
+   "orb_used": false,
+   "prev_close_below_vwap": false
+  },
+  "MSFT.NE": {
+   "position": null,
+   "entries": 0,
+   "orb_used": false,
+   "prev_close_below_vwap": true
+  },
+  "AMZN.NE": {
+   "position": null,
+   "entries": 0,
+   "orb_used": false,
+   "prev_close_below_vwap": true
+  },
+  "META.NE": {
+   "position": null,
+   "entries": 0,
+   "orb_used": false,
+   "prev_close_below_vwap": true
+  },
+  "NVDA.NE": {
+   "position": null,
+   "entries": 0,
+   "orb_used": false,
+   "prev_close_below_vwap": true
+  }
  },
- "last_bar": "2026-10-28T11:20:00-04:00",
+ "last_bar": {
+  "BTCC-B.TO": "2026-10-28T12:20:00-04:00",
+  "BTCX-B.TO": "2026-10-28T12:14:26-04:00",
+  "FBTC.TO": "2026-10-28T12:14:53-04:00",
+  "ETHX-B.TO": "2026-10-28T12:07:18-04:00",
+  "SU.TO": "2026-10-28T12:20:00-04:00",
+  "ENB.TO": "2026-10-28T12:20:00-04:00",
+  "CNQ.TO": "2026-10-28T12:20:00-04:00",
+  "TSLA.NE": "2026-10-28T11:59:21-04:00",
+  "MSFT.NE": "2026-10-28T12:20:00-04:00",
+  "AMZN.NE": "2026-10-28T12:22:19-04:00",
+  "META.NE": "2026-10-28T12:20:00-04:00",
+  "NVDA.NE": "2026-10-28T12:20:13-04:00"
+ },
  "journal": [],
  "summary_sent": null,
  "pause_sent": false
