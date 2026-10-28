@@ -169,6 +169,9 @@ def fmt(e):
 
 
 def notify(title, priority, lines):
+    if CFG.get("simulation"):
+        title = "SIMULATION : " + title
+        lines = lines + ["Simulation : ne place pas d'argent."]
     print(f"\n[{title}]\n" + "\n".join(lines))
     if os.environ.get("NO_NOTIFY"):
         return
