@@ -11,12 +11,14 @@
   "force_exit_at": "15:45",
   "vwap_reclaim_after": "10:30",
   "volume_factor": 1.2,
-  "stop_pct": 1.25,
+  "stop_pct": 2.0,
   "target1_pct": 3.0,
   "target2_pct": 5.0,
   "breakeven_after_t1": true,
   "round_trip_cost_pct": 0.2,
   "signal_valid_minutes": 10,
   "alerts_enabled": true,
-  "simulation": true
+  "simulation": true,
+  "strategy": "reversion",
+  "reversion_dev_pct": 1.0
 }

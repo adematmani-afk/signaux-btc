@@ -167,7 +167,7 @@ def fmt(e):
             f"Montant : {e['equity']:.0f} $ (~{e['equity'] / e['price']:.2f} parts) au marché",
             f"Prix : {e['price']:.2f} $ (max {p['entry'] * 1.003:.2f} $)",
             f"Stop : {p['stop']:.2f} $",
-            f"Objectif 1 : {p['t1']:.2f} $  |  Objectif 2 : {p['t2']:.2f} $",
+            f"Objectif : {p['t1']:.2f} $" if p["t1"] == p["t2"] else f"Objectif 1 : {p['t1']:.2f} $  |  Objectif 2 : {p['t2']:.2f} $",
             f"Valable jusqu'à {expiry}",
         ])
     if e["type"] == "t1":
