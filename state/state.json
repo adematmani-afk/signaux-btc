@@ -1,0 +1,14 @@
+{
+ "equity": 100,
+ "day": "2026-10-28",
+ "day_state": {
+  "position": null,
+  "entries": 0,
+  "orb_used": false,
+  "prev_close_below_vwap": false
+ },
+ "last_bar": "2026-10-28T09:40:00-04:00",
+ "journal": [],
+ "summary_sent": null,
+ "pause_sent": false
+}
