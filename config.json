@@ -1,7 +1,6 @@
 {
   "ticker": "BTCC-B.TO",
   "ticker_label": "BTCC.B (Purpose Bitcoin ETF, CAD)",
-  "ntfy_topic": "signaux-btc-0a31db6c80eb3cec",
   "timezone": "America/Toronto",
   "starting_equity": 103.9,
   "pause_below_equity": 50,

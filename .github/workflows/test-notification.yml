@@ -15,12 +15,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - env:
+          NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
           TITLE: ${{ inputs.title }}
           MESSAGE: ${{ inputs.message }}
         run: |
           python3 - <<'PY'
           import json, os, urllib.request
-          topic = json.load(open("config.json"))["ntfy_topic"]
+          topic = os.environ["NTFY_TOPIC"]
           body = json.dumps({"topic": topic, "title": os.environ["TITLE"], "message": os.environ["MESSAGE"], "priority": 4}).encode()
           req = urllib.request.Request("https://ntfy.sh/", data=body, headers={"Content-Type": "application/json"})
           print(urllib.request.urlopen(req, timeout=20).status)

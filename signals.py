@@ -189,7 +189,10 @@ def notify(title, priority, lines):
     print(f"\n[{title}]\n" + "\n".join(lines))
     if os.environ.get("NO_NOTIFY"):
         return
-    topic = os.environ.get("NTFY_TOPIC") or CFG["ntfy_topic"]
+    topic = os.environ.get("NTFY_TOPIC")
+    if not topic:
+        print("NTFY_TOPIC manquant : notification non envoyée")
+        return
     requests.post("https://ntfy.sh/", json={"topic": topic, "title": title,
                                            "message": "\n".join(lines), "priority": priority,
                                            "tags": ["chart_with_upwards_trend"]}, timeout=20)
