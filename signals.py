@@ -66,6 +66,7 @@ def context(day_bars, i):
     prev_vols = [b["v"] for b in upto[:-1]]
     return {
         "vwap": vwap,
+        "day_open": upto[0]["o"],
         "or_ready": upto[-1]["t"].time() >= or_end,
         "or_high": max(b["h"] for b in orb) if orb else None,
         "or_low": min(b["l"] for b in orb) if orb else None,
@@ -107,19 +108,32 @@ def step(bar, ctx, st, equity, paused):
     can_enter = (st["position"] is None and not events and not paused and ctx["or_ready"]
                  and st["entries"] < CFG["max_entries_per_day"] and t < hhmm(CFG["no_entry_after"]))
     if can_enter:
-        setup = None
+        setup, target = None, None
         vol_ok = bar["v"] >= CFG["volume_factor"] * ctx["avg_vol"]
-        if not st["orb_used"] and bar["c"] > ctx["or_high"] and bar["c"] > ctx["vwap"] and vol_ok:
-            setup = "Cassure du range d'ouverture"
-            st["orb_used"] = True
-        elif t >= hhmm(CFG["vwap_reclaim_after"]) and st["prev_close_below_vwap"] and not below and vol_ok:
-            setup = "Reprise du VWAP"
+        strategy = CFG.get("strategy", "momentum")
+        if strategy == "momentum":
+            if not st["orb_used"] and bar["c"] > ctx["or_high"] and bar["c"] > ctx["vwap"] and vol_ok:
+                setup = "Cassure du range d'ouverture"
+                st["orb_used"] = True
+            elif t >= hhmm(CFG["vwap_reclaim_after"]) and st["prev_close_below_vwap"] and not below and vol_ok:
+                setup = "Reprise du VWAP"
+        elif strategy == "reversion":
+            # Achat d'un excès de baisse sous le VWAP, revente au retour vers le VWAP.
+            if bar["c"] <= ctx["vwap"] * (1 - CFG["reversion_dev_pct"] / 100):
+                setup, target = "Retour vers le VWAP", round(ctx["vwap"], 2)
+        elif strategy == "trend":
+            # Une seule entrée par jour, si la première heure est déjà nettement haussière.
+            day_open = ctx["day_open"]
+            if not st["orb_used"] and t >= hhmm(CFG["trend_check_at"]):
+                st["orb_used"] = True
+                if bar["c"] >= day_open * (1 + CFG["trend_min_pct"] / 100) and bar["c"] > ctx["vwap"]:
+                    setup = "Journée haussière"
         if setup:
             entry = bar["c"]
             pos = {"setup": setup, "entry": entry, "t": bar["t"].isoformat(),
                    "stop": round(entry * (1 - CFG["stop_pct"] / 100), 2),
-                   "t1": round(entry * (1 + CFG["target1_pct"] / 100), 2),
-                   "t2": round(entry * (1 + CFG["target2_pct"] / 100), 2),
+                   "t1": target or round(entry * (1 + CFG["target1_pct"] / 100), 2),
+                   "t2": target or round(entry * (1 + CFG["target2_pct"] / 100), 2),
                    "t1_done": False, "vwap": round(ctx["vwap"], 2), "or_high": ctx["or_high"]}
             st["position"] = pos
             st["entries"] += 1
@@ -312,10 +326,40 @@ def run_sweep(tickers):
         open(os.environ["GITHUB_STEP_SUMMARY"], "a").write(report + "\n")
 
 
+def run_alternatives(tickers):
+    """Compare d'autres familles de stratégies, mêmes règles : choix sur la 1re moitié, vérification sur la 2e."""
+    base = dict(CFG)
+    variants = [("momentum", {})]
+    variants += [("reversion", {"reversion_dev_pct": d, "stop_pct": sl}) for d in (0.5, 0.75, 1.0, 1.5) for sl in (1.0, 2.0, 99.0)]
+    variants += [("trend", {"trend_check_at": c, "trend_min_pct": m, "stop_pct": sl, "target1_pct": 3.0, "target2_pct": 5.0})
+                 for c in ("10:30", "11:30") for m in (0.0, 0.5, 1.0) for sl in (1.0, 2.0, 99.0)]
+    out = ["## Autres approches (compte final sur 100 $ : 1re moitié / 2e moitié / total, nb de trades)"]
+    for tk in tickers:
+        days = by_day(fetch_bars(tk, range_="60d"))
+        keys = sorted(days)
+        first, second = {d: days[d] for d in keys[: len(keys) // 2]}, {d: days[d] for d in keys[len(keys) // 2:]}
+        rows = []
+        for name, params in variants:
+            CFG.clear(); CFG.update(base); CFG.update(params, strategy=name, max_entries_per_day=99)
+            a, b, full = simulate(first)[0], simulate(second)[0], simulate(days)
+            rows.append((a, b, full[0], len(full[2]), name, params))
+        CFG.clear(); CFG.update(base)
+        rows.sort(key=lambda r: r[0], reverse=True)
+        buy_hold = days[keys[-1]][-1]["c"] / days[keys[0]][0]["o"] * 100
+        out.append(f"\n**{tk}** (achat-conservation sur la période : {buy_hold:.2f})")
+        out += [f"- {n} {p} : {a:.2f} / {b:.2f} / {c:.2f} ({k} trades)" for a, b, c, k, n, p in rows[:12]]
+    report = "\n".join(out)
+    print(report)
+    if os.environ.get("GITHUB_STEP_SUMMARY"):
+        open(os.environ["GITHUB_STEP_SUMMARY"], "a").write(report + "\n")
+
+
 if __name__ == "__main__":
     cmd = sys.argv[1] if len(sys.argv) > 1 else "live"
     if cmd == "backtest":
         run_backtest(sys.argv[2:] or [CFG["ticker"], "FBTC.TO"])
+    elif cmd == "alternatives":
+        run_alternatives(sys.argv[2:] or [CFG["ticker"], "FBTC.TO"])
     elif cmd == "sweep":
         run_sweep(sys.argv[2:] or [CFG["ticker"], "FBTC.TO"])
     else:

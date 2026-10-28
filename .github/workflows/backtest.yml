@@ -17,3 +17,4 @@ jobs:
       - run: pip install -r requirements.txt
       - run: python signals.py backtest
       - run: python signals.py sweep
+      - run: python signals.py alternatives
