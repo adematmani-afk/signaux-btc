@@ -1,5 +1,5 @@
 {
- "equity": 105.0803,
+ "equity": 102.7801,
  "day": "2026-11-02",
  "day_state": {
   "BTCC-B.TO": {
@@ -30,7 +30,7 @@
    "position": null,
    "entries": 0,
    "orb_used": false,
-   "prev_close_below_vwap": false
+   "prev_close_below_vwap": true
   },
   "CNQ.TO": {
    "position": null,
@@ -45,17 +45,7 @@
    "prev_close_below_vwap": true
   },
   "MSFT.NE": {
-   "position": {
-    "setup": "Retour vers le VWAP",
-    "entry": 36.20000076293945,
-    "t": "2026-11-02T12:27:10-05:00",
-    "stop": 35.48,
-    "t1": 36.61,
-    "t2": 36.61,
-    "t1_done": false,
-    "vwap": 36.61,
-    "or_high": 36.75
-   },
+   "position": null,
    "entries": 1,
    "orb_used": false,
    "prev_close_below_vwap": true
@@ -68,15 +58,15 @@
   }
  },
  "last_bar": {
-  "BTCC-B.TO": "2026-11-02T14:27:50-05:00",
-  "BTCX-B.TO": "2026-11-02T14:27:49-05:00",
-  "FBTC.TO": "2026-11-02T14:27:55-05:00",
-  "SU.TO": "2026-11-02T14:30:00-05:00",
-  "ENB.TO": "2026-11-02T14:30:00-05:00",
-  "CNQ.TO": "2026-11-02T14:30:00-05:00",
-  "TSLA.NE": "2026-11-02T14:25:00-05:00",
-  "MSFT.NE": "2026-11-02T14:30:00-05:00",
-  "AMZN.NE": "2026-11-02T14:30:00-05:00"
+  "BTCC-B.TO": "2026-11-02T15:55:00-05:00",
+  "BTCX-B.TO": "2026-11-02T15:55:00-05:00",
+  "FBTC.TO": "2026-11-02T15:55:00-05:00",
+  "SU.TO": "2026-11-02T15:55:00-05:00",
+  "ENB.TO": "2026-11-02T15:55:00-05:00",
+  "CNQ.TO": "2026-11-02T15:55:00-05:00",
+  "TSLA.NE": "2026-11-02T15:55:00-05:00",
+  "MSFT.NE": "2026-11-02T15:55:00-05:00",
+  "AMZN.NE": "2026-11-02T15:51:55-05:00"
  },
  "journal": [
   {
@@ -97,6 +87,16 @@
    "exit": 34.87,
    "reason": "t2",
    "ret_pct": 0.814,
+   "alert_sent": true
+  },
+  {
+   "date": "2026-11-02",
+   "ticker": "MSFT.NE",
+   "setup": "Retour vers le VWAP",
+   "entry": 36.20000076293945,
+   "exit": 35.48,
+   "reason": "stop",
+   "ret_pct": -2.189,
    "alert_sent": true
   }
  ],
