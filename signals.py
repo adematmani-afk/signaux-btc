@@ -264,6 +264,86 @@ def run_live():
     save_state(s)
 
 
+# ---------------------------------------------------------------- détecteur de « coups de loto »
+
+def fetch_movers():
+    """Plus fortes hausses du jour selon les écrans prédéfinis de Yahoo (marché américain et canadien)."""
+    out = {}
+    for scr in CFG.get("scan_screens", ["day_gainers", "small_cap_gainers"]):
+        for region in ("US", "CA"):
+            try:
+                r = requests.get("https://query1.finance.yahoo.com/v1/finance/screener/predefined/saved",
+                                 params={"scrIds": scr, "count": 50, "region": region, "lang": "en-US"},
+                                 headers={"User-Agent": "Mozilla/5.0"}, timeout=20)
+                r.raise_for_status()
+                quotes = r.json()["finance"]["result"][0]["quotes"]
+            except Exception as ex:
+                print(f"écran {scr}/{region} indisponible ({ex})")
+                continue
+            for q in quotes:
+                if q.get("symbol"):
+                    out[q["symbol"]] = q
+    return list(out.values())
+
+
+def is_candidate(q):
+    return (q.get("regularMarketChangePercent", 0) >= CFG["scan_min_change_pct"]
+            and q.get("regularMarketPrice", 0) >= CFG["scan_min_price"]
+            and q.get("regularMarketVolume", 0) >= CFG["scan_min_volume"])
+
+
+def scan_round_trip_cost(currency):
+    # Wealthsimple : environ 1,5 % de conversion à l'achat et à la vente pour un titre en USD.
+    return CFG["round_trip_cost_pct"] + (3.0 if currency != "CAD" else 0.0)
+
+
+def run_scan(dry=False):
+    """Alerte une fois par jour et par titre quand un titre explose (simulation : suivi jusqu'à la clôture)."""
+    now = datetime.now(TZ)
+    s = load_state()
+    today = now.date().isoformat()
+    loto = s.setdefault("loto", [])
+    in_session = now.weekday() < 5 and time(9, 35) <= now.time() <= time(16, 20)
+    if not dry and (not CFG.get("scan_enabled") or not in_session):
+        return
+    # Fin de séance : on note le prix de clôture de chaque alerte du jour pour mesurer le résultat simulé.
+    if now.time() >= time(15, 55):
+        for a in loto:
+            if a["date"] == today and a.get("exit") is None:
+                try:
+                    a["exit"] = round(fetch_bars(a["symbol"])[-1]["c"], 4)
+                    a["ret_pct"] = round((a["exit"] / a["entry"] - 1) * 100 - scan_round_trip_cost(a["currency"]), 2)
+                except Exception as ex:
+                    print(f"{a['symbol']} : clôture indisponible ({ex})")
+        save_state(s)
+        return
+    seen = {a["symbol"] for a in loto if a["date"] == today}
+    for q in sorted(fetch_movers(), key=lambda q: -q.get("regularMarketChangePercent", 0)):
+        if dry:
+            print(f"{q['symbol']:<8} {q.get('regularMarketChangePercent', 0):+7.1f} %  {q.get('regularMarketPrice')} "
+                  f"{q.get('currency')}  vol {q.get('regularMarketVolume')}  {q.get('fullExchangeName')}")
+            continue
+        if not is_candidate(q) or q["symbol"] in seen:
+            continue
+        price, cur = q["regularMarketPrice"], q.get("currency", "USD")
+        amount = s["equity"] if cur == "CAD" else s["equity"] / CFG.get("usd_cad", 1.40)
+        shares = int(amount // (price * 1.01))
+        lines = [f"{q['symbol']} ({q.get('shortName', '')}) : {q['regularMarketChangePercent']:+.0f} % aujourd'hui",
+                 f"Prix : {price:.2f} {cur}, volume {q['regularMarketVolume']:,}".replace(",", " "),
+                 f"Montant : {s['equity']:.2f} $ CA = {shares} parts" if shares else "Prix trop élevé pour le compte",
+                 f"Ordre à cours limité : {price * 1.01:.2f} {cur}",
+                 f"Stop : {price * (1 - CFG['scan_stop_pct'] / 100):.2f} {cur}",
+                 "Le mouvement a déjà commencé : risque très élevé."]
+        if cur != "CAD":
+            lines.append("Titre en USD : environ 1,5 % de frais de conversion à l'achat et à la vente.")
+        notify(f"COUP DE LOTO : {q['symbol']}", 5, lines)
+        loto.append({"date": today, "time": now.strftime("%H:%M"), "symbol": q["symbol"], "currency": cur,
+                     "change_pct": round(q["regularMarketChangePercent"], 1), "entry": price, "exit": None})
+        seen.add(q["symbol"])
+    if not dry:
+        save_state(s)
+
+
 # ---------------------------------------------------------------- backtest
 
 def simulate(days):
@@ -412,6 +492,11 @@ def run_loop(max_minutes):
             run_live()
         except Exception as ex:  # une erreur réseau ne doit pas arrêter la séance
             print(f"{now:%H:%M} erreur : {ex}")
+        if now.minute % CFG.get("scan_every_minutes", 2) == 0:
+            try:
+                run_scan()
+            except Exception as ex:
+                print(f"{now:%H:%M} détecteur : erreur {ex}")
         _time.sleep(60)
 
 
@@ -425,6 +510,8 @@ if __name__ == "__main__":
         run_loop(int(sys.argv[2]) if len(sys.argv) > 2 else 340)
     elif cmd == "alternatives":
         run_alternatives(sys.argv[2:] or [CFG["ticker"], "FBTC.TO"])
+    elif cmd == "scan":
+        run_scan(dry="--dry" in sys.argv)
     elif cmd == "sweep":
         run_sweep(sys.argv[2:] or [CFG["ticker"], "FBTC.TO"])
     else:

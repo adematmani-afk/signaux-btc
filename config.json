@@ -30,5 +30,16 @@
     "TSLA.NE",
     "MSFT.NE",
     "AMZN.NE"
-  ]
+  ],
+  "scan_enabled": true,
+  "scan_screens": [
+    "day_gainers",
+    "small_cap_gainers"
+  ],
+  "scan_min_change_pct": 30,
+  "scan_min_price": 0.5,
+  "scan_min_volume": 1000000,
+  "scan_stop_pct": 15,
+  "scan_every_minutes": 2,
+  "usd_cad": 1.4
 }
