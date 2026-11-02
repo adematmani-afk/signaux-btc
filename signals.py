@@ -264,7 +264,7 @@ def run_live():
     save_state(s)
 
 
-# ---------------------------------------------------------------- détecteur de « coups de loto »
+# ---------------------------------------------------------------- détecteur de départs explosifs
 
 def fetch_movers():
     """Plus fortes hausses du jour selon les écrans prédéfinis de Yahoo (marché américain et canadien)."""
@@ -286,10 +286,24 @@ def fetch_movers():
     return list(out.values())
 
 
-def is_candidate(q):
-    return (q.get("regularMarketChangePercent", 0) >= CFG["scan_min_change_pct"]
-            and q.get("regularMarketPrice", 0) >= CFG["scan_min_price"]
-            and q.get("regularMarketVolume", 0) >= CFG["scan_min_volume"])
+def session_fraction(now):
+    """Part de la séance écoulée (0 à 1), pour comparer le volume du moment à un jour normal."""
+    elapsed = (datetime.combine(now.date(), now.time()) - datetime.combine(now.date(), OPEN)).total_seconds()
+    return min(max(elapsed / (6.5 * 3600), 0.02), 1.0)
+
+
+def early_score(q, now):
+    """Signal précoce : hausse encore modeste mais volume anormal pour l'heure, et prix au-dessus de l'ouverture."""
+    chg, price = q.get("regularMarketChangePercent", 0), q.get("regularMarketPrice", 0)
+    avg = q.get("averageDailyVolume3Month") or q.get("averageDailyVolume10Day") or 0
+    if not avg or price < CFG["scan_min_price"] or avg < CFG["scan_min_avg_volume"]:
+        return None
+    rel = q.get("regularMarketVolume", 0) / (avg * session_fraction(now))
+    if not CFG["scan_min_change_pct"] <= chg <= CFG["scan_max_change_pct"]:
+        return None  # trop peu, ou déjà explosé : trop tard
+    if rel < CFG["scan_min_rel_volume"] or price < (q.get("regularMarketOpen") or 0):
+        return None
+    return rel
 
 
 def scan_round_trip_cost(currency):
@@ -298,7 +312,7 @@ def scan_round_trip_cost(currency):
 
 
 def run_scan(dry=False):
-    """Alerte une fois par jour et par titre quand un titre explose (simulation : suivi jusqu'à la clôture)."""
+    """Alerte une fois par jour et par titre sur un départ possible, avant l'explosion (simulation)."""
     now = datetime.now(TZ)
     s = load_state()
     today = now.date().isoformat()
@@ -311,34 +325,48 @@ def run_scan(dry=False):
         for a in loto:
             if a["date"] == today and a.get("exit") is None:
                 try:
-                    a["exit"] = round(fetch_bars(a["symbol"])[-1]["c"], 4)
+                    stop = a["entry"] * (1 - CFG["scan_stop_pct"] / 100)
+                    target = a["entry"] * (1 + CFG["scan_target_pct"] / 100)
+                    after = [b for b in fetch_bars(a["symbol"]) if b["t"].strftime("%H:%M") > a["time"]]
+                    a["exit"], a["reason"] = round(after[-1]["c"], 4), "fin_de_seance"
+                    for b in after:
+                        if b["l"] <= stop:
+                            a["exit"], a["reason"] = round(stop, 4), "stop"
+                            break
+                        if b["h"] >= target:
+                            a["exit"], a["reason"] = round(target, 4), "objectif"
+                            break
                     a["ret_pct"] = round((a["exit"] / a["entry"] - 1) * 100 - scan_round_trip_cost(a["currency"]), 2)
                 except Exception as ex:
                     print(f"{a['symbol']} : clôture indisponible ({ex})")
         save_state(s)
         return
     seen = {a["symbol"] for a in loto if a["date"] == today}
-    for q in sorted(fetch_movers(), key=lambda q: -q.get("regularMarketChangePercent", 0)):
+    for q in fetch_movers():
+        rel = early_score(q, now)
         if dry:
-            print(f"{q['symbol']:<8} {q.get('regularMarketChangePercent', 0):+7.1f} %  {q.get('regularMarketPrice')} "
-                  f"{q.get('currency')}  vol {q.get('regularMarketVolume')}  {q.get('fullExchangeName')}")
+            if rel:
+                print(f"SIGNAL {q['symbol']:<6} {q['regularMarketChangePercent']:+5.1f} %  volume x{rel:.1f}  "
+                      f"{q['regularMarketPrice']} {q.get('currency')}")
             continue
-        if not is_candidate(q) or q["symbol"] in seen:
+        if rel is None or q["symbol"] in seen:
             continue
         price, cur = q["regularMarketPrice"], q.get("currency", "USD")
         amount = s["equity"] if cur == "CAD" else s["equity"] / CFG.get("usd_cad", 1.40)
         shares = int(amount // (price * 1.01))
-        lines = [f"{q['symbol']} ({q.get('shortName', '')}) : {q['regularMarketChangePercent']:+.0f} % aujourd'hui",
+        lines = [f"{q['symbol']} ({q.get('shortName', '')}) : {q['regularMarketChangePercent']:+.0f} % pour l'instant, volume {rel:.0f} fois la normale",
                  f"Prix : {price:.2f} {cur}, volume {q['regularMarketVolume']:,}".replace(",", " "),
                  f"Montant : {s['equity']:.2f} $ CA = {shares} parts" if shares else "Prix trop élevé pour le compte",
                  f"Ordre à cours limité : {price * 1.01:.2f} {cur}",
                  f"Stop : {price * (1 - CFG['scan_stop_pct'] / 100):.2f} {cur}",
-                 "Le mouvement a déjà commencé : risque très élevé."]
+                 f"Objectif : {price * (1 + CFG['scan_target_pct'] / 100):.2f} {cur}",
+                 "Pari très risqué : la plupart de ces départs retombent."]
         if cur != "CAD":
             lines.append("Titre en USD : environ 1,5 % de frais de conversion à l'achat et à la vente.")
-        notify(f"COUP DE LOTO : {q['symbol']}", 5, lines)
+        notify(f"DÉPART POSSIBLE : {q['symbol']}", 5, lines)
         loto.append({"date": today, "time": now.strftime("%H:%M"), "symbol": q["symbol"], "currency": cur,
-                     "change_pct": round(q["regularMarketChangePercent"], 1), "entry": price, "exit": None})
+                     "change_pct": round(q["regularMarketChangePercent"], 1), "rel_volume": round(rel, 1),
+                     "entry": price, "exit": None})
         seen.add(q["symbol"])
     if not dry:
         save_state(s)

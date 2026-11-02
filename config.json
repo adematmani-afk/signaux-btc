@@ -34,12 +34,16 @@
   "scan_enabled": true,
   "scan_screens": [
     "day_gainers",
-    "small_cap_gainers"
+    "small_cap_gainers",
+    "most_actives"
   ],
-  "scan_min_change_pct": 30,
-  "scan_min_price": 0.5,
-  "scan_min_volume": 1000000,
-  "scan_stop_pct": 15,
+  "scan_min_change_pct": 4,
+  "scan_min_price": 1.0,
+  "scan_stop_pct": 10,
   "scan_every_minutes": 2,
-  "usd_cad": 1.4
+  "usd_cad": 1.4,
+  "scan_max_change_pct": 15,
+  "scan_min_rel_volume": 4,
+  "scan_min_avg_volume": 300000,
+  "scan_target_pct": 25
 }
