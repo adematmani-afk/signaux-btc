@@ -41,6 +41,7 @@
   "scan_min_price": 1.0,
   "scan_stop_pct": 10,
   "scan_every_minutes": 2,
+  "scan_max_alerts_per_day": 3,
   "usd_cad": 1.4,
   "scan_max_change_pct": 15,
   "scan_min_rel_volume": 4,

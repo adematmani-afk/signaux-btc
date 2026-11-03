@@ -342,8 +342,10 @@ def run_scan(dry=False):
         save_state(s)
         return
     seen = {a["symbol"] for a in loto if a["date"] == today}
-    for q in fetch_movers():
-        rel = early_score(q, now)
+    sent = sum(1 for a in loto if a["date"] == today and a.get("alerted", True))
+    # Les plus gros volumes anormaux d'abord : seuls les premiers du jour vont sur le téléphone, les autres sont notés.
+    movers = sorted(((q, early_score(q, now)) for q in fetch_movers()), key=lambda x: -(x[1] or 0))
+    for q, rel in movers:
         if dry:
             if rel:
                 print(f"SIGNAL {q['symbol']:<6} {q['regularMarketChangePercent']:+5.1f} %  volume x{rel:.1f}  "
@@ -351,6 +353,7 @@ def run_scan(dry=False):
             continue
         if rel is None or q["symbol"] in seen:
             continue
+        alerted = sent < CFG.get("scan_max_alerts_per_day", 3)
         price, cur = q["regularMarketPrice"], q.get("currency", "USD")
         amount = s["equity"] if cur == "CAD" else s["equity"] / CFG.get("usd_cad", 1.40)
         shares = int(amount // (price * 1.01))
@@ -363,10 +366,12 @@ def run_scan(dry=False):
                  "Pari très risqué : la plupart de ces départs retombent."]
         if cur != "CAD":
             lines.append("Titre en USD : environ 1,5 % de frais de conversion à l'achat et à la vente.")
-        notify(f"DÉPART POSSIBLE : {q['symbol']}", 5, lines)
+        if alerted:
+            notify(f"DÉPART POSSIBLE : {q['symbol']}", 5, lines)
+            sent += 1
         loto.append({"date": today, "time": now.strftime("%H:%M"), "symbol": q["symbol"], "currency": cur,
                      "change_pct": round(q["regularMarketChangePercent"], 1), "rel_volume": round(rel, 1),
-                     "entry": price, "exit": None})
+                     "entry": price, "exit": None, "alerted": alerted})
         seen.add(q["symbol"])
     if not dry:
         save_state(s)
