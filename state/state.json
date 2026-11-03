@@ -1,6 +1,6 @@
 {
  "equity": 102.7801,
- "day": "2026-11-02",
+ "day": "2026-11-03",
  "day_state": {
   "BTCC-B.TO": {
    "position": null,
@@ -12,13 +12,13 @@
    "position": null,
    "entries": 0,
    "orb_used": false,
-   "prev_close_below_vwap": true
+   "prev_close_below_vwap": false
   },
   "FBTC.TO": {
    "position": null,
    "entries": 0,
    "orb_used": false,
-   "prev_close_below_vwap": true
+   "prev_close_below_vwap": false
   },
   "SU.TO": {
    "position": null,
@@ -39,34 +39,44 @@
    "prev_close_below_vwap": true
   },
   "TSLA.NE": {
-   "position": null,
+   "position": {
+    "setup": "Retour vers le VWAP",
+    "entry": 34.2599983215332,
+    "t": "2026-11-03T12:30:18-05:00",
+    "stop": 33.57,
+    "t1": 34.62,
+    "t2": 34.62,
+    "t1_done": false,
+    "vwap": 34.62,
+    "or_high": 35.040000915527344
+   },
    "entries": 1,
    "orb_used": false,
    "prev_close_below_vwap": true
   },
   "MSFT.NE": {
    "position": null,
-   "entries": 1,
+   "entries": 0,
    "orb_used": false,
-   "prev_close_below_vwap": true
+   "prev_close_below_vwap": false
   },
   "AMZN.NE": {
    "position": null,
    "entries": 0,
    "orb_used": false,
-   "prev_close_below_vwap": true
+   "prev_close_below_vwap": false
   }
  },
  "last_bar": {
-  "BTCC-B.TO": "2026-11-02T15:55:00-05:00",
-  "BTCX-B.TO": "2026-11-02T15:55:00-05:00",
-  "FBTC.TO": "2026-11-02T15:55:00-05:00",
-  "SU.TO": "2026-11-02T15:55:00-05:00",
-  "ENB.TO": "2026-11-02T15:55:00-05:00",
-  "CNQ.TO": "2026-11-02T15:55:00-05:00",
-  "TSLA.NE": "2026-11-02T15:55:00-05:00",
-  "MSFT.NE": "2026-11-02T15:55:00-05:00",
-  "AMZN.NE": "2026-11-02T15:51:55-05:00"
+  "BTCC-B.TO": "2026-11-03T14:15:00-05:00",
+  "BTCX-B.TO": "2026-11-03T14:11:29-05:00",
+  "FBTC.TO": "2026-11-03T14:15:08-05:00",
+  "SU.TO": "2026-11-03T14:15:00-05:00",
+  "ENB.TO": "2026-11-03T14:15:00-05:00",
+  "CNQ.TO": "2026-11-03T14:15:00-05:00",
+  "TSLA.NE": "2026-11-03T14:14:40-05:00",
+  "MSFT.NE": "2026-11-03T13:52:42-05:00",
+  "AMZN.NE": "2026-11-03T14:16:29-05:00"
  },
  "journal": [
   {
@@ -101,5 +111,437 @@
   }
  ],
  "summary_sent": null,
- "pause_sent": false
+ "pause_sent": false,
+ "loto": [
+  {
+   "date": "2026-11-03",
+   "time": "09:36",
+   "symbol": "GPK",
+   "currency": "USD",
+   "change_pct": 12.3,
+   "rel_volume": 4.1,
+   "entry": 10.485,
+   "exit": null
+  },
+  {
+   "date": "2026-11-03",
+   "time": "09:36",
+   "symbol": "FN",
+   "currency": "USD",
+   "change_pct": 14.2,
+   "rel_volume": 11.6,
+   "entry": 358.9,
+   "exit": null
+  },
+  {
+   "date": "2026-11-03",
+   "time": "09:36",
+   "symbol": "NBIX",
+   "currency": "USD",
+   "change_pct": 12.4,
+   "rel_volume": 13.9,
+   "entry": 163.34,
+   "exit": null
+  },
+  {
+   "date": "2026-11-03",
+   "time": "09:36",
+   "symbol": "LSCC",
+   "currency": "USD",
+   "change_pct": 13.6,
+   "rel_volume": 30.4,
+   "entry": 108.425,
+   "exit": null
+  },
+  {
+   "date": "2026-11-03",
+   "time": "09:36",
+   "symbol": "RVTY",
+   "currency": "USD",
+   "change_pct": 12.1,
+   "rel_volume": 8.7,
+   "entry": 169.9,
+   "exit": null
+  },
+  {
+   "date": "2026-11-03",
+   "time": "09:36",
+   "symbol": "BETA",
+   "currency": "USD",
+   "change_pct": 13.3,
+   "rel_volume": 5.7,
+   "entry": 23.09,
+   "exit": null
+  },
+  {
+   "date": "2026-11-03",
+   "time": "09:36",
+   "symbol": "AEIS",
+   "currency": "USD",
+   "change_pct": 11.0,
+   "rel_volume": 8.3,
+   "entry": 241.0,
+   "exit": null
+  },
+  {
+   "date": "2026-11-03",
+   "time": "09:36",
+   "symbol": "BE",
+   "currency": "USD",
+   "change_pct": 8.8,
+   "rel_volume": 7.2,
+   "entry": 213.6119,
+   "exit": null
+  },
+  {
+   "date": "2026-11-03",
+   "time": "09:36",
+   "symbol": "DD",
+   "currency": "USD",
+   "change_pct": 8.5,
+   "rel_volume": 7.7,
+   "entry": 153.45,
+   "exit": null
+  },
+  {
+   "date": "2026-11-03",
+   "time": "09:36",
+   "symbol": "TAC",
+   "currency": "USD",
+   "change_pct": 7.4,
+   "rel_volume": 5.0,
+   "entry": 13.69,
+   "exit": null
+  },
+  {
+   "date": "2026-11-03",
+   "time": "09:36",
+   "symbol": "LBTYA",
+   "currency": "USD",
+   "change_pct": 7.0,
+   "rel_volume": 5.6,
+   "entry": 8.69,
+   "exit": null
+  },
+  {
+   "date": "2026-11-03",
+   "time": "09:36",
+   "symbol": "ALAB",
+   "currency": "USD",
+   "change_pct": 7.6,
+   "rel_volume": 4.0,
+   "entry": 247.045,
+   "exit": null
+  },
+  {
+   "date": "2026-11-03",
+   "time": "09:36",
+   "symbol": "PENG",
+   "currency": "USD",
+   "change_pct": 7.8,
+   "rel_volume": 6.8,
+   "entry": 51.1994,
+   "exit": null
+  },
+  {
+   "date": "2026-11-03",
+   "time": "09:36",
+   "symbol": "JAZZ",
+   "currency": "USD",
+   "change_pct": 5.4,
+   "rel_volume": 5.5,
+   "entry": 226.0098,
+   "exit": null
+  },
+  {
+   "date": "2026-11-03",
+   "time": "09:36",
+   "symbol": "SNDK",
+   "currency": "USD",
+   "change_pct": 6.5,
+   "rel_volume": 6.1,
+   "entry": 1144.53,
+   "exit": null
+  },
+  {
+   "date": "2026-11-03",
+   "time": "09:36",
+   "symbol": "TLN",
+   "currency": "USD",
+   "change_pct": 7.2,
+   "rel_volume": 4.3,
+   "entry": 356.815,
+   "exit": null
+  },
+  {
+   "date": "2026-11-03",
+   "time": "09:36",
+   "symbol": "ETN",
+   "currency": "USD",
+   "change_pct": 5.3,
+   "rel_volume": 4.5,
+   "entry": 385.475,
+   "exit": null
+  },
+  {
+   "date": "2026-11-03",
+   "time": "09:36",
+   "symbol": "GEV",
+   "currency": "USD",
+   "change_pct": 5.7,
+   "rel_volume": 8.0,
+   "entry": 911.25,
+   "exit": null
+  },
+  {
+   "date": "2026-11-03",
+   "time": "09:36",
+   "symbol": "IREN",
+   "currency": "USD",
+   "change_pct": 4.9,
+   "rel_volume": 6.1,
+   "entry": 23.099,
+   "exit": null
+  },
+  {
+   "date": "2026-11-03",
+   "time": "09:36",
+   "symbol": "CMPS",
+   "currency": "USD",
+   "change_pct": 9.5,
+   "rel_volume": 25.5,
+   "entry": 9.2052,
+   "exit": null
+  },
+  {
+   "date": "2026-11-03",
+   "time": "09:36",
+   "symbol": "ISSC",
+   "currency": "USD",
+   "change_pct": 7.7,
+   "rel_volume": 54.9,
+   "entry": 24.78,
+   "exit": null
+  },
+  {
+   "date": "2026-11-03",
+   "time": "09:36",
+   "symbol": "GRAB",
+   "currency": "USD",
+   "change_pct": 14.0,
+   "rel_volume": 20.0,
+   "entry": 3.26,
+   "exit": null
+  },
+  {
+   "date": "2026-11-03",
+   "time": "09:38",
+   "symbol": "RRX",
+   "currency": "USD",
+   "change_pct": 8.2,
+   "rel_volume": 4.1,
+   "entry": 174.17,
+   "exit": null
+  },
+  {
+   "date": "2026-11-03",
+   "time": "09:38",
+   "symbol": "CIFR",
+   "currency": "USD",
+   "change_pct": 6.6,
+   "rel_volume": 4.2,
+   "entry": 7.315,
+   "exit": null
+  },
+  {
+   "date": "2026-11-03",
+   "time": "09:38",
+   "symbol": "PTCT",
+   "currency": "USD",
+   "change_pct": 6.7,
+   "rel_volume": 11.4,
+   "entry": 64.98,
+   "exit": null
+  },
+  {
+   "date": "2026-11-03",
+   "time": "09:38",
+   "symbol": "RSI",
+   "currency": "USD",
+   "change_pct": 7.1,
+   "rel_volume": 4.1,
+   "entry": 12.2,
+   "exit": null
+  },
+  {
+   "date": "2026-11-03",
+   "time": "09:38",
+   "symbol": "REPL",
+   "currency": "USD",
+   "change_pct": 6.6,
+   "rel_volume": 6.3,
+   "entry": 20.77,
+   "exit": null
+  },
+  {
+   "date": "2026-11-03",
+   "time": "09:38",
+   "symbol": "LUNG",
+   "currency": "USD",
+   "change_pct": 7.0,
+   "rel_volume": 4.1,
+   "entry": 2.76,
+   "exit": null
+  },
+  {
+   "date": "2026-11-03",
+   "time": "09:38",
+   "symbol": "CVGI",
+   "currency": "USD",
+   "change_pct": 12.9,
+   "rel_volume": 16.6,
+   "entry": 3.58,
+   "exit": null
+  },
+  {
+   "date": "2026-11-03",
+   "time": "09:40",
+   "symbol": "SNDX",
+   "currency": "USD",
+   "change_pct": 6.2,
+   "rel_volume": 5.8,
+   "entry": 13.91,
+   "exit": null
+  },
+  {
+   "date": "2026-11-03",
+   "time": "09:44",
+   "symbol": "FISV",
+   "currency": "USD",
+   "change_pct": 9.1,
+   "rel_volume": 9.0,
+   "entry": 56.66,
+   "exit": null
+  },
+  {
+   "date": "2026-11-03",
+   "time": "09:44",
+   "symbol": "STRL",
+   "currency": "USD",
+   "change_pct": 6.6,
+   "rel_volume": 4.0,
+   "entry": 357.46,
+   "exit": null
+  },
+  {
+   "date": "2026-11-03",
+   "time": "09:44",
+   "symbol": "AXTI",
+   "currency": "USD",
+   "change_pct": 7.2,
+   "rel_volume": 5.5,
+   "entry": 51.66,
+   "exit": null
+  },
+  {
+   "date": "2026-11-03",
+   "time": "09:44",
+   "symbol": "EBS",
+   "currency": "USD",
+   "change_pct": 9.5,
+   "rel_volume": 9.2,
+   "entry": 7.0361,
+   "exit": null
+  },
+  {
+   "date": "2026-11-03",
+   "time": "09:46",
+   "symbol": "XTND",
+   "currency": "USD",
+   "change_pct": 7.6,
+   "rel_volume": 4.1,
+   "entry": 1.3991,
+   "exit": null
+  },
+  {
+   "date": "2026-11-03",
+   "time": "09:46",
+   "symbol": "INTC",
+   "currency": "USD",
+   "change_pct": 4.2,
+   "rel_volume": 4.8,
+   "entry": 62.46,
+   "exit": null
+  },
+  {
+   "date": "2026-11-03",
+   "time": "09:46",
+   "symbol": "ORCL",
+   "currency": "USD",
+   "change_pct": 4.0,
+   "rel_volume": 14.1,
+   "entry": 123.875,
+   "exit": null
+  },
+  {
+   "date": "2026-11-03",
+   "time": "09:48",
+   "symbol": "OPRA",
+   "currency": "USD",
+   "change_pct": 5.7,
+   "rel_volume": 6.0,
+   "entry": 15.65,
+   "exit": null
+  },
+  {
+   "date": "2026-11-03",
+   "time": "09:50",
+   "symbol": "SITM",
+   "currency": "USD",
+   "change_pct": 6.8,
+   "rel_volume": 4.4,
+   "entry": 446.25,
+   "exit": null
+  },
+  {
+   "date": "2026-11-03",
+   "time": "09:50",
+   "symbol": "AMD",
+   "currency": "USD",
+   "change_pct": 5.3,
+   "rel_volume": 4.6,
+   "entry": 491.73,
+   "exit": null
+  },
+  {
+   "date": "2026-11-03",
+   "time": "09:54",
+   "symbol": "TLRY",
+   "currency": "USD",
+   "change_pct": 5.7,
+   "rel_volume": 4.8,
+   "entry": 2.695,
+   "exit": null
+  },
+  {
+   "date": "2026-11-03",
+   "time": "10:24",
+   "symbol": "AHRT",
+   "currency": "USD",
+   "change_pct": 5.5,
+   "rel_volume": 4.1,
+   "entry": 6.755,
+   "exit": null
+  },
+  {
+   "date": "2026-11-03",
+   "time": "10:46",
+   "symbol": "UPWK",
+   "currency": "USD",
+   "change_pct": 4.4,
+   "rel_volume": 5.0,
+   "entry": 10.15,
+   "exit": null
+  }
+ ]
 }
