@@ -1,12 +1,12 @@
 {
- "equity": 102.7801,
+ "equity": 102.7545,
  "day": "2026-11-03",
  "day_state": {
   "BTCC-B.TO": {
    "position": null,
    "entries": 0,
    "orb_used": false,
-   "prev_close_below_vwap": true
+   "prev_close_below_vwap": false
   },
   "BTCX-B.TO": {
    "position": null,
@@ -39,17 +39,7 @@
    "prev_close_below_vwap": true
   },
   "TSLA.NE": {
-   "position": {
-    "setup": "Retour vers le VWAP",
-    "entry": 34.2599983215332,
-    "t": "2026-11-03T12:30:18-05:00",
-    "stop": 33.57,
-    "t1": 34.62,
-    "t2": 34.62,
-    "t1_done": false,
-    "vwap": 34.62,
-    "or_high": 35.040000915527344
-   },
+   "position": null,
    "entries": 1,
    "orb_used": false,
    "prev_close_below_vwap": true
@@ -68,15 +58,15 @@
   }
  },
  "last_bar": {
-  "BTCC-B.TO": "2026-11-03T14:15:00-05:00",
-  "BTCX-B.TO": "2026-11-03T14:11:29-05:00",
-  "FBTC.TO": "2026-11-03T14:15:08-05:00",
-  "SU.TO": "2026-11-03T14:15:00-05:00",
-  "ENB.TO": "2026-11-03T14:15:00-05:00",
-  "CNQ.TO": "2026-11-03T14:15:00-05:00",
-  "TSLA.NE": "2026-11-03T14:14:40-05:00",
-  "MSFT.NE": "2026-11-03T13:52:42-05:00",
-  "AMZN.NE": "2026-11-03T14:16:29-05:00"
+  "BTCC-B.TO": "2026-11-03T15:55:00-05:00",
+  "BTCX-B.TO": "2026-11-03T15:55:00-05:00",
+  "FBTC.TO": "2026-11-03T15:55:00-05:00",
+  "SU.TO": "2026-11-03T15:55:00-05:00",
+  "ENB.TO": "2026-11-03T15:55:00-05:00",
+  "CNQ.TO": "2026-11-03T15:55:00-05:00",
+  "TSLA.NE": "2026-11-03T15:55:00-05:00",
+  "MSFT.NE": "2026-11-03T15:55:00-05:00",
+  "AMZN.NE": "2026-11-03T15:55:00-05:00"
  },
  "journal": [
   {
@@ -108,6 +98,16 @@
    "reason": "stop",
    "ret_pct": -2.189,
    "alert_sent": true
+  },
+  {
+   "date": "2026-11-03",
+   "ticker": "TSLA.NE",
+   "setup": "Retour vers le VWAP",
+   "entry": 34.2599983215332,
+   "exit": 34.31999969482422,
+   "reason": "fin_de_seance",
+   "ret_pct": -0.025,
+   "alert_sent": true
   }
  ],
  "summary_sent": null,
@@ -121,7 +121,9 @@
    "change_pct": 12.3,
    "rel_volume": 4.1,
    "entry": 10.485,
-   "exit": null
+   "exit": 11.315,
+   "reason": "fin_de_seance",
+   "ret_pct": 4.72
   },
   {
    "date": "2026-11-03",
@@ -131,7 +133,9 @@
    "change_pct": 14.2,
    "rel_volume": 11.6,
    "entry": 358.9,
-   "exit": null
+   "exit": 359.76,
+   "reason": "fin_de_seance",
+   "ret_pct": -2.96
   },
   {
    "date": "2026-11-03",
@@ -141,7 +145,9 @@
    "change_pct": 12.4,
    "rel_volume": 13.9,
    "entry": 163.34,
-   "exit": null
+   "exit": 165.36,
+   "reason": "fin_de_seance",
+   "ret_pct": -1.96
   },
   {
    "date": "2026-11-03",
@@ -151,7 +157,9 @@
    "change_pct": 13.6,
    "rel_volume": 30.4,
    "entry": 108.425,
-   "exit": null
+   "exit": 105.75,
+   "reason": "fin_de_seance",
+   "ret_pct": -5.67
   },
   {
    "date": "2026-11-03",
@@ -161,7 +169,9 @@
    "change_pct": 12.1,
    "rel_volume": 8.7,
    "entry": 169.9,
-   "exit": null
+   "exit": 164.43,
+   "reason": "fin_de_seance",
+   "ret_pct": -6.42
   },
   {
    "date": "2026-11-03",
@@ -171,7 +181,9 @@
    "change_pct": 13.3,
    "rel_volume": 5.7,
    "entry": 23.09,
-   "exit": null
+   "exit": 23.515,
+   "reason": "fin_de_seance",
+   "ret_pct": -1.36
   },
   {
    "date": "2026-11-03",
@@ -181,7 +193,9 @@
    "change_pct": 11.0,
    "rel_volume": 8.3,
    "entry": 241.0,
-   "exit": null
+   "exit": 237.75,
+   "reason": "fin_de_seance",
+   "ret_pct": -4.55
   },
   {
    "date": "2026-11-03",
@@ -191,7 +205,9 @@
    "change_pct": 8.8,
    "rel_volume": 7.2,
    "entry": 213.6119,
-   "exit": null
+   "exit": 213.4425,
+   "reason": "fin_de_seance",
+   "ret_pct": -3.28
   },
   {
    "date": "2026-11-03",
@@ -201,7 +217,9 @@
    "change_pct": 8.5,
    "rel_volume": 7.7,
    "entry": 153.45,
-   "exit": null
+   "exit": 152.96,
+   "reason": "fin_de_seance",
+   "ret_pct": -3.52
   },
   {
    "date": "2026-11-03",
@@ -211,7 +229,9 @@
    "change_pct": 7.4,
    "rel_volume": 5.0,
    "entry": 13.69,
-   "exit": null
+   "exit": 13.265,
+   "reason": "fin_de_seance",
+   "ret_pct": -6.3
   },
   {
    "date": "2026-11-03",
@@ -221,7 +241,9 @@
    "change_pct": 7.0,
    "rel_volume": 5.6,
    "entry": 8.69,
-   "exit": null
+   "exit": 8.645,
+   "reason": "fin_de_seance",
+   "ret_pct": -3.72
   },
   {
    "date": "2026-11-03",
@@ -231,7 +253,9 @@
    "change_pct": 7.6,
    "rel_volume": 4.0,
    "entry": 247.045,
-   "exit": null
+   "exit": 231.84,
+   "reason": "fin_de_seance",
+   "ret_pct": -9.35
   },
   {
    "date": "2026-11-03",
@@ -241,7 +265,9 @@
    "change_pct": 7.8,
    "rel_volume": 6.8,
    "entry": 51.1994,
-   "exit": null
+   "exit": 53.23,
+   "reason": "fin_de_seance",
+   "ret_pct": 0.77
   },
   {
    "date": "2026-11-03",
@@ -251,7 +277,9 @@
    "change_pct": 5.4,
    "rel_volume": 5.5,
    "entry": 226.0098,
-   "exit": null
+   "exit": 229.285,
+   "reason": "fin_de_seance",
+   "ret_pct": -1.75
   },
   {
    "date": "2026-11-03",
@@ -261,7 +289,9 @@
    "change_pct": 6.5,
    "rel_volume": 6.1,
    "entry": 1144.53,
-   "exit": null
+   "exit": 1123.9584,
+   "reason": "fin_de_seance",
+   "ret_pct": -5.0
   },
   {
    "date": "2026-11-03",
@@ -271,7 +301,9 @@
    "change_pct": 7.2,
    "rel_volume": 4.3,
    "entry": 356.815,
-   "exit": null
+   "exit": 359.175,
+   "reason": "fin_de_seance",
+   "ret_pct": -2.54
   },
   {
    "date": "2026-11-03",
@@ -281,7 +313,9 @@
    "change_pct": 5.3,
    "rel_volume": 4.5,
    "entry": 385.475,
-   "exit": null
+   "exit": 391.735,
+   "reason": "fin_de_seance",
+   "ret_pct": -1.58
   },
   {
    "date": "2026-11-03",
@@ -291,7 +325,9 @@
    "change_pct": 5.7,
    "rel_volume": 8.0,
    "entry": 911.25,
-   "exit": null
+   "exit": 916.365,
+   "reason": "fin_de_seance",
+   "ret_pct": -2.64
   },
   {
    "date": "2026-11-03",
@@ -301,7 +337,9 @@
    "change_pct": 4.9,
    "rel_volume": 6.1,
    "entry": 23.099,
-   "exit": null
+   "exit": 24.405,
+   "reason": "fin_de_seance",
+   "ret_pct": 2.45
   },
   {
    "date": "2026-11-03",
@@ -311,7 +349,9 @@
    "change_pct": 9.5,
    "rel_volume": 25.5,
    "entry": 9.2052,
-   "exit": null
+   "exit": 8.64,
+   "reason": "fin_de_seance",
+   "ret_pct": -9.34
   },
   {
    "date": "2026-11-03",
@@ -331,7 +371,9 @@
    "change_pct": 14.0,
    "rel_volume": 20.0,
    "entry": 3.26,
-   "exit": null
+   "exit": 3.115,
+   "reason": "fin_de_seance",
+   "ret_pct": -7.65
   },
   {
    "date": "2026-11-03",
@@ -341,7 +383,9 @@
    "change_pct": 8.2,
    "rel_volume": 4.1,
    "entry": 174.17,
-   "exit": null
+   "exit": 177.98,
+   "reason": "fin_de_seance",
+   "ret_pct": -1.01
   },
   {
    "date": "2026-11-03",
@@ -351,7 +395,9 @@
    "change_pct": 6.6,
    "rel_volume": 4.2,
    "entry": 7.315,
-   "exit": null
+   "exit": 8.065,
+   "reason": "fin_de_seance",
+   "ret_pct": 7.05
   },
   {
    "date": "2026-11-03",
@@ -361,7 +407,9 @@
    "change_pct": 6.7,
    "rel_volume": 11.4,
    "entry": 64.98,
-   "exit": null
+   "exit": 67.91,
+   "reason": "fin_de_seance",
+   "ret_pct": 1.31
   },
   {
    "date": "2026-11-03",
@@ -371,7 +419,9 @@
    "change_pct": 7.1,
    "rel_volume": 4.1,
    "entry": 12.2,
-   "exit": null
+   "exit": 12.575,
+   "reason": "fin_de_seance",
+   "ret_pct": -0.13
   },
   {
    "date": "2026-11-03",
@@ -381,7 +431,9 @@
    "change_pct": 6.6,
    "rel_volume": 6.3,
    "entry": 20.77,
-   "exit": null
+   "exit": 20.68,
+   "reason": "fin_de_seance",
+   "ret_pct": -3.63
   },
   {
    "date": "2026-11-03",
@@ -391,7 +443,9 @@
    "change_pct": 7.0,
    "rel_volume": 4.1,
    "entry": 2.76,
-   "exit": null
+   "exit": 2.68,
+   "reason": "fin_de_seance",
+   "ret_pct": -6.1
   },
   {
    "date": "2026-11-03",
@@ -401,7 +455,9 @@
    "change_pct": 12.9,
    "rel_volume": 16.6,
    "entry": 3.58,
-   "exit": null
+   "exit": 3.33,
+   "reason": "fin_de_seance",
+   "ret_pct": -10.18
   },
   {
    "date": "2026-11-03",
@@ -411,7 +467,9 @@
    "change_pct": 6.2,
    "rel_volume": 5.8,
    "entry": 13.91,
-   "exit": null
+   "exit": 14.215,
+   "reason": "fin_de_seance",
+   "ret_pct": -1.01
   },
   {
    "date": "2026-11-03",
@@ -421,7 +479,9 @@
    "change_pct": 9.1,
    "rel_volume": 9.0,
    "entry": 56.66,
-   "exit": null
+   "exit": 58.09,
+   "reason": "fin_de_seance",
+   "ret_pct": -0.68
   },
   {
    "date": "2026-11-03",
@@ -431,7 +491,9 @@
    "change_pct": 6.6,
    "rel_volume": 4.0,
    "entry": 357.46,
-   "exit": null
+   "exit": 359.71,
+   "reason": "fin_de_seance",
+   "ret_pct": -2.57
   },
   {
    "date": "2026-11-03",
@@ -441,7 +503,9 @@
    "change_pct": 7.2,
    "rel_volume": 5.5,
    "entry": 51.66,
-   "exit": null
+   "exit": 51.515,
+   "reason": "fin_de_seance",
+   "ret_pct": -3.48
   },
   {
    "date": "2026-11-03",
@@ -451,7 +515,9 @@
    "change_pct": 9.5,
    "rel_volume": 9.2,
    "entry": 7.0361,
-   "exit": null
+   "exit": 6.3325,
+   "reason": "stop",
+   "ret_pct": -13.2
   },
   {
    "date": "2026-11-03",
@@ -461,7 +527,9 @@
    "change_pct": 7.6,
    "rel_volume": 4.1,
    "entry": 1.3991,
-   "exit": null
+   "exit": 1.7489,
+   "reason": "objectif",
+   "ret_pct": 21.8
   },
   {
    "date": "2026-11-03",
@@ -471,7 +539,9 @@
    "change_pct": 4.2,
    "rel_volume": 4.8,
    "entry": 62.46,
-   "exit": null
+   "exit": 60.405,
+   "reason": "fin_de_seance",
+   "ret_pct": -6.49
   },
   {
    "date": "2026-11-03",
@@ -481,7 +551,9 @@
    "change_pct": 4.0,
    "rel_volume": 14.1,
    "entry": 123.875,
-   "exit": null
+   "exit": 126.38,
+   "reason": "fin_de_seance",
+   "ret_pct": -1.18
   },
   {
    "date": "2026-11-03",
@@ -491,7 +563,9 @@
    "change_pct": 5.7,
    "rel_volume": 6.0,
    "entry": 15.65,
-   "exit": null
+   "exit": 15.46,
+   "reason": "fin_de_seance",
+   "ret_pct": -4.41
   },
   {
    "date": "2026-11-03",
@@ -501,7 +575,9 @@
    "change_pct": 6.8,
    "rel_volume": 4.4,
    "entry": 446.25,
-   "exit": null
+   "exit": 444.33,
+   "reason": "fin_de_seance",
+   "ret_pct": -3.63
   },
   {
    "date": "2026-11-03",
@@ -511,7 +587,9 @@
    "change_pct": 5.3,
    "rel_volume": 4.6,
    "entry": 491.73,
-   "exit": null
+   "exit": 484.86,
+   "reason": "fin_de_seance",
+   "ret_pct": -4.6
   },
   {
    "date": "2026-11-03",
@@ -521,7 +599,9 @@
    "change_pct": 5.7,
    "rel_volume": 4.8,
    "entry": 2.695,
-   "exit": null
+   "exit": 2.66,
+   "reason": "fin_de_seance",
+   "ret_pct": -4.5
   },
   {
    "date": "2026-11-03",
@@ -531,7 +611,9 @@
    "change_pct": 5.5,
    "rel_volume": 4.1,
    "entry": 6.755,
-   "exit": null
+   "exit": 6.565,
+   "reason": "fin_de_seance",
+   "ret_pct": -6.01
   },
   {
    "date": "2026-11-03",
@@ -541,7 +623,9 @@
    "change_pct": 4.4,
    "rel_volume": 5.0,
    "entry": 10.15,
-   "exit": null
+   "exit": 10.075,
+   "reason": "fin_de_seance",
+   "ret_pct": -3.94
   }
  ]
 }
