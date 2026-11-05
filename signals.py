@@ -298,6 +298,9 @@ def early_score(q, now):
     avg = q.get("averageDailyVolume3Month") or q.get("averageDailyVolume10Day") or 0
     if not avg or price < CFG["scan_min_price"] or avg < CFG["scan_min_avg_volume"]:
         return None
+    ts = q.get("regularMarketTime")
+    if isinstance(ts, (int, float)) and now.timestamp() - ts > 900:
+        return None  # cotation figée (titre suspendu ou données périmées)
     rel = q.get("regularMarketVolume", 0) / (avg * session_fraction(now))
     if not CFG["scan_min_change_pct"] <= chg <= CFG["scan_max_change_pct"]:
         return None  # trop peu, ou déjà explosé : trop tard
