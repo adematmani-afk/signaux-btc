@@ -1,24 +1,24 @@
 {
- "equity": 98.8058,
- "day": "2026-11-05",
+ "equity": 99.6582,
+ "day": "2026-11-06",
  "day_state": {
   "BTCC-B.TO": {
    "position": null,
    "entries": 1,
    "orb_used": false,
-   "prev_close_below_vwap": true
+   "prev_close_below_vwap": false
   },
   "BTCX-B.TO": {
    "position": null,
-   "entries": 1,
+   "entries": 0,
    "orb_used": false,
-   "prev_close_below_vwap": true
+   "prev_close_below_vwap": false
   },
   "FBTC.TO": {
    "position": null,
    "entries": 0,
    "orb_used": false,
-   "prev_close_below_vwap": true
+   "prev_close_below_vwap": false
   },
   "SU.TO": {
    "position": null,
@@ -30,7 +30,7 @@
    "position": null,
    "entries": 0,
    "orb_used": false,
-   "prev_close_below_vwap": true
+   "prev_close_below_vwap": false
   },
   "CNQ.TO": {
    "position": null,
@@ -42,13 +42,13 @@
    "position": null,
    "entries": 0,
    "orb_used": false,
-   "prev_close_below_vwap": true
+   "prev_close_below_vwap": false
   },
   "MSFT.NE": {
    "position": null,
    "entries": 0,
    "orb_used": false,
-   "prev_close_below_vwap": true
+   "prev_close_below_vwap": false
   },
   "AMZN.NE": {
    "position": null,
@@ -58,15 +58,15 @@
   }
  },
  "last_bar": {
-  "BTCC-B.TO": "2026-11-05T15:55:00-05:00",
-  "FBTC.TO": "2026-11-05T15:55:00-05:00",
-  "SU.TO": "2026-11-05T15:55:00-05:00",
-  "ENB.TO": "2026-11-05T15:55:00-05:00",
-  "CNQ.TO": "2026-11-05T15:55:00-05:00",
-  "TSLA.NE": "2026-11-05T15:55:00-05:00",
-  "MSFT.NE": "2026-11-05T15:55:00-05:00",
-  "AMZN.NE": "2026-11-05T15:55:00-05:00",
-  "BTCX-B.TO": "2026-11-05T15:55:00-05:00"
+  "BTCC-B.TO": "2026-11-06T14:15:00-05:00",
+  "BTCX-B.TO": "2026-11-06T14:15:00-05:00",
+  "FBTC.TO": "2026-11-06T14:05:47-05:00",
+  "SU.TO": "2026-11-06T14:15:00-05:00",
+  "ENB.TO": "2026-11-06T14:15:00-05:00",
+  "CNQ.TO": "2026-11-06T14:15:00-05:00",
+  "TSLA.NE": "2026-11-06T14:14:05-05:00",
+  "MSFT.NE": "2026-11-06T14:14:53-05:00",
+  "AMZN.NE": "2026-11-06T14:14:33-05:00"
  },
  "journal": [
   {
@@ -147,6 +147,16 @@
    "exit": 15.5,
    "reason": "fin_de_seance",
    "ret_pct": -0.2,
+   "alert_sent": true
+  },
+  {
+   "date": "2026-11-06",
+   "ticker": "BTCC-B.TO",
+   "setup": "Retour vers le VWAP",
+   "entry": 14.585000038146973,
+   "exit": 14.74,
+   "reason": "t2",
+   "ret_pct": 0.863,
    "alert_sent": true
   }
  ],
@@ -2393,6 +2403,765 @@
    "alerted": false,
    "reason": "fin_de_seance",
    "ret_pct": -4.02
+  },
+  {
+   "date": "2026-11-06",
+   "time": "09:36",
+   "symbol": "NET",
+   "currency": "USD",
+   "change_pct": 9.5,
+   "rel_volume": 19.6,
+   "entry": 268.5302,
+   "exit": null,
+   "alerted": true
+  },
+  {
+   "date": "2026-11-06",
+   "time": "09:36",
+   "symbol": "NVDA",
+   "currency": "USD",
+   "change_pct": 5.9,
+   "rel_volume": 11.7,
+   "entry": 192.385,
+   "exit": null,
+   "alerted": true
+  },
+  {
+   "date": "2026-11-06",
+   "time": "09:36",
+   "symbol": "HIMX",
+   "currency": "USD",
+   "change_pct": 4.8,
+   "rel_volume": 10.4,
+   "entry": 8.05,
+   "exit": null,
+   "alerted": true
+  },
+  {
+   "date": "2026-11-06",
+   "time": "09:36",
+   "symbol": "INTC",
+   "currency": "USD",
+   "change_pct": 6.0,
+   "rel_volume": 10.2,
+   "entry": 55.38,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-06",
+   "time": "09:36",
+   "symbol": "HNST",
+   "currency": "USD",
+   "change_pct": 7.4,
+   "rel_volume": 9.6,
+   "entry": 4.77,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-06",
+   "time": "09:36",
+   "symbol": "VST",
+   "currency": "USD",
+   "change_pct": 5.6,
+   "rel_volume": 9.1,
+   "entry": 119.31,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-06",
+   "time": "09:36",
+   "symbol": "AMPH",
+   "currency": "USD",
+   "change_pct": 10.9,
+   "rel_volume": 8.6,
+   "entry": 30.675,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-06",
+   "time": "09:36",
+   "symbol": "KRMN",
+   "currency": "USD",
+   "change_pct": 7.8,
+   "rel_volume": 7.9,
+   "entry": 34.595,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-06",
+   "time": "09:36",
+   "symbol": "AEVA",
+   "currency": "USD",
+   "change_pct": 8.2,
+   "rel_volume": 7.7,
+   "entry": 9.95,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-06",
+   "time": "09:36",
+   "symbol": "SSP",
+   "currency": "USD",
+   "change_pct": 8.1,
+   "rel_volume": 7.5,
+   "entry": 3.19,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-06",
+   "time": "09:36",
+   "symbol": "IRWD",
+   "currency": "USD",
+   "change_pct": 7.8,
+   "rel_volume": 6.7,
+   "entry": 4.345,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-06",
+   "time": "09:36",
+   "symbol": "HSAI",
+   "currency": "USD",
+   "change_pct": 7.6,
+   "rel_volume": 6.6,
+   "entry": 13.81,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-06",
+   "time": "09:36",
+   "symbol": "SLVM",
+   "currency": "USD",
+   "change_pct": 13.2,
+   "rel_volume": 6.6,
+   "entry": 37.46,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-06",
+   "time": "09:36",
+   "symbol": "ACRE",
+   "currency": "USD",
+   "change_pct": 7.7,
+   "rel_volume": 6.6,
+   "entry": 3.675,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-06",
+   "time": "09:36",
+   "symbol": "XERS",
+   "currency": "USD",
+   "change_pct": 5.8,
+   "rel_volume": 5.9,
+   "entry": 13.8396,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-06",
+   "time": "09:36",
+   "symbol": "ZLAB",
+   "currency": "USD",
+   "change_pct": 6.7,
+   "rel_volume": 5.8,
+   "entry": 24.12,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-06",
+   "time": "09:36",
+   "symbol": "RVMD",
+   "currency": "USD",
+   "change_pct": 5.0,
+   "rel_volume": 5.2,
+   "entry": 186.59,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-06",
+   "time": "09:36",
+   "symbol": "ATEN",
+   "currency": "USD",
+   "change_pct": 10.5,
+   "rel_volume": 5.0,
+   "entry": 24.975,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-06",
+   "time": "09:36",
+   "symbol": "FIP",
+   "currency": "USD",
+   "change_pct": 7.5,
+   "rel_volume": 4.9,
+   "entry": 3.16,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-06",
+   "time": "09:36",
+   "symbol": "GCTS",
+   "currency": "USD",
+   "change_pct": 9.7,
+   "rel_volume": 4.5,
+   "entry": 1.135,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-06",
+   "time": "09:36",
+   "symbol": "KLIC",
+   "currency": "USD",
+   "change_pct": 7.9,
+   "rel_volume": 4.2,
+   "entry": 64.57,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-06",
+   "time": "09:38",
+   "symbol": "AMD",
+   "currency": "USD",
+   "change_pct": 10.1,
+   "rel_volume": 14.0,
+   "entry": 445.1675,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-06",
+   "time": "09:38",
+   "symbol": "NBIS",
+   "currency": "USD",
+   "change_pct": 8.7,
+   "rel_volume": 9.1,
+   "entry": 130.8482,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-06",
+   "time": "09:38",
+   "symbol": "OUST",
+   "currency": "USD",
+   "change_pct": 8.4,
+   "rel_volume": 7.3,
+   "entry": 33.075,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-06",
+   "time": "09:38",
+   "symbol": "LAES",
+   "currency": "USD",
+   "change_pct": 4.9,
+   "rel_volume": 5.2,
+   "entry": 1.2902,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-06",
+   "time": "09:38",
+   "symbol": "RC",
+   "currency": "USD",
+   "change_pct": 11.6,
+   "rel_volume": 4.1,
+   "entry": 1.205,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-06",
+   "time": "09:40",
+   "symbol": "MU",
+   "currency": "USD",
+   "change_pct": 8.1,
+   "rel_volume": 11.0,
+   "entry": 709.2246,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-06",
+   "time": "09:40",
+   "symbol": "COHR",
+   "currency": "USD",
+   "change_pct": 9.4,
+   "rel_volume": 8.4,
+   "entry": 185.66,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-06",
+   "time": "09:40",
+   "symbol": "IONQ",
+   "currency": "USD",
+   "change_pct": 10.1,
+   "rel_volume": 7.9,
+   "entry": 29.15,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-06",
+   "time": "09:40",
+   "symbol": "SMCI",
+   "currency": "USD",
+   "change_pct": 7.3,
+   "rel_volume": 7.4,
+   "entry": 29.06,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-06",
+   "time": "09:40",
+   "symbol": "SPCX",
+   "currency": "USD",
+   "change_pct": 6.3,
+   "rel_volume": 6.7,
+   "entry": 131.375,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-06",
+   "time": "09:40",
+   "symbol": "PENG",
+   "currency": "USD",
+   "change_pct": 12.7,
+   "rel_volume": 5.6,
+   "entry": 41.96,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-06",
+   "time": "09:40",
+   "symbol": "LEU",
+   "currency": "USD",
+   "change_pct": 7.8,
+   "rel_volume": 5.6,
+   "entry": 96.075,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-06",
+   "time": "09:40",
+   "symbol": "FIX",
+   "currency": "USD",
+   "change_pct": 7.6,
+   "rel_volume": 5.4,
+   "entry": 1037.81,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-06",
+   "time": "09:40",
+   "symbol": "ICHR",
+   "currency": "USD",
+   "change_pct": 10.4,
+   "rel_volume": 4.3,
+   "entry": 30.94,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-06",
+   "time": "09:42",
+   "symbol": "FLY",
+   "currency": "USD",
+   "change_pct": 13.1,
+   "rel_volume": 13.5,
+   "entry": 17.1665,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-06",
+   "time": "09:42",
+   "symbol": "SKHY",
+   "currency": "USD",
+   "change_pct": 5.0,
+   "rel_volume": 9.8,
+   "entry": 130.075,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-06",
+   "time": "09:42",
+   "symbol": "CRDO",
+   "currency": "USD",
+   "change_pct": 11.9,
+   "rel_volume": 7.1,
+   "entry": 125.69,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-06",
+   "time": "09:42",
+   "symbol": "LITE",
+   "currency": "USD",
+   "change_pct": 8.7,
+   "rel_volume": 5.9,
+   "entry": 554.0018,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-06",
+   "time": "09:44",
+   "symbol": "AKAM",
+   "currency": "USD",
+   "change_pct": 8.1,
+   "rel_volume": 8.4,
+   "entry": 84.145,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-06",
+   "time": "09:44",
+   "symbol": "IESC",
+   "currency": "USD",
+   "change_pct": 9.1,
+   "rel_volume": 4.2,
+   "entry": 158.83,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-06",
+   "time": "09:46",
+   "symbol": "MBLY",
+   "currency": "USD",
+   "change_pct": 4.3,
+   "rel_volume": 27.4,
+   "entry": 5.35,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-06",
+   "time": "09:46",
+   "symbol": "AAOI",
+   "currency": "USD",
+   "change_pct": 9.7,
+   "rel_volume": 12.5,
+   "entry": 51.43,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-06",
+   "time": "09:46",
+   "symbol": "SNDK",
+   "currency": "USD",
+   "change_pct": 12.6,
+   "rel_volume": 9.3,
+   "entry": 907.968,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-06",
+   "time": "09:46",
+   "symbol": "HUT",
+   "currency": "USD",
+   "change_pct": 12.0,
+   "rel_volume": 7.8,
+   "entry": 51.45,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-06",
+   "time": "09:46",
+   "symbol": "RIOT",
+   "currency": "USD",
+   "change_pct": 8.1,
+   "rel_volume": 7.0,
+   "entry": 15.95,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-06",
+   "time": "09:46",
+   "symbol": "MRVL",
+   "currency": "USD",
+   "change_pct": 9.4,
+   "rel_volume": 6.9,
+   "entry": 146.08,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-06",
+   "time": "09:46",
+   "symbol": "BE",
+   "currency": "USD",
+   "change_pct": 10.9,
+   "rel_volume": 6.9,
+   "entry": 185.86,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-06",
+   "time": "09:46",
+   "symbol": "CRWV",
+   "currency": "USD",
+   "change_pct": 9.2,
+   "rel_volume": 6.6,
+   "entry": 47.6672,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-06",
+   "time": "09:46",
+   "symbol": "AXTI",
+   "currency": "USD",
+   "change_pct": 10.0,
+   "rel_volume": 5.9,
+   "entry": 40.3775,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-06",
+   "time": "09:46",
+   "symbol": "DELL",
+   "currency": "USD",
+   "change_pct": 10.2,
+   "rel_volume": 5.3,
+   "entry": 349.2,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-06",
+   "time": "09:46",
+   "symbol": "ASX",
+   "currency": "USD",
+   "change_pct": 9.2,
+   "rel_volume": 5.0,
+   "entry": 32.45,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-06",
+   "time": "09:46",
+   "symbol": "LBRT",
+   "currency": "USD",
+   "change_pct": 6.4,
+   "rel_volume": 4.7,
+   "entry": 12.08,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-06",
+   "time": "09:46",
+   "symbol": "CECO",
+   "currency": "USD",
+   "change_pct": 10.6,
+   "rel_volume": 4.5,
+   "entry": 41.655,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-06",
+   "time": "09:46",
+   "symbol": "CIEN",
+   "currency": "USD",
+   "change_pct": 10.3,
+   "rel_volume": 4.3,
+   "entry": 254.67,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-06",
+   "time": "09:46",
+   "symbol": "SEI",
+   "currency": "USD",
+   "change_pct": 8.9,
+   "rel_volume": 4.1,
+   "entry": 55.045,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-06",
+   "time": "09:46",
+   "symbol": "RDW",
+   "currency": "USD",
+   "change_pct": 7.4,
+   "rel_volume": 4.1,
+   "entry": 6.65,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-06",
+   "time": "09:48",
+   "symbol": "DDD",
+   "currency": "USD",
+   "change_pct": 5.1,
+   "rel_volume": 6.3,
+   "entry": 1.755,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-06",
+   "time": "09:50",
+   "symbol": "APLD",
+   "currency": "USD",
+   "change_pct": 9.5,
+   "rel_volume": 4.5,
+   "entry": 15.52,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-06",
+   "time": "09:52",
+   "symbol": "OKLO",
+   "currency": "USD",
+   "change_pct": 14.9,
+   "rel_volume": 6.8,
+   "entry": 22.07,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-06",
+   "time": "09:52",
+   "symbol": "FTAI",
+   "currency": "USD",
+   "change_pct": 8.6,
+   "rel_volume": 6.7,
+   "entry": 176.41,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-06",
+   "time": "09:54",
+   "symbol": "U",
+   "currency": "USD",
+   "change_pct": 6.5,
+   "rel_volume": 7.6,
+   "entry": 51.98,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-06",
+   "time": "10:04",
+   "symbol": "MNTN",
+   "currency": "USD",
+   "change_pct": 6.8,
+   "rel_volume": 4.7,
+   "entry": 5.0214,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-06",
+   "time": "10:06",
+   "symbol": "JKS",
+   "currency": "USD",
+   "change_pct": 7.5,
+   "rel_volume": 4.3,
+   "entry": 11.0588,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-06",
+   "time": "10:08",
+   "symbol": "FUN",
+   "currency": "USD",
+   "change_pct": 7.3,
+   "rel_volume": 4.3,
+   "entry": 9.91,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-06",
+   "time": "10:18",
+   "symbol": "TDS",
+   "currency": "USD",
+   "change_pct": 5.5,
+   "rel_volume": 4.4,
+   "entry": 34.15,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-06",
+   "time": "10:28",
+   "symbol": "EXTR",
+   "currency": "USD",
+   "change_pct": 14.4,
+   "rel_volume": 8.0,
+   "entry": 24.0799,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-06",
+   "time": "10:56",
+   "symbol": "ASTS",
+   "currency": "USD",
+   "change_pct": 4.2,
+   "rel_volume": 5.2,
+   "entry": 31.455,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-06",
+   "time": "11:18",
+   "symbol": "ARDT",
+   "currency": "USD",
+   "change_pct": 7.4,
+   "rel_volume": 5.7,
+   "entry": 17.07,
+   "exit": null,
+   "alerted": false
   }
  ]
 }
