@@ -42,31 +42,31 @@
    "position": null,
    "entries": 0,
    "orb_used": false,
-   "prev_close_below_vwap": false
+   "prev_close_below_vwap": true
   },
   "MSFT.NE": {
    "position": null,
    "entries": 0,
    "orb_used": false,
-   "prev_close_below_vwap": false
+   "prev_close_below_vwap": true
   },
   "AMZN.NE": {
    "position": null,
    "entries": 0,
    "orb_used": false,
-   "prev_close_below_vwap": false
+   "prev_close_below_vwap": true
   }
  },
  "last_bar": {
-  "BTCC-B.TO": "2026-11-06T14:15:00-05:00",
-  "BTCX-B.TO": "2026-11-06T14:15:00-05:00",
-  "FBTC.TO": "2026-11-06T14:05:47-05:00",
-  "SU.TO": "2026-11-06T14:15:00-05:00",
-  "ENB.TO": "2026-11-06T14:15:00-05:00",
-  "CNQ.TO": "2026-11-06T14:15:00-05:00",
-  "TSLA.NE": "2026-11-06T14:14:05-05:00",
-  "MSFT.NE": "2026-11-06T14:14:53-05:00",
-  "AMZN.NE": "2026-11-06T14:14:33-05:00"
+  "BTCC-B.TO": "2026-11-06T15:55:00-05:00",
+  "BTCX-B.TO": "2026-11-06T15:55:00-05:00",
+  "FBTC.TO": "2026-11-06T15:55:00-05:00",
+  "SU.TO": "2026-11-06T15:55:00-05:00",
+  "ENB.TO": "2026-11-06T15:55:00-05:00",
+  "CNQ.TO": "2026-11-06T15:55:00-05:00",
+  "TSLA.NE": "2026-11-06T15:55:00-05:00",
+  "MSFT.NE": "2026-11-06T15:55:00-05:00",
+  "AMZN.NE": "2026-11-06T15:55:00-05:00"
  },
  "journal": [
   {
@@ -2412,8 +2412,10 @@
    "change_pct": 9.5,
    "rel_volume": 19.6,
    "entry": 268.5302,
-   "exit": null,
-   "alerted": true
+   "exit": 268.495,
+   "alerted": true,
+   "reason": "fin_de_seance",
+   "ret_pct": -3.21
   },
   {
    "date": "2026-11-06",
@@ -2423,8 +2425,10 @@
    "change_pct": 5.9,
    "rel_volume": 11.7,
    "entry": 192.385,
-   "exit": null,
-   "alerted": true
+   "exit": 186.42,
+   "alerted": true,
+   "reason": "fin_de_seance",
+   "ret_pct": -6.3
   },
   {
    "date": "2026-11-06",
@@ -2434,8 +2438,10 @@
    "change_pct": 4.8,
    "rel_volume": 10.4,
    "entry": 8.05,
-   "exit": null,
-   "alerted": true
+   "exit": 8.45,
+   "alerted": true,
+   "reason": "fin_de_seance",
+   "ret_pct": 1.77
   },
   {
    "date": "2026-11-06",
@@ -2445,8 +2451,10 @@
    "change_pct": 6.0,
    "rel_volume": 10.2,
    "entry": 55.38,
-   "exit": null,
-   "alerted": false
+   "exit": 55.8,
+   "alerted": false,
+   "reason": "fin_de_seance",
+   "ret_pct": -2.44
   },
   {
    "date": "2026-11-06",
@@ -2456,8 +2464,10 @@
    "change_pct": 7.4,
    "rel_volume": 9.6,
    "entry": 4.77,
-   "exit": null,
-   "alerted": false
+   "exit": 4.625,
+   "alerted": false,
+   "reason": "fin_de_seance",
+   "ret_pct": -6.24
   },
   {
    "date": "2026-11-06",
@@ -2467,8 +2477,10 @@
    "change_pct": 5.6,
    "rel_volume": 9.1,
    "entry": 119.31,
-   "exit": null,
-   "alerted": false
+   "exit": 124.65,
+   "alerted": false,
+   "reason": "fin_de_seance",
+   "ret_pct": 1.28
   },
   {
    "date": "2026-11-06",
@@ -2478,8 +2490,10 @@
    "change_pct": 10.9,
    "rel_volume": 8.6,
    "entry": 30.675,
-   "exit": null,
-   "alerted": false
+   "exit": 28.535,
+   "alerted": false,
+   "reason": "fin_de_seance",
+   "ret_pct": -10.18
   },
   {
    "date": "2026-11-06",
@@ -2489,8 +2503,10 @@
    "change_pct": 7.8,
    "rel_volume": 7.9,
    "entry": 34.595,
-   "exit": null,
-   "alerted": false
+   "exit": 43.2437,
+   "alerted": false,
+   "reason": "objectif",
+   "ret_pct": 21.8
   },
   {
    "date": "2026-11-06",
@@ -2500,8 +2516,10 @@
    "change_pct": 8.2,
    "rel_volume": 7.7,
    "entry": 9.95,
-   "exit": null,
-   "alerted": false
+   "exit": 10.965,
+   "alerted": false,
+   "reason": "fin_de_seance",
+   "ret_pct": 7.0
   },
   {
    "date": "2026-11-06",
@@ -2511,8 +2529,10 @@
    "change_pct": 8.1,
    "rel_volume": 7.5,
    "entry": 3.19,
-   "exit": null,
-   "alerted": false
+   "exit": 2.871,
+   "alerted": false,
+   "reason": "stop",
+   "ret_pct": -13.2
   },
   {
    "date": "2026-11-06",
@@ -2522,8 +2542,10 @@
    "change_pct": 7.8,
    "rel_volume": 6.7,
    "entry": 4.345,
-   "exit": null,
-   "alerted": false
+   "exit": 4.335,
+   "alerted": false,
+   "reason": "fin_de_seance",
+   "ret_pct": -3.43
   },
   {
    "date": "2026-11-06",
@@ -2533,8 +2555,10 @@
    "change_pct": 7.6,
    "rel_volume": 6.6,
    "entry": 13.81,
-   "exit": null,
-   "alerted": false
+   "exit": 14.255,
+   "alerted": false,
+   "reason": "fin_de_seance",
+   "ret_pct": 0.02
   },
   {
    "date": "2026-11-06",
@@ -2544,8 +2568,10 @@
    "change_pct": 13.2,
    "rel_volume": 6.6,
    "entry": 37.46,
-   "exit": null,
-   "alerted": false
+   "exit": 39.545,
+   "alerted": false,
+   "reason": "fin_de_seance",
+   "ret_pct": 2.37
   },
   {
    "date": "2026-11-06",
@@ -2555,8 +2581,10 @@
    "change_pct": 7.7,
    "rel_volume": 6.6,
    "entry": 3.675,
-   "exit": null,
-   "alerted": false
+   "exit": 3.672,
+   "alerted": false,
+   "reason": "fin_de_seance",
+   "ret_pct": -3.28
   },
   {
    "date": "2026-11-06",
@@ -2566,8 +2594,10 @@
    "change_pct": 5.8,
    "rel_volume": 5.9,
    "entry": 13.8396,
-   "exit": null,
-   "alerted": false
+   "exit": 15.07,
+   "alerted": false,
+   "reason": "fin_de_seance",
+   "ret_pct": 5.69
   },
   {
    "date": "2026-11-06",
@@ -2577,8 +2607,10 @@
    "change_pct": 6.7,
    "rel_volume": 5.8,
    "entry": 24.12,
-   "exit": null,
-   "alerted": false
+   "exit": 25.42,
+   "alerted": false,
+   "reason": "fin_de_seance",
+   "ret_pct": 2.19
   },
   {
    "date": "2026-11-06",
@@ -2588,8 +2620,10 @@
    "change_pct": 5.0,
    "rel_volume": 5.2,
    "entry": 186.59,
-   "exit": null,
-   "alerted": false
+   "exit": 192.895,
+   "alerted": false,
+   "reason": "fin_de_seance",
+   "ret_pct": 0.18
   },
   {
    "date": "2026-11-06",
@@ -2599,8 +2633,10 @@
    "change_pct": 10.5,
    "rel_volume": 5.0,
    "entry": 24.975,
-   "exit": null,
-   "alerted": false
+   "exit": 24.615,
+   "alerted": false,
+   "reason": "fin_de_seance",
+   "ret_pct": -4.64
   },
   {
    "date": "2026-11-06",
@@ -2610,8 +2646,10 @@
    "change_pct": 7.5,
    "rel_volume": 4.9,
    "entry": 3.16,
-   "exit": null,
-   "alerted": false
+   "exit": 3.415,
+   "alerted": false,
+   "reason": "fin_de_seance",
+   "ret_pct": 4.87
   },
   {
    "date": "2026-11-06",
@@ -2621,8 +2659,10 @@
    "change_pct": 9.7,
    "rel_volume": 4.5,
    "entry": 1.135,
-   "exit": null,
-   "alerted": false
+   "exit": 1.15,
+   "alerted": false,
+   "reason": "fin_de_seance",
+   "ret_pct": -1.88
   },
   {
    "date": "2026-11-06",
@@ -2632,8 +2672,10 @@
    "change_pct": 7.9,
    "rel_volume": 4.2,
    "entry": 64.57,
-   "exit": null,
-   "alerted": false
+   "exit": 63.825,
+   "alerted": false,
+   "reason": "fin_de_seance",
+   "ret_pct": -4.35
   },
   {
    "date": "2026-11-06",
@@ -2643,8 +2685,10 @@
    "change_pct": 10.1,
    "rel_volume": 14.0,
    "entry": 445.1675,
-   "exit": null,
-   "alerted": false
+   "exit": 445.1,
+   "alerted": false,
+   "reason": "fin_de_seance",
+   "ret_pct": -3.22
   },
   {
    "date": "2026-11-06",
@@ -2654,8 +2698,10 @@
    "change_pct": 8.7,
    "rel_volume": 9.1,
    "entry": 130.8482,
-   "exit": null,
-   "alerted": false
+   "exit": 129.27,
+   "alerted": false,
+   "reason": "fin_de_seance",
+   "ret_pct": -4.41
   },
   {
    "date": "2026-11-06",
@@ -2665,8 +2711,10 @@
    "change_pct": 8.4,
    "rel_volume": 7.3,
    "entry": 33.075,
-   "exit": null,
-   "alerted": false
+   "exit": 34.58,
+   "alerted": false,
+   "reason": "fin_de_seance",
+   "ret_pct": 1.35
   },
   {
    "date": "2026-11-06",
@@ -2676,8 +2724,10 @@
    "change_pct": 4.9,
    "rel_volume": 5.2,
    "entry": 1.2902,
-   "exit": null,
-   "alerted": false
+   "exit": 1.31,
+   "alerted": false,
+   "reason": "fin_de_seance",
+   "ret_pct": -1.67
   },
   {
    "date": "2026-11-06",
@@ -2687,8 +2737,10 @@
    "change_pct": 11.6,
    "rel_volume": 4.1,
    "entry": 1.205,
-   "exit": null,
-   "alerted": false
+   "exit": 1.0845,
+   "alerted": false,
+   "reason": "stop",
+   "ret_pct": -13.2
   },
   {
    "date": "2026-11-06",
@@ -2698,8 +2750,10 @@
    "change_pct": 8.1,
    "rel_volume": 11.0,
    "entry": 709.2246,
-   "exit": null,
-   "alerted": false
+   "exit": 686.58,
+   "alerted": false,
+   "reason": "fin_de_seance",
+   "ret_pct": -6.39
   },
   {
    "date": "2026-11-06",
@@ -2709,8 +2763,10 @@
    "change_pct": 9.4,
    "rel_volume": 8.4,
    "entry": 185.66,
-   "exit": null,
-   "alerted": false
+   "exit": 192.655,
+   "alerted": false,
+   "reason": "fin_de_seance",
+   "ret_pct": 0.57
   },
   {
    "date": "2026-11-06",
@@ -2720,8 +2776,10 @@
    "change_pct": 10.1,
    "rel_volume": 7.9,
    "entry": 29.15,
-   "exit": null,
-   "alerted": false
+   "exit": 31.935,
+   "alerted": false,
+   "reason": "fin_de_seance",
+   "ret_pct": 6.35
   },
   {
    "date": "2026-11-06",
@@ -2731,8 +2789,10 @@
    "change_pct": 7.3,
    "rel_volume": 7.4,
    "entry": 29.06,
-   "exit": null,
-   "alerted": false
+   "exit": 28.75,
+   "alerted": false,
+   "reason": "fin_de_seance",
+   "ret_pct": -4.27
   },
   {
    "date": "2026-11-06",
@@ -2742,8 +2802,10 @@
    "change_pct": 6.3,
    "rel_volume": 6.7,
    "entry": 131.375,
-   "exit": null,
-   "alerted": false
+   "exit": 134.27,
+   "alerted": false,
+   "reason": "fin_de_seance",
+   "ret_pct": -1.0
   },
   {
    "date": "2026-11-06",
@@ -2753,8 +2815,10 @@
    "change_pct": 12.7,
    "rel_volume": 5.6,
    "entry": 41.96,
-   "exit": null,
-   "alerted": false
+   "exit": 41.59,
+   "alerted": false,
+   "reason": "fin_de_seance",
+   "ret_pct": -4.08
   },
   {
    "date": "2026-11-06",
@@ -2764,8 +2828,10 @@
    "change_pct": 7.8,
    "rel_volume": 5.6,
    "entry": 96.075,
-   "exit": null,
-   "alerted": false
+   "exit": 104.2591,
+   "alerted": false,
+   "reason": "fin_de_seance",
+   "ret_pct": 5.32
   },
   {
    "date": "2026-11-06",
@@ -2775,8 +2841,10 @@
    "change_pct": 7.6,
    "rel_volume": 5.4,
    "entry": 1037.81,
-   "exit": null,
-   "alerted": false
+   "exit": 1012.025,
+   "alerted": false,
+   "reason": "fin_de_seance",
+   "ret_pct": -5.68
   },
   {
    "date": "2026-11-06",
@@ -2786,8 +2854,10 @@
    "change_pct": 10.4,
    "rel_volume": 4.3,
    "entry": 30.94,
-   "exit": null,
-   "alerted": false
+   "exit": 30.865,
+   "alerted": false,
+   "reason": "fin_de_seance",
+   "ret_pct": -3.44
   },
   {
    "date": "2026-11-06",
@@ -2797,8 +2867,10 @@
    "change_pct": 13.1,
    "rel_volume": 13.5,
    "entry": 17.1665,
-   "exit": null,
-   "alerted": false
+   "exit": 20.805,
+   "alerted": false,
+   "reason": "fin_de_seance",
+   "ret_pct": 18.0
   },
   {
    "date": "2026-11-06",
@@ -2808,8 +2880,10 @@
    "change_pct": 5.0,
    "rel_volume": 9.8,
    "entry": 130.075,
-   "exit": null,
-   "alerted": false
+   "exit": 126.84,
+   "alerted": false,
+   "reason": "fin_de_seance",
+   "ret_pct": -5.69
   },
   {
    "date": "2026-11-06",
@@ -2819,8 +2893,10 @@
    "change_pct": 11.9,
    "rel_volume": 7.1,
    "entry": 125.69,
-   "exit": null,
-   "alerted": false
+   "exit": 119.455,
+   "alerted": false,
+   "reason": "fin_de_seance",
+   "ret_pct": -8.16
   },
   {
    "date": "2026-11-06",
@@ -2830,8 +2906,10 @@
    "change_pct": 8.7,
    "rel_volume": 5.9,
    "entry": 554.0018,
-   "exit": null,
-   "alerted": false
+   "exit": 537.52,
+   "alerted": false,
+   "reason": "fin_de_seance",
+   "ret_pct": -6.18
   },
   {
    "date": "2026-11-06",
@@ -2841,8 +2919,10 @@
    "change_pct": 8.1,
    "rel_volume": 8.4,
    "entry": 84.145,
-   "exit": null,
-   "alerted": false
+   "exit": 83.26,
+   "alerted": false,
+   "reason": "fin_de_seance",
+   "ret_pct": -4.25
   },
   {
    "date": "2026-11-06",
@@ -2852,8 +2932,10 @@
    "change_pct": 9.1,
    "rel_volume": 4.2,
    "entry": 158.83,
-   "exit": null,
-   "alerted": false
+   "exit": 158.4,
+   "alerted": false,
+   "reason": "fin_de_seance",
+   "ret_pct": -3.47
   },
   {
    "date": "2026-11-06",
@@ -2863,8 +2945,10 @@
    "change_pct": 4.3,
    "rel_volume": 27.4,
    "entry": 5.35,
-   "exit": null,
-   "alerted": false
+   "exit": 5.69,
+   "alerted": false,
+   "reason": "fin_de_seance",
+   "ret_pct": 3.16
   },
   {
    "date": "2026-11-06",
@@ -2874,8 +2958,10 @@
    "change_pct": 9.7,
    "rel_volume": 12.5,
    "entry": 51.43,
-   "exit": null,
-   "alerted": false
+   "exit": 49.98,
+   "alerted": false,
+   "reason": "fin_de_seance",
+   "ret_pct": -6.02
   },
   {
    "date": "2026-11-06",
@@ -2885,8 +2971,10 @@
    "change_pct": 12.6,
    "rel_volume": 9.3,
    "entry": 907.968,
-   "exit": null,
-   "alerted": false
+   "exit": 817.1712,
+   "alerted": false,
+   "reason": "stop",
+   "ret_pct": -13.2
   },
   {
    "date": "2026-11-06",
@@ -2896,8 +2984,10 @@
    "change_pct": 12.0,
    "rel_volume": 7.8,
    "entry": 51.45,
-   "exit": null,
-   "alerted": false
+   "exit": 52.715,
+   "alerted": false,
+   "reason": "fin_de_seance",
+   "ret_pct": -0.74
   },
   {
    "date": "2026-11-06",
@@ -2907,8 +2997,10 @@
    "change_pct": 8.1,
    "rel_volume": 7.0,
    "entry": 15.95,
-   "exit": null,
-   "alerted": false
+   "exit": 16.745,
+   "alerted": false,
+   "reason": "fin_de_seance",
+   "ret_pct": 1.78
   },
   {
    "date": "2026-11-06",
@@ -2918,8 +3010,10 @@
    "change_pct": 9.4,
    "rel_volume": 6.9,
    "entry": 146.08,
-   "exit": null,
-   "alerted": false
+   "exit": 140.19,
+   "alerted": false,
+   "reason": "fin_de_seance",
+   "ret_pct": -7.23
   },
   {
    "date": "2026-11-06",
@@ -2929,8 +3023,10 @@
    "change_pct": 10.9,
    "rel_volume": 6.9,
    "entry": 185.86,
-   "exit": null,
-   "alerted": false
+   "exit": 173.08,
+   "alerted": false,
+   "reason": "fin_de_seance",
+   "ret_pct": -10.08
   },
   {
    "date": "2026-11-06",
@@ -2940,8 +3036,10 @@
    "change_pct": 9.2,
    "rel_volume": 6.6,
    "entry": 47.6672,
-   "exit": null,
-   "alerted": false
+   "exit": 46.295,
+   "alerted": false,
+   "reason": "fin_de_seance",
+   "ret_pct": -6.08
   },
   {
    "date": "2026-11-06",
@@ -2951,8 +3049,10 @@
    "change_pct": 10.0,
    "rel_volume": 5.9,
    "entry": 40.3775,
-   "exit": null,
-   "alerted": false
+   "exit": 38.81,
+   "alerted": false,
+   "reason": "fin_de_seance",
+   "ret_pct": -7.08
   },
   {
    "date": "2026-11-06",
@@ -2962,8 +3062,10 @@
    "change_pct": 10.2,
    "rel_volume": 5.3,
    "entry": 349.2,
-   "exit": null,
-   "alerted": false
+   "exit": 328.27,
+   "alerted": false,
+   "reason": "fin_de_seance",
+   "ret_pct": -9.19
   },
   {
    "date": "2026-11-06",
@@ -2973,8 +3075,10 @@
    "change_pct": 9.2,
    "rel_volume": 5.0,
    "entry": 32.45,
-   "exit": null,
-   "alerted": false
+   "exit": 31.455,
+   "alerted": false,
+   "reason": "fin_de_seance",
+   "ret_pct": -6.27
   },
   {
    "date": "2026-11-06",
@@ -2984,8 +3088,10 @@
    "change_pct": 6.4,
    "rel_volume": 4.7,
    "entry": 12.08,
-   "exit": null,
-   "alerted": false
+   "exit": 11.835,
+   "alerted": false,
+   "reason": "fin_de_seance",
+   "ret_pct": -5.23
   },
   {
    "date": "2026-11-06",
@@ -2995,8 +3101,10 @@
    "change_pct": 10.6,
    "rel_volume": 4.5,
    "entry": 41.655,
-   "exit": null,
-   "alerted": false
+   "exit": 43.11,
+   "alerted": false,
+   "reason": "fin_de_seance",
+   "ret_pct": 0.29
   },
   {
    "date": "2026-11-06",
@@ -3006,8 +3114,10 @@
    "change_pct": 10.3,
    "rel_volume": 4.3,
    "entry": 254.67,
-   "exit": null,
-   "alerted": false
+   "exit": 241.82,
+   "alerted": false,
+   "reason": "fin_de_seance",
+   "ret_pct": -8.25
   },
   {
    "date": "2026-11-06",
@@ -3017,8 +3127,10 @@
    "change_pct": 8.9,
    "rel_volume": 4.1,
    "entry": 55.045,
-   "exit": null,
-   "alerted": false
+   "exit": 57.675,
+   "alerted": false,
+   "reason": "fin_de_seance",
+   "ret_pct": 1.58
   },
   {
    "date": "2026-11-06",
@@ -3028,8 +3140,10 @@
    "change_pct": 7.4,
    "rel_volume": 4.1,
    "entry": 6.65,
-   "exit": null,
-   "alerted": false
+   "exit": 7.215,
+   "alerted": false,
+   "reason": "fin_de_seance",
+   "ret_pct": 5.3
   },
   {
    "date": "2026-11-06",
@@ -3039,8 +3153,10 @@
    "change_pct": 5.1,
    "rel_volume": 6.3,
    "entry": 1.755,
-   "exit": null,
-   "alerted": false
+   "exit": 1.765,
+   "alerted": false,
+   "reason": "fin_de_seance",
+   "ret_pct": -2.63
   },
   {
    "date": "2026-11-06",
@@ -3050,8 +3166,10 @@
    "change_pct": 9.5,
    "rel_volume": 4.5,
    "entry": 15.52,
-   "exit": null,
-   "alerted": false
+   "exit": 15.545,
+   "alerted": false,
+   "reason": "fin_de_seance",
+   "ret_pct": -3.04
   },
   {
    "date": "2026-11-06",
@@ -3061,8 +3179,10 @@
    "change_pct": 14.9,
    "rel_volume": 6.8,
    "entry": 22.07,
-   "exit": null,
-   "alerted": false
+   "exit": 23.51,
+   "alerted": false,
+   "reason": "fin_de_seance",
+   "ret_pct": 3.32
   },
   {
    "date": "2026-11-06",
@@ -3072,8 +3192,10 @@
    "change_pct": 8.6,
    "rel_volume": 6.7,
    "entry": 176.41,
-   "exit": null,
-   "alerted": false
+   "exit": 179.54,
+   "alerted": false,
+   "reason": "fin_de_seance",
+   "ret_pct": -1.43
   },
   {
    "date": "2026-11-06",
@@ -3083,8 +3205,10 @@
    "change_pct": 6.5,
    "rel_volume": 7.6,
    "entry": 51.98,
-   "exit": null,
-   "alerted": false
+   "exit": 51.815,
+   "alerted": false,
+   "reason": "fin_de_seance",
+   "ret_pct": -3.52
   },
   {
    "date": "2026-11-06",
@@ -3094,8 +3218,10 @@
    "change_pct": 6.8,
    "rel_volume": 4.7,
    "entry": 5.0214,
-   "exit": null,
-   "alerted": false
+   "exit": 5.205,
+   "alerted": false,
+   "reason": "fin_de_seance",
+   "ret_pct": 0.46
   },
   {
    "date": "2026-11-06",
@@ -3105,8 +3231,10 @@
    "change_pct": 7.5,
    "rel_volume": 4.3,
    "entry": 11.0588,
-   "exit": null,
-   "alerted": false
+   "exit": 10.98,
+   "alerted": false,
+   "reason": "fin_de_seance",
+   "ret_pct": -3.91
   },
   {
    "date": "2026-11-06",
@@ -3116,8 +3244,10 @@
    "change_pct": 7.3,
    "rel_volume": 4.3,
    "entry": 9.91,
-   "exit": null,
-   "alerted": false
+   "exit": 9.875,
+   "alerted": false,
+   "reason": "fin_de_seance",
+   "ret_pct": -3.55
   },
   {
    "date": "2026-11-06",
@@ -3127,8 +3257,10 @@
    "change_pct": 5.5,
    "rel_volume": 4.4,
    "entry": 34.15,
-   "exit": null,
-   "alerted": false
+   "exit": 32.82,
+   "alerted": false,
+   "reason": "fin_de_seance",
+   "ret_pct": -7.09
   },
   {
    "date": "2026-11-06",
@@ -3138,8 +3270,10 @@
    "change_pct": 14.4,
    "rel_volume": 8.0,
    "entry": 24.0799,
-   "exit": null,
-   "alerted": false
+   "exit": 23.89,
+   "alerted": false,
+   "reason": "fin_de_seance",
+   "ret_pct": -3.99
   },
   {
    "date": "2026-11-06",
@@ -3149,8 +3283,10 @@
    "change_pct": 4.2,
    "rel_volume": 5.2,
    "entry": 31.455,
-   "exit": null,
-   "alerted": false
+   "exit": 32.28,
+   "alerted": false,
+   "reason": "fin_de_seance",
+   "ret_pct": -0.58
   },
   {
    "date": "2026-11-06",
@@ -3160,8 +3296,10 @@
    "change_pct": 7.4,
    "rel_volume": 5.7,
    "entry": 17.07,
-   "exit": null,
-   "alerted": false
+   "exit": 17.265,
+   "alerted": false,
+   "reason": "fin_de_seance",
+   "ret_pct": -2.06
   }
  ]
 }
