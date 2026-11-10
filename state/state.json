@@ -1,10 +1,20 @@
 {
  "equity": 98.8732,
- "day": "2026-11-09",
+ "day": "2026-11-10",
  "day_state": {
   "BTCC-B.TO": {
-   "position": null,
-   "entries": 0,
+   "position": {
+    "setup": "Retour vers le VWAP",
+    "entry": 14.289999961853027,
+    "t": "2026-11-10T10:44:46-05:00",
+    "stop": 14.0,
+    "t1": 14.44,
+    "t2": 14.44,
+    "t1_done": false,
+    "vwap": 14.44,
+    "or_high": 14.539999961853027
+   },
+   "entries": 1,
    "orb_used": false,
    "prev_close_below_vwap": true
   },
@@ -12,15 +22,9 @@
    "position": null,
    "entries": 0,
    "orb_used": false,
-   "prev_close_below_vwap": true
+   "prev_close_below_vwap": false
   },
   "FBTC.TO": {
-   "position": null,
-   "entries": 0,
-   "orb_used": false,
-   "prev_close_below_vwap": true
-  },
-  "SU.TO": {
    "position": null,
    "entries": 0,
    "orb_used": false,
@@ -30,13 +34,7 @@
    "position": null,
    "entries": 0,
    "orb_used": false,
-   "prev_close_below_vwap": true
-  },
-  "CNQ.TO": {
-   "position": null,
-   "entries": 0,
-   "orb_used": false,
-   "prev_close_below_vwap": true
+   "prev_close_below_vwap": false
   },
   "TSLA.NE": {
    "position": null,
@@ -48,25 +46,23 @@
    "position": null,
    "entries": 0,
    "orb_used": false,
-   "prev_close_below_vwap": false
+   "prev_close_below_vwap": true
   },
   "AMZN.NE": {
    "position": null,
-   "entries": 1,
+   "entries": 0,
    "orb_used": false,
    "prev_close_below_vwap": true
   }
  },
  "last_bar": {
-  "BTCC-B.TO": "2026-11-09T15:55:00-05:00",
-  "BTCX-B.TO": "2026-11-09T15:55:00-05:00",
-  "FBTC.TO": "2026-11-09T15:50:01-05:00",
-  "SU.TO": "2026-11-09T14:15:00-05:00",
-  "ENB.TO": "2026-11-09T15:55:00-05:00",
-  "CNQ.TO": "2026-11-09T14:15:00-05:00",
-  "TSLA.NE": "2026-11-09T15:55:00-05:00",
-  "MSFT.NE": "2026-11-09T15:40:38-05:00",
-  "AMZN.NE": "2026-11-09T15:55:00-05:00"
+  "BTCC-B.TO": "2026-11-10T14:12:29-05:00",
+  "BTCX-B.TO": "2026-11-10T14:11:26-05:00",
+  "FBTC.TO": "2026-11-10T14:05:13-05:00",
+  "ENB.TO": "2026-11-10T14:15:00-05:00",
+  "TSLA.NE": "2026-11-10T13:35:43-05:00",
+  "AMZN.NE": "2026-11-10T14:14:03-05:00",
+  "MSFT.NE": "2026-11-10T14:16:31-05:00"
  },
  "journal": [
   {
@@ -4038,6 +4034,281 @@
    "alerted": false,
    "reason": "fin_de_seance",
    "ret_pct": -1.53
+  },
+  {
+   "date": "2026-11-10",
+   "time": "09:36",
+   "symbol": "SE",
+   "currency": "USD",
+   "change_pct": 5.5,
+   "rel_volume": 27.4,
+   "entry": 82.33,
+   "exit": null,
+   "alerted": true
+  },
+  {
+   "date": "2026-11-10",
+   "time": "09:36",
+   "symbol": "TTWO",
+   "currency": "USD",
+   "change_pct": 7.7,
+   "rel_volume": 25.9,
+   "entry": 223.4,
+   "exit": null,
+   "alerted": true
+  },
+  {
+   "date": "2026-11-10",
+   "time": "09:36",
+   "symbol": "EMBJ",
+   "currency": "USD",
+   "change_pct": 6.3,
+   "rel_volume": 16.8,
+   "entry": 81.91,
+   "exit": null,
+   "alerted": true
+  },
+  {
+   "date": "2026-11-10",
+   "time": "09:36",
+   "symbol": "AMPY",
+   "currency": "USD",
+   "change_pct": 6.8,
+   "rel_volume": 12.6,
+   "entry": 3.43,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-10",
+   "time": "09:36",
+   "symbol": "ASX",
+   "currency": "USD",
+   "change_pct": 4.1,
+   "rel_volume": 12.1,
+   "entry": 35.795,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-10",
+   "time": "09:36",
+   "symbol": "SKM",
+   "currency": "USD",
+   "change_pct": 4.1,
+   "rel_volume": 10.1,
+   "entry": 33.63,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-10",
+   "time": "09:36",
+   "symbol": "IRWD",
+   "currency": "USD",
+   "change_pct": 6.2,
+   "rel_volume": 9.9,
+   "entry": 4.968,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-10",
+   "time": "09:36",
+   "symbol": "ACAD",
+   "currency": "USD",
+   "change_pct": 6.2,
+   "rel_volume": 8.7,
+   "entry": 17.52,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-10",
+   "time": "09:36",
+   "symbol": "RIOT",
+   "currency": "USD",
+   "change_pct": 4.5,
+   "rel_volume": 8.7,
+   "entry": 18.45,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-10",
+   "time": "09:36",
+   "symbol": "MX",
+   "currency": "USD",
+   "change_pct": 5.0,
+   "rel_volume": 7.8,
+   "entry": 2.6255,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-10",
+   "time": "09:36",
+   "symbol": "CSQR",
+   "currency": "USD",
+   "change_pct": 14.0,
+   "rel_volume": 6.3,
+   "entry": 17.396,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-10",
+   "time": "09:36",
+   "symbol": "AMRC",
+   "currency": "USD",
+   "change_pct": 10.7,
+   "rel_volume": 5.5,
+   "entry": 24.8886,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-10",
+   "time": "09:36",
+   "symbol": "MRCY",
+   "currency": "USD",
+   "change_pct": 6.3,
+   "rel_volume": 4.4,
+   "entry": 84.6,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-10",
+   "time": "09:40",
+   "symbol": "RXT",
+   "currency": "USD",
+   "change_pct": 8.4,
+   "rel_volume": 7.2,
+   "entry": 2.95,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-10",
+   "time": "09:40",
+   "symbol": "MARA",
+   "currency": "USD",
+   "change_pct": 5.4,
+   "rel_volume": 4.2,
+   "entry": 7.0,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-10",
+   "time": "09:42",
+   "symbol": "BW",
+   "currency": "USD",
+   "change_pct": 5.8,
+   "rel_volume": 12.0,
+   "entry": 4.0,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-10",
+   "time": "09:44",
+   "symbol": "MXCT",
+   "currency": "USD",
+   "change_pct": 8.4,
+   "rel_volume": 16.6,
+   "entry": 1.41,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-10",
+   "time": "09:44",
+   "symbol": "FRVO",
+   "currency": "USD",
+   "change_pct": 4.3,
+   "rel_volume": 4.1,
+   "entry": 11.87,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-10",
+   "time": "09:54",
+   "symbol": "LCID",
+   "currency": "USD",
+   "change_pct": 6.3,
+   "rel_volume": 5.5,
+   "entry": 3.825,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-10",
+   "time": "09:56",
+   "symbol": "ONTO",
+   "currency": "USD",
+   "change_pct": 4.5,
+   "rel_volume": 6.7,
+   "entry": 202.49,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-10",
+   "time": "09:56",
+   "symbol": "ZETA",
+   "currency": "USD",
+   "change_pct": 4.9,
+   "rel_volume": 4.5,
+   "entry": 34.0,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-10",
+   "time": "09:58",
+   "symbol": "AMD",
+   "currency": "USD",
+   "change_pct": 4.5,
+   "rel_volume": 6.1,
+   "entry": 531.5372,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-10",
+   "time": "10:02",
+   "symbol": "SANM",
+   "currency": "USD",
+   "change_pct": 10.4,
+   "rel_volume": 17.5,
+   "entry": 165.24,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-10",
+   "time": "10:02",
+   "symbol": "IAM",
+   "currency": "USD",
+   "change_pct": 10.6,
+   "rel_volume": 4.1,
+   "entry": 14.8,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-10",
+   "time": "13:58",
+   "symbol": "AKAM",
+   "currency": "USD",
+   "change_pct": 4.0,
+   "rel_volume": 4.8,
+   "entry": 83.51,
+   "exit": null,
+   "alerted": false
   }
  ]
 }
