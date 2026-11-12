@@ -47,27 +47,100 @@ LABELS = {
 # ---------------------------------------------------------------- données
 
 def _chart(ticker, range_, interval):
+    """Bougies Yahoo : liste de (heure Toronto, open, high, low, close, volume)."""
     r = requests.get(f"https://query1.finance.yahoo.com/v8/finance/chart/{ticker}",
                      params={"range": range_, "interval": interval},
                      headers={"User-Agent": "Mozilla/5.0"}, timeout=30)
     r.raise_for_status()
     res = r.json()["chart"]["result"][0]
     ts = res.get("timestamp") or []
-    cl = res["indicators"]["quote"][0]["close"]
-    return [(datetime.fromtimestamp(t, TZ), c) for t, c in zip(ts, cl) if c]
+    q = res["indicators"]["quote"][0]
+    out = []
+    for i, t in enumerate(ts):
+        o, h, l, c = q["open"][i], q["high"][i], q["low"][i], q["close"][i]
+        if None in (o, h, l, c):
+            continue
+        out.append((datetime.fromtimestamp(t, TZ), o, h, l, c, q["volume"][i] or 0))
+    return out
+
+
+def fetch_daily_ohlcv(ticker):
+    """Bougies quotidiennes. Yahoo ne donne pas d'historique journalier pour les
+    CDR (.NE) : on les reconstruit alors depuis les bougies d'une heure."""
+    rows = _chart(ticker, "5y", "1d")
+    if len(rows) >= 250:
+        return [(t.date(), o, h, l, c, v) for t, o, h, l, c, v in rows]
+    days = {}
+    for t, o, h, l, c, v in _chart(ticker, "730d", "1h"):
+        d = days.get(t.date())
+        if d is None:
+            days[t.date()] = [t.date(), o, h, l, c, v]
+        else:
+            d[2], d[3], d[4], d[5] = max(d[2], h), min(d[3], l), c, d[5] + v
+    return [tuple(d) for _, d in sorted(days.items())]
 
 
 def fetch_daily(ticker):
-    """Clôtures quotidiennes. Yahoo ne donne pas d'historique journalier pour les
-    CDR (.NE) : on reconstruit alors les clôtures depuis les bougies d'une heure."""
-    rows = _chart(ticker, "5y", "1d")
-    if len(rows) < 250:
-        last = {}
-        for t, c in _chart(ticker, "730d", "1h"):
-            last[t.date()] = c
-        rows = sorted(last.items())
-        return [d.isoformat() for d, _ in rows], np.array([c for _, c in rows], float)
-    return [t.date().isoformat() for t, _ in rows], np.array([c for _, c in rows], float)
+    rows = fetch_daily_ohlcv(ticker)
+    return [r[0].isoformat() for r in rows], np.array([r[4] for r in rows], float)
+
+
+# ---------------------------------------------------------------- liquidité
+
+def corwin_schultz(h, l):
+    """Écart achat-vente estimé à partir des plus hauts / plus bas de 2 jours
+    (Corwin & Schultz 2012). Yahoo ne donne pas le carnet d'ordres, c'est donc une estimation."""
+    h, l = np.asarray(h, float), np.asarray(l, float)
+    b = np.log(h[1:] / l[1:]) ** 2 + np.log(h[:-1] / l[:-1]) ** 2
+    g = np.log(np.maximum(h[1:], h[:-1]) / np.minimum(l[1:], l[:-1])) ** 2
+    k = 3 - 2 * np.sqrt(2)
+    a = (np.sqrt(2 * b) - np.sqrt(b)) / k - np.sqrt(g / k)
+    s = 2 * (np.exp(a) - 1) / (1 + np.exp(a))
+    return np.clip(s, 0, None)
+
+
+def liquidity(ticker, daily):
+    """Bougies + volume quotidiens (6 mois) et 5 minutes (5 dernières séances),
+    plus quelques mesures simples de liquidité."""
+    d = daily[-130:]
+    dv = np.array([r[5] for r in d], float)
+    dc = np.array([r[4] for r in d], float)
+    dollar = dv * dc
+    spread = corwin_schultz([r[2] for r in d], [r[3] for r in d])
+    intra = [b for b in _chart(ticker, "5d", "5m") if (b[0].hour, b[0].minute) >= (9, 30) and b[0].hour < 16]
+    days = sorted({b[0].date() for b in intra})
+    today = [b for b in intra if b[0].date() == days[-1]] if days else []
+    # VWAP par séance, pour superposer aux bougies 5 min
+    vwap, cum_pv, cum_v, cur = [], 0.0, 0.0, None
+    for t, o, h, l, c, v in intra:
+        if t.date() != cur:
+            cur, cum_pv, cum_v = t.date(), 0.0, 0.0
+        cum_pv += (h + l + c) / 3 * v
+        cum_v += v
+        vwap.append(round(cum_pv / cum_v, 4) if cum_v else None)
+    avg20 = float(dv[-21:-1].mean()) if len(dv) > 21 else float(dv.mean())
+    # rythme normal : volume moyen à la même heure, sur les séances précédentes
+    vol_today = float(sum(b[5] for b in today))
+    n_today = len(today)
+    prev = [[b for b in intra if b[0].date() == dd][:n_today] for dd in days[:-1]]
+    pace = np.mean([sum(b[5] for b in p) for p in prev]) if prev and n_today else 0
+    return {
+        "daily": {"t": [r[0].isoformat() for r in d], "o": [round(r[1], 4) for r in d],
+                  "h": [round(r[2], 4) for r in d], "l": [round(r[3], 4) for r in d],
+                  "c": [round(r[4], 4) for r in d], "v": [int(r[5]) for r in d],
+                  "spread_pct": [None] + (spread * 100).round(3).tolist()},
+        "intraday": {"t": [b[0].strftime("%Y-%m-%d %H:%M") for b in intra],
+                     "o": [round(b[1], 4) for b in intra], "h": [round(b[2], 4) for b in intra],
+                     "l": [round(b[3], 4) for b in intra], "c": [round(b[4], 4) for b in intra],
+                     "v": [int(b[5]) for b in intra], "vwap": vwap},
+        "avg_volume_20d": round(avg20),
+        "avg_dollar_volume_20d": round(float(dollar[-21:-1].mean() if len(dollar) > 21 else dollar.mean())),
+        "spread_est_pct": round(float(np.mean(spread[-20:]) * 100), 3),
+        "zero_volume_bars_pct": round(100 * sum(1 for b in intra if b[5] == 0) / max(1, len(intra)), 1),
+        "today_volume": int(vol_today),
+        "today_rel_volume": round(float(vol_today / pace), 2) if pace else None,
+        "today_date": days[-1].isoformat() if days else None,
+    }
 
 
 # ---------------------------------------------------------------- modèles
@@ -266,7 +339,9 @@ def run():
     result = {"generated": datetime.now(timezone.utc).isoformat(timespec="seconds"),
               "horizon_days": H, "n_paths": N_PATHS, "tickers": {}}
     for tk in cfg["tickers"]:
-        dates, close = fetch_daily(tk)
+        daily = fetch_daily_ohlcv(tk)
+        dates = [r[0].isoformat() for r in daily]
+        close = np.array([r[4] for r in daily], float)
         r = np.diff(np.log(close))
         r = r[-750:]
         S0 = float(close[-1])
@@ -290,6 +365,7 @@ def run():
         info["vol_today_pct"] = round(g["sigma_next"] * 100, 2)
         info["vol_normal_pct"] = round(g["sigma_long"] * 100, 2)
         info["regime_agite_pct"] = round(info["models"]["Régimes"]["params"]["p_now"][1] * 100, 1)
+        info["liquidity"] = liquidity(tk, daily)
         result["tickers"][tk] = info
         e5 = final["5"]
         print(f"{info['label']:<11} {S0:>8.2f}  P(hausse 5j)={e5['p_up']:.0%}  "

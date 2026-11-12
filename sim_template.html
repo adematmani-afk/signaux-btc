@@ -65,6 +65,15 @@ th:first-child, td:first-child { text-align: left }
 th { font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); font-weight: 600 }
 td { font-family: var(--mono) } td:first-child { font-family: var(--body); font-weight: 500 }
 .neg { color: var(--bad) } .pos { color: var(--good) }
+.liq { display: grid; gap: 14px }
+.liqhead { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: start; gap: 10px }
+.kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 10px }
+.kpi { border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; display: grid; gap: 2px; align-content: start }
+.kpi span { font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted) }
+.kpi b { font-family: var(--mono); font-size: 1.15rem; font-weight: 500; font-variant-numeric: tabular-nums }
+.kpi small { color: var(--muted); font-size: 12px }
+#candles { width: 100%; height: 520px }
+@media (max-width: 600px) { #candles { height: 440px } }
 .foot { color: var(--muted); font-size: 12.5px; max-width: 80ch }
 </style>
 
@@ -90,6 +99,18 @@ td { font-family: var(--mono) } td:first-child { font-family: var(--body); font-
     <aside class="panel" id="card"></aside>
   </div>
 
+  <section class="panel liq">
+    <div class="liqhead">
+      <div>
+        <h2>Liquidité et bougies · <span id="liqName"></span></h2>
+        <p class="hint">Volume échangé sous les bougies. Fais glisser la barre du bas pour choisir la période.</p>
+      </div>
+      <div class="group" id="liqView"><span>Vue</span></div>
+    </div>
+    <div class="kpis" id="kpis"></div>
+    <div id="candles" role="img" aria-label="Bougies et volume"></div>
+  </section>
+
   <section class="panel verdict">
     <h2>Est-ce que ces prévisions valent quelque chose ? Test hors échantillon</h2>
     <p id="verdictText"></p>
@@ -111,8 +132,8 @@ const DESC = {
   "Régimes": "Markov à 2 régimes (calme / agité) de Hamilton.",
   "Bootstrap": "Rejoue des blocs de 5 vrais rendements des 2 dernières années."
 };
-let state = { tk: tks[0], model: "Ensemble", hz: "5" };
-try { const s = JSON.parse(localStorage.getItem("mc-state") || "{}"); if (DATA.tickers[s.tk]) state.tk = s.tk; if (MODELS.includes(s.model)) state.model = s.model; if (s.hz) state.hz = s.hz; } catch (e) {}
+let state = { tk: tks[0], model: "Ensemble", hz: "5", liq: "5min" };
+try { const s = JSON.parse(localStorage.getItem("mc-state") || "{}"); if (DATA.tickers[s.tk]) state.tk = s.tk; if (MODELS.includes(s.model)) state.model = s.model; if (s.hz) state.hz = s.hz; if (s.liq) state.liq = s.liq; } catch (e) {}
 const save = () => { try { localStorage.setItem("mc-state", JSON.stringify(state)); } catch (e) {} };
 const pct = (x, d = 0) => (x * 100).toFixed(d) + " %";
 const money = x => x.toFixed(2) + " $";
@@ -130,10 +151,12 @@ function chips(id, items, key, label) {
 }
 chips("tickers", tks, "tk", v => DATA.tickers[v].label);
 chips("models", MODELS, "model", v => v);
+chips("liqView", ["5min", "jour"], "liq", v => v === "5min" ? "5 min · 5 séances" : "Jour · 6 mois");
 
 function sync() {
   document.querySelectorAll("#tickers button").forEach(b => b.setAttribute("aria-pressed", b.dataset.v === state.tk));
   document.querySelectorAll("#models button").forEach(b => b.setAttribute("aria-pressed", b.dataset.v === state.model));
+  document.querySelectorAll("#liqView button").forEach(b => b.setAttribute("aria-pressed", b.dataset.v === state.liq));
 }
 
 function plot() {
@@ -208,8 +231,53 @@ function verdict() {
   document.getElementById("verdictText").innerHTML = VAL.summary_fr;
 }
 
-function render() { sync(); plot(); card(); }
+const nf = x => x == null ? "—" : Math.round(x).toLocaleString("fr-CA");
+const big = x => x >= 1e6 ? (x / 1e6).toFixed(1).replace(".", ",") + " M$" : x >= 1e3 ? Math.round(x / 1e3) + " k$" : Math.round(x) + " $";
+
+function liq() {
+  const T = DATA.tickers[state.tk], L = T.liquidity;
+  if (!L) return;
+  document.getElementById("liqName").textContent = T.label;
+  const rv = L.today_rel_volume;
+  const rvPill = rv == null ? "" : rv >= 1.5 ? '<span class="pill warn">très actif</span>' : rv < 0.6 ? '<span class="pill bad">calme</span>' : '<span class="pill good">normal</span>';
+  const sp = L.spread_est_pct;
+  const spPill = sp > 0.5 ? '<span class="pill bad">coûteux</span>' : sp > 0.2 ? '<span class="pill warn">moyen</span>' : '<span class="pill good">serré</span>';
+  const zb = L.zero_volume_bars_pct;
+  document.getElementById("kpis").innerHTML = `
+    <div class="kpi"><span>Volume aujourd'hui</span><b>${nf(L.today_volume)}</b><small>${rv == null ? "" : rv.toFixed(2).replace(".", ",") + "× le rythme habituel à cette heure "}${rvPill}</small></div>
+    <div class="kpi"><span>Volume moyen / jour</span><b>${nf(L.avg_volume_20d)}</b><small>titres, 20 dernières séances</small></div>
+    <div class="kpi"><span>Montant échangé / jour</span><b>${big(L.avg_dollar_volume_20d)}</b><small>en $ CA, moyenne 20 séances</small></div>
+    <div class="kpi"><span>Écart achat-vente estimé</span><b>${sp.toFixed(2).replace(".", ",")} %</b><small>coût d'un aller-retour, estimé ${spPill}</small></div>
+    <div class="kpi"><span>Bougies 5 min sans échange</span><b>${zb.toFixed(1).replace(".", ",")} %</b><small>${zb > 10 ? "trous fréquents, prix moins fiable" : "le titre s'échange en continu"}</small></div>`;
+
+  const D = state.liq === "5min" ? L.intraday : L.daily;
+  const fg = css("--fg"), muted = css("--muted"), line = css("--line"), acc = css("--accent"), good = css("--good"), bad = css("--bad");
+  const up = D.c.map((c, i) => c >= D.o[i]);
+  const lab = state.liq === "5min" ? D.t.map(t => t.slice(5).replace(" ", " · ")) : D.t;
+  const traces = [
+    { type: "candlestick", x: lab, open: D.o, high: D.h, low: D.l, close: D.c, xaxis: "x", yaxis: "y", name: "Prix",
+      increasing: { line: { color: good, width: 1 }, fillcolor: good }, decreasing: { line: { color: bad, width: 1 }, fillcolor: bad } },
+    { type: "bar", x: lab, y: D.v, xaxis: "x", yaxis: "y2", name: "Volume", marker: { color: up.map(u => u ? good : bad), opacity: 0.55 },
+      hovertemplate: "%{x}<br>Volume %{y:,}<extra></extra>" }
+  ];
+  if (D.vwap) traces.push({ type: "scatter", mode: "lines", x: lab, y: D.vwap, xaxis: "x", yaxis: "y", name: "VWAP",
+    line: { color: acc, width: 1.5 }, connectgaps: false, hovertemplate: "VWAP %{y:.2f}<extra></extra>" });
+  const n = lab.length, start = Math.max(0, n - (state.liq === "5min" ? 160 : 70));
+  const layout = {
+    paper_bgcolor: "rgba(0,0,0,0)", plot_bgcolor: "rgba(0,0,0,0)", showlegend: false, dragmode: "pan",
+    margin: { l: 50, r: 10, t: 10, b: 10 }, font: { family: "Instrument Sans, system-ui, sans-serif", color: muted, size: 11 },
+    xaxis: { type: "category", anchor: "y2", nticks: 8, gridcolor: line, linecolor: line, tickfont: { color: muted },
+      range: [start - 0.5, n - 0.5], rangeslider: { visible: true, thickness: 0.08, bgcolor: "rgba(0,0,0,0)", bordercolor: line, borderwidth: 1 } },
+    yaxis: { domain: [0.32, 1], gridcolor: line, zeroline: false, tickfont: { color: muted }, title: { text: "Prix $ CA", font: { color: muted } }, autorange: true, fixedrange: false },
+    yaxis2: { domain: [0, 0.26], gridcolor: line, zeroline: false, tickfont: { color: muted }, title: { text: "Volume", font: { color: muted } } },
+    hoverlabel: { font: { family: "JetBrains Mono, monospace" } }
+  };
+  Plotly.react("candles", traces, layout, { responsive: true, displaylogo: false, modeBarButtonsToRemove: ["toImage", "lasso2d", "select2d"] });
+}
+
+function render() { sync(); plot(); card(); liq(); }
 render(); verdict();
-matchMedia("(prefers-color-scheme: dark)").addEventListener("change", plot);
-new MutationObserver(plot).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+const repaint = () => { plot(); liq(); };
+matchMedia("(prefers-color-scheme: dark)").addEventListener("change", repaint);
+new MutationObserver(repaint).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
 </script>

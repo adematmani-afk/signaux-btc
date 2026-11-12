@@ -24,6 +24,7 @@ GBM (brownien géométrique), GARCH(1,1) avec queues Student, modèle de Markov 
 - `python market_sim.py run` : simulation, écrit `simulation/latest.json` (P(hausse), médiane, intervalle 90 %, volatilité prévue, régime).
 - `python market_sim.py validate` : test hors échantillon (walk-forward sur la dernière année), écrit `simulation/validation.json`.
 - `python market_sim.py html` : page interactive `simulation/atelier.html` (surface 3D jours × prix × probabilité).
+- Panneau liquidité : bougies 5 min (5 séances, avec VWAP) ou quotidiennes (6 mois) avec le volume dessous et une barre de défilement ; volume du jour vs rythme habituel, montant échangé, écart achat-vente estimé (Corwin-Schultz, Yahoo ne donne pas le carnet d'ordres), part des bougies sans échange.
 - Workflow « Simulation 3D » : chaque soir de semaine après la clôture, test hors échantillon le vendredi.
 
 Résultat du test du 2026-11-12 : aucun modèle ne prévoit la direction mieux que le hasard (45 à 49 % de bonnes directions à 5 séances),
