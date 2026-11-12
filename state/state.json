@@ -1,24 +1,24 @@
 {
  "equity": 99.335,
- "day": "2026-11-11",
+ "day": "2026-11-12",
  "day_state": {
   "BTCC-B.TO": {
    "position": null,
    "entries": 0,
    "orb_used": false,
-   "prev_close_below_vwap": false
+   "prev_close_below_vwap": true
   },
   "BTCX-B.TO": {
    "position": null,
    "entries": 0,
    "orb_used": false,
-   "prev_close_below_vwap": false
+   "prev_close_below_vwap": true
   },
   "FBTC.TO": {
    "position": null,
    "entries": 0,
    "orb_used": false,
-   "prev_close_below_vwap": false
+   "prev_close_below_vwap": true
   },
   "ENB.TO": {
    "position": null,
@@ -34,7 +34,7 @@
   },
   "MSFT.NE": {
    "position": null,
-   "entries": 1,
+   "entries": 0,
    "orb_used": false,
    "prev_close_below_vwap": true
   },
@@ -46,13 +46,13 @@
   }
  },
  "last_bar": {
-  "BTCC-B.TO": "2026-11-11T15:55:00-05:00",
-  "BTCX-B.TO": "2026-11-11T15:53:56-05:00",
-  "FBTC.TO": "2026-11-11T15:55:00-05:00",
-  "ENB.TO": "2026-11-11T15:55:00-05:00",
-  "TSLA.NE": "2026-11-11T15:55:00-05:00",
-  "MSFT.NE": "2026-11-11T15:55:00-05:00",
-  "AMZN.NE": "2026-11-11T15:50:00-05:00"
+  "BTCC-B.TO": "2026-11-12T14:05:48-05:00",
+  "BTCX-B.TO": "2026-11-12T14:12:36-05:00",
+  "FBTC.TO": "2026-11-12T14:02:48-05:00",
+  "ENB.TO": "2026-11-12T14:15:00-05:00",
+  "MSFT.NE": "2026-11-12T14:15:00-05:00",
+  "TSLA.NE": "2026-11-12T13:14:08-05:00",
+  "AMZN.NE": "2026-11-12T14:17:02-05:00"
  },
  "journal": [
   {
@@ -5084,6 +5084,193 @@
    "alerted": false,
    "reason": "fin_de_seance",
    "ret_pct": -4.46
+  },
+  {
+   "date": "2026-11-12",
+   "time": "09:36",
+   "symbol": "FRMI",
+   "currency": "USD",
+   "change_pct": 13.5,
+   "rel_volume": 45.9,
+   "entry": 2.055,
+   "exit": null,
+   "alerted": true
+  },
+  {
+   "date": "2026-11-12",
+   "time": "09:36",
+   "symbol": "TRMK",
+   "currency": "USD",
+   "change_pct": 6.5,
+   "rel_volume": 32.8,
+   "entry": 48.535,
+   "exit": null,
+   "alerted": true
+  },
+  {
+   "date": "2026-11-12",
+   "time": "09:36",
+   "symbol": "AVGO",
+   "currency": "USD",
+   "change_pct": 5.6,
+   "rel_volume": 12.9,
+   "entry": 364.56,
+   "exit": null,
+   "alerted": true
+  },
+  {
+   "date": "2026-11-12",
+   "time": "09:36",
+   "symbol": "SPCX",
+   "currency": "USD",
+   "change_pct": 4.7,
+   "rel_volume": 6.8,
+   "entry": 146.2805,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-12",
+   "time": "09:36",
+   "symbol": "CAE",
+   "currency": "USD",
+   "change_pct": 8.1,
+   "rel_volume": 6.1,
+   "entry": 29.61,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-12",
+   "time": "09:36",
+   "symbol": "DPC",
+   "currency": "USD",
+   "change_pct": 10.5,
+   "rel_volume": 4.9,
+   "entry": 35.01,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-12",
+   "time": "09:36",
+   "symbol": "LFTO",
+   "currency": "USD",
+   "change_pct": 5.7,
+   "rel_volume": 4.7,
+   "entry": 19.6,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-12",
+   "time": "09:36",
+   "symbol": "MBGL",
+   "currency": "USD",
+   "change_pct": 11.4,
+   "rel_volume": 4.0,
+   "entry": 22.18,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-12",
+   "time": "09:38",
+   "symbol": "BGS",
+   "currency": "USD",
+   "change_pct": 4.9,
+   "rel_volume": 17.0,
+   "entry": 3.8299,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-12",
+   "time": "09:40",
+   "symbol": "CHA",
+   "currency": "USD",
+   "change_pct": 5.4,
+   "rel_volume": 24.0,
+   "entry": 13.0,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-12",
+   "time": "09:40",
+   "symbol": "FIGR",
+   "currency": "USD",
+   "change_pct": 5.2,
+   "rel_volume": 13.4,
+   "entry": 25.44,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-12",
+   "time": "09:40",
+   "symbol": "TTEC",
+   "currency": "USD",
+   "change_pct": 5.6,
+   "rel_volume": 5.4,
+   "entry": 2.8193,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-12",
+   "time": "09:42",
+   "symbol": "AMD",
+   "currency": "USD",
+   "change_pct": 4.4,
+   "rel_volume": 16.3,
+   "entry": 577.32,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-12",
+   "time": "09:46",
+   "symbol": "CLS",
+   "currency": "USD",
+   "change_pct": 4.5,
+   "rel_volume": 4.1,
+   "entry": 253.8,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-12",
+   "time": "09:49",
+   "symbol": "ENS",
+   "currency": "USD",
+   "change_pct": 5.9,
+   "rel_volume": 5.2,
+   "entry": 156.345,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-12",
+   "time": "09:50",
+   "symbol": "HUBS",
+   "currency": "USD",
+   "change_pct": 4.9,
+   "rel_volume": 5.3,
+   "entry": 212.91,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-12",
+   "time": "09:54",
+   "symbol": "AVEX",
+   "currency": "USD",
+   "change_pct": 14.9,
+   "rel_volume": 11.2,
+   "entry": 13.935,
+   "exit": null,
+   "alerted": false
   }
  ]
 }
