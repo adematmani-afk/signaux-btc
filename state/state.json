@@ -1,34 +1,44 @@
 {
  "equity": 99.335,
- "day": "2026-11-12",
+ "day": "2026-11-13",
  "day_state": {
   "BTCC-B.TO": {
    "position": null,
    "entries": 0,
    "orb_used": false,
-   "prev_close_below_vwap": true
+   "prev_close_below_vwap": false
   },
   "BTCX-B.TO": {
    "position": null,
    "entries": 0,
    "orb_used": false,
-   "prev_close_below_vwap": true
+   "prev_close_below_vwap": false
   },
   "FBTC.TO": {
    "position": null,
    "entries": 0,
    "orb_used": false,
-   "prev_close_below_vwap": true
+   "prev_close_below_vwap": false
   },
   "ENB.TO": {
    "position": null,
    "entries": 0,
    "orb_used": false,
-   "prev_close_below_vwap": true
+   "prev_close_below_vwap": false
   },
   "TSLA.NE": {
-   "position": null,
-   "entries": 0,
+   "position": {
+    "setup": "Retour vers le VWAP",
+    "entry": 33.52000045776367,
+    "t": "2026-11-13T10:30:43-05:00",
+    "stop": 32.85,
+    "t1": 33.88,
+    "t2": 33.88,
+    "t1_done": false,
+    "vwap": 33.88,
+    "or_high": 34.58000183105469
+   },
+   "entries": 1,
    "orb_used": false,
    "prev_close_below_vwap": false
   },
@@ -36,7 +46,7 @@
    "position": null,
    "entries": 0,
    "orb_used": false,
-   "prev_close_below_vwap": true
+   "prev_close_below_vwap": false
   },
   "AMZN.NE": {
    "position": null,
@@ -46,13 +56,13 @@
   }
  },
  "last_bar": {
-  "BTCC-B.TO": "2026-11-12T15:55:00-05:00",
-  "BTCX-B.TO": "2026-11-12T15:55:00-05:00",
-  "FBTC.TO": "2026-11-12T15:55:00-05:00",
-  "ENB.TO": "2026-11-12T15:55:00-05:00",
-  "MSFT.NE": "2026-11-12T15:55:00-05:00",
-  "TSLA.NE": "2026-11-12T15:50:00-05:00",
-  "AMZN.NE": "2026-11-12T15:55:00-05:00"
+  "BTCC-B.TO": "2026-11-13T15:10:00-05:00",
+  "BTCX-B.TO": "2026-11-13T15:10:00-05:00",
+  "FBTC.TO": "2026-11-13T15:10:00-05:00",
+  "ENB.TO": "2026-11-13T15:10:00-05:00",
+  "TSLA.NE": "2026-11-13T15:00:49-05:00",
+  "MSFT.NE": "2026-11-13T15:07:59-05:00",
+  "AMZN.NE": "2026-11-13T14:57:05-05:00"
  },
  "journal": [
   {
@@ -5305,6 +5315,138 @@
    "alerted": false,
    "reason": "fin_de_seance",
    "ret_pct": -2.98
+  },
+  {
+   "date": "2026-11-13",
+   "time": "09:38",
+   "symbol": "CBRS",
+   "currency": "USD",
+   "change_pct": 13.8,
+   "rel_volume": 35.0,
+   "entry": 111.2075,
+   "exit": null,
+   "alerted": true
+  },
+  {
+   "date": "2026-11-13",
+   "time": "09:38",
+   "symbol": "WSE",
+   "currency": "USD",
+   "change_pct": 7.8,
+   "rel_volume": 31.8,
+   "entry": 11.78,
+   "exit": null,
+   "alerted": true
+  },
+  {
+   "date": "2026-11-13",
+   "time": "09:38",
+   "symbol": "HAWK",
+   "currency": "USD",
+   "change_pct": 11.1,
+   "rel_volume": 16.6,
+   "entry": 16.305,
+   "exit": null,
+   "alerted": true
+  },
+  {
+   "date": "2026-11-13",
+   "time": "09:38",
+   "symbol": "STN",
+   "currency": "USD",
+   "change_pct": 13.7,
+   "rel_volume": 10.5,
+   "entry": 85.64,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-13",
+   "time": "09:38",
+   "symbol": "MP",
+   "currency": "USD",
+   "change_pct": 4.6,
+   "rel_volume": 5.5,
+   "entry": 39.2,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-13",
+   "time": "09:38",
+   "symbol": "NU",
+   "currency": "USD",
+   "change_pct": 4.6,
+   "rel_volume": 4.9,
+   "entry": 12.335,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-13",
+   "time": "09:42",
+   "symbol": "BIRD",
+   "currency": "USD",
+   "change_pct": 13.3,
+   "rel_volume": 12.8,
+   "entry": 1.2603,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-13",
+   "time": "09:42",
+   "symbol": "OFRM",
+   "currency": "USD",
+   "change_pct": 5.3,
+   "rel_volume": 10.9,
+   "entry": 10.715,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-13",
+   "time": "09:48",
+   "symbol": "ECC",
+   "currency": "USD",
+   "change_pct": 6.6,
+   "rel_volume": 11.7,
+   "entry": 2.27,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-13",
+   "time": "09:50",
+   "symbol": "CLBT",
+   "currency": "USD",
+   "change_pct": 7.2,
+   "rel_volume": 4.3,
+   "entry": 11.68,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-13",
+   "time": "11:00",
+   "symbol": "STVN",
+   "currency": "USD",
+   "change_pct": 4.1,
+   "rel_volume": 4.0,
+   "entry": 14.95,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-13",
+   "time": "11:14",
+   "symbol": "CDNL",
+   "currency": "USD",
+   "change_pct": 15.0,
+   "rel_volume": 18.8,
+   "entry": 6.485,
+   "exit": null,
+   "alerted": false
   }
  ]
 }
