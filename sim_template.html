@@ -1,0 +1,283 @@
+<title>Atelier Monte Carlo</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/plotly.js/2.27.0/plotly.min.js"></script>
+<style>
+/* Mise en page : bandeau de contrôles, puis grande surface 3D à gauche et fiche de chiffres à droite, puis verdict du test hors échantillon. */
+:root {
+  --bg: #f3f5f8; --panel: #ffffff; --fg: #142033; --muted: #5b6b80; --line: #d9e0ea;
+  --accent: #2563c9; --accent-soft: #e3ecfb; --good: #1f8a5b; --warn: #b7791f; --bad: #c2413a;
+  --display: "Instrument Sans", "Segoe UI", system-ui, sans-serif;
+  --body: "Instrument Sans", "Segoe UI", system-ui, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #0e1520; --panel: #151f2e; --fg: #e4eaf3; --muted: #93a3b8; --line: #263347;
+  --accent: #6ea2ff; --accent-soft: #1c2c47; --good: #4cc38a; --warn: #e2a64a; --bad: #ef7a72; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #0e1520; --panel: #151f2e; --fg: #e4eaf3; --muted: #93a3b8; --line: #263347;
+  --accent: #6ea2ff; --accent-soft: #1c2c47; --good: #4cc38a; --warn: #e2a64a; --bad: #ef7a72; color-scheme: dark }
+* { box-sizing: border-box }
+body { background: var(--bg); color: var(--fg); font-family: var(--body); font-size: 15px; line-height: 1.5;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 20px 40px }
+.wrap { max-width: 1240px; margin: 0 auto; display: grid; gap: 18px }
+header { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: 12px }
+h1 { font-family: var(--display); font-size: 1.7rem; font-weight: 700; margin: 0; letter-spacing: -0.01em; text-wrap: balance }
+h2 { font-size: 1.05rem; margin: 0; font-weight: 600 }
+.sub { color: var(--muted); margin: 4px 0 0; max-width: 68ch }
+.stamp { font-family: var(--mono); font-size: 12px; color: var(--muted) }
+.controls { display: flex; flex-wrap: wrap; gap: 14px 24px; align-items: center }
+.group { display: flex; flex-wrap: wrap; gap: 6px; align-items: center }
+.group > span { font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-right: 4px }
+button.chip { font: 500 13px var(--body); color: var(--fg); background: var(--panel); border: 1px solid var(--line);
+  border-radius: 999px; padding: 5px 12px; cursor: pointer }
+button.chip:hover { border-color: var(--accent) }
+button.chip[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--bg) }
+button.chip:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px }
+.main { display: grid; grid-template-columns: minmax(0, 1fr) 330px; gap: 18px }
+@media (max-width: 900px) { .main { grid-template-columns: minmax(0, 1fr) } }
+.panel { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 16px; min-width: 0 }
+#plot { width: 100%; height: 560px }
+@media (max-width: 600px) { #plot { height: 420px } }
+.hint { color: var(--muted); font-size: 12.5px; margin: 6px 0 0 }
+.price { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap }
+.price b { font-family: var(--mono); font-size: 1.6rem; font-weight: 500 }
+.price small { color: var(--muted) }
+.tabs { display: flex; gap: 4px; margin: 14px 0 10px }
+.tabs button { flex: 1; font: 500 13px var(--body); padding: 6px; border: 1px solid var(--line); background: transparent; color: var(--fg); border-radius: 6px; cursor: pointer }
+.tabs button[aria-pressed="true"] { background: var(--accent-soft); border-color: var(--accent); color: var(--accent) }
+dl { display: grid; grid-template-columns: 1fr auto; gap: 7px 12px; margin: 0 }
+dt { color: var(--muted); font-size: 13.5px }
+dd { margin: 0; font-family: var(--mono); font-size: 13.5px; text-align: right; font-variant-numeric: tabular-nums }
+.meter { height: 6px; background: var(--line); border-radius: 3px; position: relative; margin: 4px 0 12px }
+.meter i { position: absolute; inset: 0 auto 0 0; background: var(--accent); border-radius: 3px }
+.meter::after { content: ""; position: absolute; left: 50%; top: -3px; bottom: -3px; width: 1px; background: var(--muted) }
+.facts { display: grid; gap: 8px; margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--line); font-size: 13.5px }
+.pill { display: inline-block; font-size: 11.5px; font-weight: 600; padding: 2px 8px; border-radius: 999px; border: 1px solid currentColor }
+.pill.good { color: var(--good) } .pill.warn { color: var(--warn) } .pill.bad { color: var(--bad) }
+.verdict { display: grid; gap: 14px }
+.verdict p { margin: 0; max-width: 75ch }
+.tablebox { overflow-x: auto }
+table { border-collapse: collapse; width: 100%; font-size: 13.5px; min-width: 640px }
+th, td { padding: 7px 10px; border-bottom: 1px solid var(--line); text-align: right; font-variant-numeric: tabular-nums }
+th:first-child, td:first-child { text-align: left }
+th { font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); font-weight: 600 }
+td { font-family: var(--mono) } td:first-child { font-family: var(--body); font-weight: 500 }
+.neg { color: var(--bad) } .pos { color: var(--good) }
+.liq { display: grid; gap: 14px }
+.liqhead { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: start; gap: 10px }
+.kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 10px }
+.kpi { border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; display: grid; gap: 2px; align-content: start }
+.kpi span { font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted) }
+.kpi b { font-family: var(--mono); font-size: 1.15rem; font-weight: 500; font-variant-numeric: tabular-nums }
+.kpi small { color: var(--muted); font-size: 12px }
+#candles { width: 100%; height: 520px }
+@media (max-width: 600px) { #candles { height: 440px } }
+.foot { color: var(--muted); font-size: 12.5px; max-width: 80ch }
+</style>
+
+<div class="wrap">
+  <header>
+    <div>
+      <h1>Atelier Monte Carlo</h1>
+      <p class="sub">Distribution des prix possibles sur les 20 prochaines séances, simulée avec 4 modèles quantitatifs classiques. La hauteur de la surface donne la probabilité de chaque niveau de prix, jour après jour.</p>
+    </div>
+    <div class="stamp" id="stamp"></div>
+  </header>
+
+  <div class="controls">
+    <div class="group" id="tickers"><span>Titre</span></div>
+    <div class="group" id="models"><span>Modèle</span></div>
+  </div>
+
+  <div class="main">
+    <section class="panel">
+      <div id="plot" role="img" aria-label="Surface 3D de probabilité du prix"></div>
+      <p class="hint">Glisse pour tourner, molette pour zoomer. Axe X : séances à venir. Axe Y : prix en $ CA. Axe Z : probabilité (%) que le prix soit dans cette tranche. La ligne foncée au sol montre les 25 dernières séances réelles, la ligne bleue la médiane simulée, les pointillés l'intervalle à 90 %.</p>
+    </section>
+    <aside class="panel" id="card"></aside>
+  </div>
+
+  <section class="panel liq">
+    <div class="liqhead">
+      <div>
+        <h2>Liquidité et bougies · <span id="liqName"></span></h2>
+        <p class="hint">Volume échangé sous les bougies. Fais glisser la barre du bas pour choisir la période.</p>
+      </div>
+      <div class="group" id="liqView"><span>Vue</span></div>
+    </div>
+    <div class="kpis" id="kpis"></div>
+    <div id="candles" role="img" aria-label="Bougies et volume"></div>
+  </section>
+
+  <section class="panel verdict">
+    <h2>Est-ce que ces prévisions valent quelque chose ? Test hors échantillon</h2>
+    <p id="verdictText"></p>
+    <div class="tablebox"><table id="valTable"></table></div>
+    <p class="foot">Méthode : sur la dernière année, toutes les 5 séances, chaque modèle est réestimé avec le passé seulement, puis sa prévision est comparée à ce qui est réellement arrivé. « Direction » = part des fois où P(hausse) &gt; 50 % a vu juste. « Score Brier » &gt; 0 = meilleur que la simple fréquence historique de hausse, &lt; 0 = pire. « Couverture 90 % » = part des fois où le vrai prix est tombé dans l'intervalle à 90 % (idéal : 90 %). Une simulation ne prédit pas le marché : elle décrit ce qui est plausible si le passé ressemble au futur.</p>
+  </section>
+</div>
+
+<script>
+const DATA = __DATA__;
+const VAL = __VAL__;
+const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+const tks = Object.keys(DATA.tickers);
+const MODELS = ["Ensemble", "GBM", "GARCH", "Régimes", "Bootstrap"];
+const DESC = {
+  "Ensemble": "Moyenne des 4 modèles (16 000 trajectoires).",
+  "GBM": "Mouvement brownien géométrique : volatilité constante, courbe en cloche.",
+  "GARCH": "GARCH(1,1) Student : la volatilité d'aujourd'hui influence demain, queues épaisses.",
+  "Régimes": "Markov à 2 régimes (calme / agité) de Hamilton.",
+  "Bootstrap": "Rejoue des blocs de 5 vrais rendements des 2 dernières années."
+};
+let state = { tk: tks[0], model: "Ensemble", hz: "5", liq: "5min" };
+try { const s = JSON.parse(localStorage.getItem("mc-state") || "{}"); if (DATA.tickers[s.tk]) state.tk = s.tk; if (MODELS.includes(s.model)) state.model = s.model; if (s.hz) state.hz = s.hz; if (s.liq) state.liq = s.liq; } catch (e) {}
+const save = () => { try { localStorage.setItem("mc-state", JSON.stringify(state)); } catch (e) {} };
+const pct = (x, d = 0) => (x * 100).toFixed(d) + " %";
+const money = x => x.toFixed(2) + " $";
+
+document.getElementById("stamp").textContent = "Simulé le " + new Date(DATA.generated).toLocaleString("fr-CA", { dateStyle: "medium", timeStyle: "short" }) + " · " + DATA.n_paths.toLocaleString("fr-CA") + " trajectoires par modèle";
+
+function chips(id, items, key, label) {
+  const g = document.getElementById(id);
+  items.forEach(v => {
+    const b = document.createElement("button");
+    b.className = "chip"; b.id = id + "-" + v.replace(/\W/g, ""); b.textContent = label(v);
+    b.onclick = () => { state[key] = v; save(); render(); };
+    b.dataset.v = v; g.appendChild(b);
+  });
+}
+chips("tickers", tks, "tk", v => DATA.tickers[v].label);
+chips("models", MODELS, "model", v => v);
+chips("liqView", ["5min", "jour"], "liq", v => v === "5min" ? "5 min · 5 séances" : "Jour · 6 mois");
+
+function sync() {
+  document.querySelectorAll("#tickers button").forEach(b => b.setAttribute("aria-pressed", b.dataset.v === state.tk));
+  document.querySelectorAll("#models button").forEach(b => b.setAttribute("aria-pressed", b.dataset.v === state.model));
+  document.querySelectorAll("#liqView button").forEach(b => b.setAttribute("aria-pressed", b.dataset.v === state.liq));
+}
+
+function plot() {
+  const T = DATA.tickers[state.tk], z = T.surface[state.model].map(r => r.slice(1)), y = T.price_grid;
+  const x = Array.from({ length: DATA.horizon_days }, (_, i) => i + 1), x0 = [0, ...x];
+  const fg = css("--fg"), muted = css("--muted"), line = css("--line"), acc = css("--accent");
+  const dark = css("color-scheme") === "dark" || getComputedStyle(document.documentElement).colorScheme === "dark";
+  const scale = dark
+    ? [[0, "#151f2e"], [0.15, "#1f3b6b"], [0.4, "#2f6fdb"], [0.7, "#4fc3c8"], [1, "#f2e18a"]]
+    : [[0, "#eef2f8"], [0.15, "#b9cdf2"], [0.4, "#3f7be0"], [0.7, "#17a2a8"], [1, "#e0a21b"]];
+  const h = T.history, n = 25, hc = h.close.slice(-n);
+  const hx = hc.map((_, i) => i - hc.length + 1);
+  const b = T.models[state.model].bands;
+  const traces = [
+    { type: "surface", x, y, z, colorscale: scale, showscale: false, opacity: 0.96,
+      contours: { z: { show: true, usecolormap: true, project: { z: false }, width: 1 } },
+      hovertemplate: "Séance +%{x}<br>Prix %{y:.2f} $<br>Probabilité %{z:.2f} %<extra></extra>" },
+    { type: "scatter3d", mode: "lines", x: hx, y: hc, z: hc.map(() => 0), line: { color: fg, width: 4 }, name: "Historique",
+      hovertemplate: "%{y:.2f} $<extra>réel</extra>" },
+    { type: "scatter3d", mode: "lines", x: x0, y: b["50"], z: x0.map(() => 0), line: { color: acc, width: 5 }, name: "Médiane",
+      hovertemplate: "Médiane +%{x} : %{y:.2f} $<extra></extra>" },
+    { type: "scatter3d", mode: "lines", x: x0, y: b["5"], z: x0.map(() => 0), line: { color: muted, width: 3, dash: "dash" }, name: "5 %" , hoverinfo: "skip" },
+    { type: "scatter3d", mode: "lines", x: x0, y: b["95"], z: x0.map(() => 0), line: { color: muted, width: 3, dash: "dash" }, name: "95 %", hoverinfo: "skip" }
+  ];
+  const ax = t => ({ title: { text: t, font: { color: muted, size: 12 } }, color: muted, gridcolor: line, zerolinecolor: line, backgroundcolor: "rgba(0,0,0,0)", showbackground: true, tickfont: { color: muted, size: 10 } });
+  const layout = {
+    paper_bgcolor: "rgba(0,0,0,0)", margin: { l: 0, r: 0, t: 0, b: 0 }, showlegend: false, font: { family: "Instrument Sans, system-ui, sans-serif", color: fg },
+    scene: { xaxis: ax("Séances"), yaxis: ax("Prix $ CA"), zaxis: ax("Probabilité %"),
+      camera: { eye: { x: -1.55, y: -1.55, z: 0.95 } }, aspectratio: { x: 1.4, y: 1.2, z: 0.7 } }
+  };
+  const el = document.getElementById("plot");
+  if (el.dataset.ready) { layout.scene.camera = el.layout.scene.camera; Plotly.react(el, traces, layout); }
+  else { Plotly.newPlot(el, traces, layout, { responsive: true, displaylogo: false, modeBarButtonsToRemove: ["toImage"] }); el.dataset.ready = 1; }
+}
+
+function card() {
+  const T = DATA.tickers[state.tk], M = T.models[state.model], H = M.horizons[state.hz];
+  const lbl = { "1": "demain", "5": "dans 5 séances", "20": "dans 20 séances" }[state.hz];
+  const vol = T.vol_today_pct, normal = T.vol_normal_pct, ratio = vol / normal;
+  const volPill = ratio > 1.2 ? '<span class="pill bad">plus agité que d\'habitude</span>' : ratio < 0.85 ? '<span class="pill good">plus calme que d\'habitude</span>' : '<span class="pill warn">normale</span>';
+  document.getElementById("card").innerHTML = `
+    <div class="price"><b>${money(T.last)}</b><small>${T.label} · clôture du ${T.last_date}</small></div>
+    <p class="hint" style="margin-top:2px">${DESC[state.model]}</p>
+    <div class="tabs">${["1", "5", "20"].map(k => `<button id="hz-${k}" aria-pressed="${k === state.hz}" data-h="${k}">${k === "1" ? "1 séance" : k + " séances"}</button>`).join("")}</div>
+    <dl>
+      <dt>Probabilité que le prix soit plus haut ${lbl}</dt><dd>${pct(H.p_up)}</dd>
+    </dl>
+    <div class="meter" aria-hidden="true"><i style="width:${(H.p_up * 100).toFixed(1)}%"></i></div>
+    <dl>
+      <dt>Prix médian</dt><dd>${money(H.median)}</dd>
+      <dt>Rendement moyen simulé</dt><dd class="${H.mean_ret_pct >= 0 ? "pos" : "neg"}">${H.mean_ret_pct >= 0 ? "+" : ""}${H.mean_ret_pct.toFixed(2)} %</dd>
+      <dt>Intervalle à 90 %</dt><dd>${H.q05.toFixed(2)} – ${H.q95.toFixed(2)}</dd>
+      <dt>Chance d'atteindre +3 %</dt><dd>${pct(H.p_gain_3pct)}</dd>
+      <dt>Chance de tomber sous −2 %</dt><dd>${pct(H.p_loss_2pct)}</dd>
+    </dl>
+    <div class="facts">
+      <div>Volatilité prévue demain (GARCH) : <b>${vol.toFixed(2)} %</b> par jour, contre ${normal.toFixed(2)} % en temps normal. ${volPill}</div>
+      <div>Probabilité d'être en régime agité aujourd'hui : <b>${T.regime_agite_pct.toFixed(0)} %</b></div>
+    </div>`;
+  document.querySelectorAll(".tabs button").forEach(b => b.onclick = () => { state.hz = b.dataset.h; save(); card(); });
+}
+
+function verdict() {
+  const P = VAL.pooled, rows = MODELS.map(m => [m, P[m]["1"], P[m]["5"]]);
+  const f = (x, d = 1) => (x * 100).toFixed(d) + " %";
+  const s = x => `<span class="${x > 0.005 ? "pos" : x < -0.005 ? "neg" : ""}">${x >= 0 ? "+" : ""}${x.toFixed(3)}</span>`;
+  const sig = r => r.signal_avg_ret_pct == null ? "—" : `${r.signal_avg_ret_pct >= 0 ? "+" : ""}${r.signal_avg_ret_pct.toFixed(2)} % (${r.signal_n})`;
+  document.getElementById("valTable").innerHTML =
+    `<thead><tr><th>Modèle</th><th>Direction 1 j</th><th>Direction 5 j</th><th>Score Brier 1 j</th><th>Score Brier 5 j</th><th>Couverture 90 % 5 j</th><th>Achat si P&gt;55 %, 5 j</th></tr></thead><tbody>` +
+    rows.map(([m, a, b]) => `<tr><td>${m}</td><td>${f(a.hit_rate)}</td><td>${f(b.hit_rate)}</td><td>${s(a.brier_skill)}</td><td>${s(b.brier_skill)}</td><td>${f(b.coverage90, 0)}</td><td>${sig(b)}</td></tr>`).join("") +
+    `<tr><td>Toujours acheter (référence)</td><td>${f(P.Ensemble["1"].always_up_rate)}</td><td>${f(P.Ensemble["5"].always_up_rate)}</td><td>0</td><td>0</td><td>—</td><td>${P.Ensemble["5"].all_avg_ret_pct >= 0 ? "+" : ""}${P.Ensemble["5"].all_avg_ret_pct.toFixed(2)} % (${P.Ensemble["5"].n})</td></tr></tbody>`;
+  document.getElementById("verdictText").innerHTML = VAL.summary_fr;
+}
+
+const nf = x => x == null ? "—" : Math.round(x).toLocaleString("fr-CA");
+const big = x => x >= 1e6 ? (x / 1e6).toFixed(1).replace(".", ",") + " M$" : x >= 1e3 ? Math.round(x / 1e3) + " k$" : Math.round(x) + " $";
+
+function liq() {
+  const T = DATA.tickers[state.tk], L = T.liquidity;
+  if (!L) return;
+  document.getElementById("liqName").textContent = T.label;
+  const rv = L.today_rel_volume;
+  const rvPill = rv == null ? "" : rv >= 1.5 ? '<span class="pill warn">très actif</span>' : rv < 0.6 ? '<span class="pill bad">calme</span>' : '<span class="pill good">normal</span>';
+  const sp = L.spread_est_pct;
+  const spPill = sp > 0.5 ? '<span class="pill bad">coûteux</span>' : sp > 0.2 ? '<span class="pill warn">moyen</span>' : '<span class="pill good">serré</span>';
+  const zb = L.zero_volume_bars_pct;
+  document.getElementById("kpis").innerHTML = `
+    <div class="kpi"><span>Volume aujourd'hui</span><b>${nf(L.today_volume)}</b><small>${rv == null ? "" : rv.toFixed(2).replace(".", ",") + "× le rythme habituel à cette heure "}${rvPill}</small></div>
+    <div class="kpi"><span>Volume moyen / jour</span><b>${nf(L.avg_volume_20d)}</b><small>titres, 20 dernières séances</small></div>
+    <div class="kpi"><span>Montant échangé / jour</span><b>${big(L.avg_dollar_volume_20d)}</b><small>en $ CA, moyenne 20 séances</small></div>
+    <div class="kpi"><span>Écart achat-vente estimé</span><b>${sp.toFixed(2).replace(".", ",")} %</b><small>coût d'un aller-retour, estimé ${spPill}</small></div>
+    <div class="kpi"><span>Bougies 5 min sans échange</span><b>${zb.toFixed(1).replace(".", ",")} %</b><small>${zb > 10 ? "trous fréquents, prix moins fiable" : "le titre s'échange en continu"}</small></div>`;
+
+  const D = state.liq === "5min" ? L.intraday : L.daily;
+  const fg = css("--fg"), muted = css("--muted"), line = css("--line"), acc = css("--accent"), good = css("--good"), bad = css("--bad");
+  const up = D.c.map((c, i) => c >= D.o[i]);
+  const lab = state.liq === "5min" ? D.t.map(t => t.slice(5).replace(" ", " · ")) : D.t;
+  const traces = [
+    { type: "candlestick", x: lab, open: D.o, high: D.h, low: D.l, close: D.c, xaxis: "x", yaxis: "y", name: "Prix",
+      increasing: { line: { color: good, width: 1 }, fillcolor: good }, decreasing: { line: { color: bad, width: 1 }, fillcolor: bad } },
+    { type: "bar", x: lab, y: D.v, xaxis: "x", yaxis: "y2", name: "Volume", marker: { color: up.map(u => u ? good : bad), opacity: 0.55 },
+      hovertemplate: "%{x}<br>Volume %{y:,}<extra></extra>" }
+  ];
+  if (D.vwap) traces.push({ type: "scatter", mode: "lines", x: lab, y: D.vwap, xaxis: "x", yaxis: "y", name: "VWAP",
+    line: { color: acc, width: 1.5 }, connectgaps: false, hovertemplate: "VWAP %{y:.2f}<extra></extra>" });
+  const n = lab.length, start = Math.max(0, n - (state.liq === "5min" ? 160 : 70));
+  const layout = {
+    paper_bgcolor: "rgba(0,0,0,0)", plot_bgcolor: "rgba(0,0,0,0)", showlegend: false, dragmode: "pan",
+    margin: { l: 50, r: 10, t: 10, b: 10 }, font: { family: "Instrument Sans, system-ui, sans-serif", color: muted, size: 11 },
+    xaxis: { type: "category", anchor: "y2", nticks: 8, gridcolor: line, linecolor: line, tickfont: { color: muted },
+      range: [start - 0.5, n - 0.5], rangeslider: { visible: true, thickness: 0.08, bgcolor: "rgba(0,0,0,0)", bordercolor: line, borderwidth: 1 } },
+    yaxis: { domain: [0.32, 1], gridcolor: line, zeroline: false, tickfont: { color: muted }, title: { text: "Prix $ CA", font: { color: muted } }, autorange: true, fixedrange: false },
+    yaxis2: { domain: [0, 0.26], gridcolor: line, zeroline: false, tickfont: { color: muted }, title: { text: "Volume", font: { color: muted } } },
+    hoverlabel: { font: { family: "JetBrains Mono, monospace" } }
+  };
+  Plotly.react("candles", traces, layout, { responsive: true, displaylogo: false, modeBarButtonsToRemove: ["toImage", "lasso2d", "select2d"] });
+}
+
+function render() { sync(); plot(); card(); liq(); }
+render(); verdict();
+const repaint = () => { plot(); liq(); };
+matchMedia("(prefers-color-scheme: dark)").addEventListener("change", repaint);
+new MutationObserver(repaint).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+</script>
