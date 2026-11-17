@@ -138,13 +138,7 @@ def main(probe=False):
             if it["date"] and now - it["date"] > MAX_AGE:
                 continue
             alerts += 1
-            notify("JETON OFFICIEL ? Rockstar / Take-Two", [
-                it["title"][:200],
-                f"Source officielle : {src['name']}",
-                it["link"],
-                "Avant tout achat : ouvre ce lien toi-même et vérifie l'adresse du contrat sur le site "
-                "officiel. Des copies du jeton apparaîtront dans les minutes qui suivent.",
-            ])
+            notify("JETON OFFICIEL ? Rockstar / Take-Two", alert_lines(it["title"], src["name"], it["link"]))
     if not probe:
         st["seen"] = sorted(seen)[-500:]
         st["initialised"] = True
@@ -157,5 +151,18 @@ def main(probe=False):
     print(f"{alerts} alerte(s) envoyée(s)")
 
 
+def alert_lines(title, source, link):
+    return [title[:200], f"Source officielle : {source}", link,
+            "Avant tout achat : ouvre ce lien toi-même et vérifie l'adresse du contrat sur le site "
+            "officiel. Des copies du jeton apparaîtront dans les minutes qui suivent."]
+
+
 if __name__ == "__main__":
-    main(probe=len(sys.argv) > 1 and sys.argv[1] == "probe")
+    arg = sys.argv[1] if len(sys.argv) > 1 else ""
+    if arg == "test":
+        notify("TEST veille jeton Rockstar / Take-Two",
+               ["Ceci est un essai : aucun jeton officiel n'a été annoncé."]
+               + alert_lines("(exemple) Rockstar Games annonce un jeton", "Take-Two (communiqués officiels)",
+                             "https://ir.take2games.com/"))
+    else:
+        main(probe=arg == "probe")

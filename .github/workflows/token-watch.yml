@@ -6,10 +6,9 @@ on:
     - cron: "*/10 * * * *"
   workflow_dispatch:
     inputs:
-      probe:
-        description: "Afficher ce que renvoie chaque source, sans alerte"
-        type: boolean
-        default: false
+      mode:
+        description: "vide = veille normale, probe = afficher les sources, test = alerte d'essai"
+        default: ""
 
 permissions:
   contents: write
@@ -30,8 +29,8 @@ jobs:
       - run: pip install -r requirements.txt
       - env:
           NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
-        run: python token_watch.py ${{ inputs.probe && 'probe' || '' }}
-      - if: ${{ !inputs.probe }}
+        run: python token_watch.py ${{ inputs.mode }}
+      - if: ${{ !inputs.mode }}
         run: |
           git config user.name "signaux-bot"
           git config user.email "signaux-bot@users.noreply.github.com"
