@@ -1,7 +1,7 @@
 """Veille : annonce d'un jeton crypto OFFICIEL de Rockstar Games ou Take-Two.
 
-Ne regarde que des sources officielles (dépôts SEC de Take-Two, communiqués de
-Take-Two, newswire de Rockstar, et communiqués de presse diffusés par fil de presse
+Ne regarde que des sources officielles (communiqués de Take-Two, newswire de
+Rockstar, et communiqués de presse diffusés par fil de presse
 au nom de Take-Two). Les articles de blogs ou les jetons « GTA » créés par des
 inconnus ne déclenchent rien.
 
@@ -32,18 +32,12 @@ ISSUER = re.compile(r"take-two interactive|take two interactive|rockstar games",
 # Sources officielles. "kind" = "official" : tout article qui parle de crypto compte.
 # "kind" = "wire" : il faut en plus que l'émetteur soit Take-Two / Rockstar.
 SOURCES = [
-    {"name": "SEC (dépôts 8-K de Take-Two)", "kind": "official",
-     "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000946581&type=8-K&dateb=&owner=include&count=20&output=atom"},
-    {"name": "Take-Two (communiqués)", "kind": "official",
+    {"name": "Take-Two (communiqués officiels)", "kind": "official",
      "url": "https://ir.take2games.com/rss/news-releases.xml"},
-    {"name": "Take-Two (communiqués, autre flux)", "kind": "official",
-     "url": "https://ir.take2games.com/news-releases/rss"},
-    {"name": "Rockstar Newswire", "kind": "official",
-     "url": "https://www.rockstargames.com/newswire/rss"},
-    {"name": "Rockstar Newswire (autre flux)", "kind": "official",
-     "url": "https://www.rockstargames.com/newswire/feed"},
-    {"name": "Google Actualités (fils de presse officiels)", "kind": "wire",
-     "url": "https://news.google.com/rss/search?q=%28%22Take-Two%22+OR+%22Rockstar+Games%22%29+%28token+OR+crypto+OR+blockchain+OR+cryptocurrency%29+%28site%3Abusinesswire.com+OR+site%3Aprnewswire.com+OR+site%3Aglobenewswire.com+OR+site%3Atake2games.com+OR+site%3Arockstargames.com%29&hl=en-US&gl=US&ceid=US%3Aen"},
+    {"name": "Rockstar Newswire (via Google Actualités)", "kind": "official",
+     "url": "https://news.google.com/rss/search?q=site%3Arockstargames.com+%28token+OR+crypto+OR+blockchain+OR+cryptocurrency+OR+web3+OR+NFT%29&hl=en-US&gl=US&ceid=US%3Aen"},
+    {"name": "Fils de presse (communiqués de Take-Two / Rockstar)", "kind": "wire",
+     "url": "https://news.google.com/rss/search?q=%28%22Take-Two%22+OR+%22Rockstar+Games%22%29+%28token+OR+crypto+OR+blockchain+OR+cryptocurrency%29+%28site%3Abusinesswire.com+OR+site%3Aprnewswire.com+OR+site%3Aglobenewswire.com+OR+site%3Atake2games.com%29&hl=en-US&gl=US&ceid=US%3Aen"},
 ]
 MAX_AGE = timedelta(days=7)
 
