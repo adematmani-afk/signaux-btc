@@ -1,17 +1,20 @@
 name: Veille jeton Rockstar / Take-Two
 
-# Vérifie les sources officielles toutes les 10 minutes, jour et nuit.
+# Un job reste allumé environ 6 h et vérifie les sources officielles toutes les 5 minutes,
+# puis relance lui-même le suivant : la veille tourne jour et nuit.
+# Le planificateur de GitHub sert seulement de filet si la chaîne s'arrête.
 on:
   schedule:
-    - cron: "*/10 * * * *"
+    - cron: "7 */2 * * *"
   workflow_dispatch:
     inputs:
       mode:
-        description: "vide = veille normale, probe = afficher les sources, test = alerte d'essai"
+        description: "vide = veille continue, once = une vérification, probe = afficher les sources, test = alerte d'essai"
         default: ""
 
 permissions:
   contents: write
+  actions: write
 
 concurrency:
   group: token-watch
@@ -20,7 +23,7 @@ concurrency:
 jobs:
   veille:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 355
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -29,10 +32,21 @@ jobs:
       - run: pip install -r requirements.txt
       - env:
           NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
-        run: python token_watch.py ${{ inputs.mode }}
-      - if: ${{ !inputs.mode }}
+          MODE: ${{ inputs.mode }}
+        run: |
+          case "$MODE" in
+            "") python token_watch.py loop 340 ;;
+            once) python token_watch.py ;;
+            probe|test) python token_watch.py "$MODE" ;;
+            *) echo "mode inconnu : $MODE"; exit 1 ;;
+          esac
+      - if: ${{ always() && inputs.mode != 'probe' && inputs.mode != 'test' }}
         run: |
           git config user.name "signaux-bot"
           git config user.email "signaux-bot@users.noreply.github.com"
           git add state/token_watch.json 2>/dev/null || true
           git diff --cached --quiet || (git commit -m "Veille jeton : mise à jour" && git pull --rebase -q && git push)
+      - if: ${{ always() && !inputs.mode }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run token-watch.yml --ref main

@@ -159,7 +159,17 @@ def alert_lines(title, source, link):
 
 if __name__ == "__main__":
     arg = sys.argv[1] if len(sys.argv) > 1 else ""
-    if arg == "test":
+    if arg == "loop":
+        import time
+        minutes = int(sys.argv[2]) if len(sys.argv) > 2 else 340
+        start = time.monotonic()
+        while time.monotonic() - start < minutes * 60:
+            try:
+                main()
+            except Exception as ex:  # une erreur réseau ne doit pas arrêter la veille
+                print(f"erreur : {ex}")
+            time.sleep(300)
+    elif arg == "test":
         notify("TEST veille jeton Rockstar / Take-Two",
                ["Ceci est un essai : aucun jeton officiel n'a été annoncé."]
                + alert_lines("(exemple) Rockstar Games annonce un jeton", "Take-Two (communiqués officiels)",
