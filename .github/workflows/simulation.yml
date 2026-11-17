@@ -1,0 +1,42 @@
+name: Simulation 3D
+
+# Après la clôture : simulation Monte Carlo (4 modèles) et page 3D.
+# Le vendredi, on refait aussi le test hors échantillon (~15 min).
+# Rien ici n'envoie d'alerte ni ne change la stratégie du bot.
+
+on:
+  workflow_dispatch:
+    inputs:
+      validate:
+        description: "Refaire le test hors échantillon"
+        type: boolean
+        default: false
+  schedule:
+    - cron: "30 21 * * 1-5"
+
+permissions:
+  contents: write
+
+jobs:
+  simulate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r requirements-sim.txt
+      - run: python market_sim.py run
+      - name: Test hors échantillon (vendredi ou sur demande)
+        run: |
+          if [ "${{ inputs.validate }}" = "true" ] || [ "$(TZ=America/Toronto date +%u)" = "5" ]; then
+            python market_sim.py validate
+          fi
+      - run: python market_sim.py html
+      - name: Sauvegarder les résultats
+        run: |
+          git config user.name "signaux-bot"
+          git config user.email "signaux-bot@users.noreply.github.com"
+          git add simulation/
+          git diff --cached --quiet || (git commit -m "Simulation 3D" && git pull --rebase -q && git push)
