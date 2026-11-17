@@ -1,0 +1,39 @@
+name: Veille jeton Rockstar / Take-Two
+
+# Vérifie les sources officielles toutes les 10 minutes, jour et nuit.
+on:
+  schedule:
+    - cron: "*/10 * * * *"
+  workflow_dispatch:
+    inputs:
+      probe:
+        description: "Afficher ce que renvoie chaque source, sans alerte"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: token-watch
+  cancel-in-progress: false
+
+jobs:
+  veille:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r requirements.txt
+      - env:
+          NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
+        run: python token_watch.py ${{ inputs.probe && 'probe' || '' }}
+      - if: ${{ !inputs.probe }}
+        run: |
+          git config user.name "signaux-bot"
+          git config user.email "signaux-bot@users.noreply.github.com"
+          git add state/token_watch.json 2>/dev/null || true
+          git diff --cached --quiet || (git commit -m "Veille jeton : mise à jour" && git pull --rebase -q && git push)
