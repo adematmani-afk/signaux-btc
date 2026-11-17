@@ -1,24 +1,34 @@
 {
  "equity": 100.1567,
- "day": "2026-11-16",
+ "day": "2026-11-17",
  "day_state": {
   "BTCC-B.TO": {
-   "position": null,
-   "entries": 0,
+   "position": {
+    "setup": "Retour vers le VWAP",
+    "entry": 12.649999618530273,
+    "t": "2026-11-17T10:45:00-05:00",
+    "stop": 12.4,
+    "t1": 12.78,
+    "t2": 12.78,
+    "t1_done": false,
+    "vwap": 12.78,
+    "or_high": 12.859999656677246
+   },
+   "entries": 1,
    "orb_used": false,
-   "prev_close_below_vwap": false
+   "prev_close_below_vwap": true
   },
   "BTCX-B.TO": {
    "position": null,
    "entries": 0,
    "orb_used": false,
-   "prev_close_below_vwap": false
+   "prev_close_below_vwap": true
   },
   "FBTC.TO": {
    "position": null,
    "entries": 0,
    "orb_used": false,
-   "prev_close_below_vwap": false
+   "prev_close_below_vwap": true
   },
   "ENB.TO": {
    "position": null,
@@ -28,7 +38,7 @@
   },
   "TSLA.NE": {
    "position": null,
-   "entries": 1,
+   "entries": 0,
    "orb_used": false,
    "prev_close_below_vwap": true
   },
@@ -46,13 +56,13 @@
   }
  },
  "last_bar": {
-  "BTCC-B.TO": "2026-11-16T15:55:00-05:00",
-  "BTCX-B.TO": "2026-11-16T15:55:00-05:00",
-  "FBTC.TO": "2026-11-16T15:55:00-05:00",
-  "ENB.TO": "2026-11-16T15:55:00-05:00",
-  "TSLA.NE": "2026-11-16T15:55:00-05:00",
-  "AMZN.NE": "2026-11-16T15:54:31-05:00",
-  "MSFT.NE": "2026-11-16T15:55:00-05:00"
+  "BTCX-B.TO": "2026-11-17T14:15:00-05:00",
+  "FBTC.TO": "2026-11-17T14:10:00-05:00",
+  "ENB.TO": "2026-11-17T14:15:00-05:00",
+  "TSLA.NE": "2026-11-17T13:46:13-05:00",
+  "MSFT.NE": "2026-11-17T13:40:58-05:00",
+  "AMZN.NE": "2026-11-17T14:10:01-05:00",
+  "BTCC-B.TO": "2026-11-17T14:15:00-05:00"
  },
  "journal": [
   {
@@ -5741,6 +5751,347 @@
    "alerted": false,
    "reason": "fin_de_seance",
    "ret_pct": -5.57
+  },
+  {
+   "date": "2026-11-17",
+   "time": "09:36",
+   "symbol": "KLAR",
+   "currency": "USD",
+   "change_pct": 5.2,
+   "rel_volume": 20.4,
+   "entry": 14.3474,
+   "exit": null,
+   "alerted": true
+  },
+  {
+   "date": "2026-11-17",
+   "time": "09:36",
+   "symbol": "RERE",
+   "currency": "USD",
+   "change_pct": 6.1,
+   "rel_volume": 19.1,
+   "entry": 4.28,
+   "exit": null,
+   "alerted": true
+  },
+  {
+   "date": "2026-11-17",
+   "time": "09:36",
+   "symbol": "AS",
+   "currency": "USD",
+   "change_pct": 7.8,
+   "rel_volume": 15.5,
+   "entry": 31.4,
+   "exit": null,
+   "alerted": true
+  },
+  {
+   "date": "2026-11-17",
+   "time": "09:36",
+   "symbol": "MNSO",
+   "currency": "USD",
+   "change_pct": 4.6,
+   "rel_volume": 12.5,
+   "entry": 11.74,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-17",
+   "time": "09:36",
+   "symbol": "NKE",
+   "currency": "USD",
+   "change_pct": 4.7,
+   "rel_volume": 11.5,
+   "entry": 40.085,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-17",
+   "time": "09:36",
+   "symbol": "COHR",
+   "currency": "USD",
+   "change_pct": 4.4,
+   "rel_volume": 10.4,
+   "entry": 212.34,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-17",
+   "time": "09:36",
+   "symbol": "SMWB",
+   "currency": "USD",
+   "change_pct": 11.2,
+   "rel_volume": 8.8,
+   "entry": 8.705,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-17",
+   "time": "09:36",
+   "symbol": "ENR",
+   "currency": "USD",
+   "change_pct": 8.3,
+   "rel_volume": 8.6,
+   "entry": 26.4177,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-17",
+   "time": "09:36",
+   "symbol": "ACM",
+   "currency": "USD",
+   "change_pct": 9.8,
+   "rel_volume": 7.2,
+   "entry": 79.71,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-17",
+   "time": "09:36",
+   "symbol": "MX",
+   "currency": "USD",
+   "change_pct": 7.3,
+   "rel_volume": 6.1,
+   "entry": 2.494,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-17",
+   "time": "09:36",
+   "symbol": "FPS",
+   "currency": "USD",
+   "change_pct": 8.2,
+   "rel_volume": 5.7,
+   "entry": 22.2443,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-17",
+   "time": "09:36",
+   "symbol": "GFF",
+   "currency": "USD",
+   "change_pct": 5.8,
+   "rel_volume": 5.3,
+   "entry": 105.78,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-17",
+   "time": "09:36",
+   "symbol": "UNFI",
+   "currency": "USD",
+   "change_pct": 7.4,
+   "rel_volume": 5.2,
+   "entry": 51.9951,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-17",
+   "time": "09:36",
+   "symbol": "SITE",
+   "currency": "USD",
+   "change_pct": 4.2,
+   "rel_volume": 5.1,
+   "entry": 115.455,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-17",
+   "time": "09:36",
+   "symbol": "SENS",
+   "currency": "USD",
+   "change_pct": 7.2,
+   "rel_volume": 4.9,
+   "entry": 11.6799,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-17",
+   "time": "09:36",
+   "symbol": "PPTA",
+   "currency": "USD",
+   "change_pct": 5.0,
+   "rel_volume": 4.5,
+   "entry": 17.86,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-17",
+   "time": "09:36",
+   "symbol": "OPEN",
+   "currency": "USD",
+   "change_pct": 6.2,
+   "rel_volume": 4.3,
+   "entry": 1.2004,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-17",
+   "time": "09:38",
+   "symbol": "TME",
+   "currency": "USD",
+   "change_pct": 4.7,
+   "rel_volume": 6.2,
+   "entry": 9.29,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-17",
+   "time": "09:38",
+   "symbol": "SSMR",
+   "currency": "USD",
+   "change_pct": 5.3,
+   "rel_volume": 5.5,
+   "entry": 13.365,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-17",
+   "time": "09:40",
+   "symbol": "LITE",
+   "currency": "USD",
+   "change_pct": 4.4,
+   "rel_volume": 4.9,
+   "entry": 570.25,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-17",
+   "time": "09:40",
+   "symbol": "ARM",
+   "currency": "USD",
+   "change_pct": 4.5,
+   "rel_volume": 4.8,
+   "entry": 182.95,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-17",
+   "time": "09:42",
+   "symbol": "FUBO",
+   "currency": "USD",
+   "change_pct": 6.8,
+   "rel_volume": 9.5,
+   "entry": 7.9,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-17",
+   "time": "09:42",
+   "symbol": "CSHR",
+   "currency": "USD",
+   "change_pct": 6.9,
+   "rel_volume": 8.3,
+   "entry": 3.56,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-17",
+   "time": "09:42",
+   "symbol": "AXTI",
+   "currency": "USD",
+   "change_pct": 4.5,
+   "rel_volume": 6.8,
+   "entry": 40.195,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-17",
+   "time": "09:44",
+   "symbol": "ADIG",
+   "currency": "USD",
+   "change_pct": 6.2,
+   "rel_volume": 8.5,
+   "entry": 9.8706,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-17",
+   "time": "09:44",
+   "symbol": "BRSP",
+   "currency": "USD",
+   "change_pct": 5.6,
+   "rel_volume": 4.3,
+   "entry": 3.465,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-17",
+   "time": "09:46",
+   "symbol": "KURA",
+   "currency": "USD",
+   "change_pct": 8.8,
+   "rel_volume": 4.6,
+   "entry": 7.7099,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-17",
+   "time": "10:02",
+   "symbol": "NIO",
+   "currency": "USD",
+   "change_pct": 5.5,
+   "rel_volume": 4.0,
+   "entry": 2.8701,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-17",
+   "time": "10:16",
+   "symbol": "YALA",
+   "currency": "USD",
+   "change_pct": 5.5,
+   "rel_volume": 5.7,
+   "entry": 5.76,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-17",
+   "time": "10:58",
+   "symbol": "CANG",
+   "currency": "USD",
+   "change_pct": 6.1,
+   "rel_volume": 8.2,
+   "entry": 1.56,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-17",
+   "time": "11:40",
+   "symbol": "BILL",
+   "currency": "USD",
+   "change_pct": 8.8,
+   "rel_volume": 4.4,
+   "entry": 62.7023,
+   "exit": null,
+   "alerted": false
   }
  ]
 }
