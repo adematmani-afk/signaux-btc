@@ -473,6 +473,8 @@ def build_html():
     val = json.loads((OUT / "validation.json").read_text())
     val["summary_fr"] = summary_fr(val)
     html = (ROOT / "sim_template.html").read_text()
+    ipos = OUT / "ipos.json"
+    html = html.replace("__IPO__", ipos.read_text() if ipos.exists() else '{"ipos": [], "ant": null, "sessions": 10}')
     html = html.replace("__DATA__", json.dumps(data, ensure_ascii=False)).replace(
         "__VAL__", json.dumps({"pooled": val["pooled"], "summary_fr": val["summary_fr"]}, ensure_ascii=False))
     (OUT / "atelier.html").write_text(html)

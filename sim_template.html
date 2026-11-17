@@ -74,6 +74,16 @@ td { font-family: var(--mono) } td:first-child { font-family: var(--body); font-
 .kpi small { color: var(--muted); font-size: 12px }
 #candles { width: 100%; height: 520px }
 @media (max-width: 600px) { #candles { height: 440px } }
+.ipo { display: grid; gap: 16px }
+h3 { font-size: 0.95rem; font-weight: 600; margin: 0 }
+.antbox { border: 1px dashed var(--accent); border-radius: 8px; padding: 12px 14px; display: flex; flex-wrap: wrap; gap: 6px 22px; font-size: 13.5px; background: var(--accent-soft) }
+.antbox b { font-family: var(--mono); font-weight: 500 }
+.antbox a { color: var(--accent) }
+#ipoPaths { width: 100%; height: 460px }
+#ipoCandles { width: 100%; height: 400px }
+.twin { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 18px }
+.twin > div { min-width: 0; display: grid; gap: 6px; align-content: start }
+.sc { width: 100%; height: 340px }
 .foot { color: var(--muted); font-size: 12.5px; max-width: 80ch }
 </style>
 
@@ -83,7 +93,7 @@ td { font-family: var(--mono) } td:first-child { font-family: var(--body); font-
       <h1>Atelier Monte Carlo</h1>
       <p class="sub">Distribution des prix possibles sur les 20 prochaines séances, simulée avec 4 modèles quantitatifs classiques. La hauteur de la surface donne la probabilité de chaque niveau de prix, jour après jour.</p>
     </div>
-    <div class="stamp" id="stamp"></div>
+    <div class="stamp"><span id="stamp"></span><br><a href="#ipo" style="color:var(--accent)">Aller aux IPO tech ↓</a></div>
   </header>
 
   <div class="controls">
@@ -111,6 +121,30 @@ td { font-family: var(--mono) } td:first-child { font-family: var(--body); font-
     <div id="candles" role="img" aria-label="Bougies et volume"></div>
   </section>
 
+  <section class="panel ipo" id="ipo">
+    <div class="liqhead">
+      <div>
+        <h2>Les 10 premières séances des grosses IPO tech</h2>
+        <p class="hint">15 introductions en bourse, de Google (2004) à SpaceX (2026), comparées à la taille attendue de chaque opération. Faits historiques uniquement. Claude est fait par Anthropic : aucune prévision ni avis sur ANT ici.</p>
+      </div>
+      <div class="group" id="ipoBase"><span>Mesuré depuis</span></div>
+    </div>
+    <div class="antbox" id="antbox"></div>
+    <div class="kpis" id="ipoKpis"></div>
+    <div id="ipoPaths" role="img" aria-label="Trajectoire des 10 premières séances de chaque IPO"></div>
+    <div class="twin">
+      <div><h3>Taille de l'opération et 5 premières séances</h3><div id="ipoSize" class="sc"></div><p class="hint">Axe X logarithmique. La bande ombrée montre le montant visé par ANT (57,75 à 64,35 G$ US).</p></div>
+      <div><h3>Demande avant l'IPO et saut à l'ouverture</h3><div id="ipoDemand" class="sc"></div><p class="hint">Plus le prix final dépasse le milieu de la fourchette de départ, plus la demande était forte avant l'IPO. SpaceX n'avait pas de fourchette.</p></div>
+    </div>
+    <div>
+      <h3>Graphique de trading</h3>
+      <div class="group" id="ipoPick" style="margin:8px 0"></div>
+      <div id="ipoCandles" role="img" aria-label="Bougies des 10 premières séances"></div>
+    </div>
+    <div class="tablebox"><table id="ipoTable"></table></div>
+    <p class="foot">« Saut » = prix d'IPO → 1re ouverture. Le prix d'IPO est réservé aux clients des banques ; le public achète en général à l'ouverture, d'où le réglage « Ouverture J1 » par défaut. Cours : Yahoo Finance, remis en prix de l'époque pour Google et Tesla (divisions d'actions). Prix, fourchettes, montants et valorisations : prospectus et presse de l'époque, arrondis. 15 cas, c'est peu pour en tirer une règle.</p>
+  </section>
+
   <section class="panel verdict">
     <h2>Est-ce que ces prévisions valent quelque chose ? Test hors échantillon</h2>
     <p id="verdictText"></p>
@@ -122,6 +156,7 @@ td { font-family: var(--mono) } td:first-child { font-family: var(--body); font-
 <script>
 const DATA = __DATA__;
 const VAL = __VAL__;
+const IPO = __IPO__;
 const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
 const tks = Object.keys(DATA.tickers);
 const MODELS = ["Ensemble", "GBM", "GARCH", "Régimes", "Bootstrap"];
@@ -132,8 +167,8 @@ const DESC = {
   "Régimes": "Markov à 2 régimes (calme / agité) de Hamilton.",
   "Bootstrap": "Rejoue des blocs de 5 vrais rendements des 2 dernières années."
 };
-let state = { tk: tks[0], model: "Ensemble", hz: "5", liq: "5min" };
-try { const s = JSON.parse(localStorage.getItem("mc-state") || "{}"); if (DATA.tickers[s.tk]) state.tk = s.tk; if (MODELS.includes(s.model)) state.model = s.model; if (s.hz) state.hz = s.hz; if (s.liq) state.liq = s.liq; } catch (e) {}
+let state = { tk: tks[0], model: "Ensemble", hz: "5", liq: "5min", base: "open", pick: "SPCX" };
+try { const s = JSON.parse(localStorage.getItem("mc-state") || "{}"); if (DATA.tickers[s.tk]) state.tk = s.tk; if (MODELS.includes(s.model)) state.model = s.model; if (s.hz) state.hz = s.hz; if (s.liq) state.liq = s.liq; if (s.base) state.base = s.base; if (s.pick) state.pick = s.pick; } catch (e) {}
 const save = () => { try { localStorage.setItem("mc-state", JSON.stringify(state)); } catch (e) {} };
 const pct = (x, d = 0) => (x * 100).toFixed(d) + " %";
 const money = x => x.toFixed(2) + " $";
@@ -156,6 +191,8 @@ chips("liqView", ["5min", "jour"], "liq", v => v === "5min" ? "5 min · 5 séanc
 function sync() {
   document.querySelectorAll("#tickers button").forEach(b => b.setAttribute("aria-pressed", b.dataset.v === state.tk));
   document.querySelectorAll("#models button").forEach(b => b.setAttribute("aria-pressed", b.dataset.v === state.model));
+  document.querySelectorAll("#ipoBase button").forEach(b => b.setAttribute("aria-pressed", b.dataset.v === state.base));
+  document.querySelectorAll("#ipoPick button").forEach(b => b.setAttribute("aria-pressed", b.dataset.v === state.pick));
   document.querySelectorAll("#liqView button").forEach(b => b.setAttribute("aria-pressed", b.dataset.v === state.liq));
 }
 
@@ -275,9 +312,103 @@ function liq() {
   Plotly.react("candles", traces, layout, { responsive: true, displaylogo: false, modeBarButtonsToRemove: ["toImage", "lasso2d", "select2d"] });
 }
 
-function render() { sync(); plot(); card(); liq(); }
+const sgn = (x, d = 1) => (x >= 0 ? "+" : "−") + Math.abs(x).toFixed(d).replace(".", ",") + " %";
+const gd = x => x >= 100 ? Math.round(x).toLocaleString("fr-CA") + " G$" : x >= 1 ? x.toFixed(1).replace(".", ",") + " G$" : Math.round(x * 1000) + " M$";
+const bucket = r => r.raised_b >= 10 ? 2 : r.raised_b >= 2 ? 1 : 0;
+const BUCKETS = ["Moins de 2 G$ levés", "2 à 10 G$ levés", "Plus de 10 G$ levés"];
+
+function ipoStatic() {
+  const A = IPO.ant;
+  document.getElementById("antbox").innerHTML = `
+    <span><b>${A.ticker}</b> ${A.name} · ${A.exchange}</span>
+    <span>Fourchette <b>${A.range[0]}–${A.range[1]} $ US</b></span>
+    <span>Montant visé <b>${gd(A.raise_low)}–${gd(A.raise_high)}</b></span>
+    <span>Valorisation <b>≈ ${gd(A.valuation_high)}</b> (${gd(A.valuation_diluted)} dilué)</span>
+    <span>1re séance <b>jeu. 19 nov. 2026</b></span>
+    <span>${A.sources.map(([n, u]) => `<a href="${u}" target="_blank" rel="noopener">${n}</a>`).join(" · ")}</span>`;
+  const R = IPO.ipos, med = a => { const b = [...a].sort((x, y) => x - y), m = b.length >> 1; return b.length % 2 ? b[m] : (b[m - 1] + b[m]) / 2; };
+  const pos = k => R.filter(r => r[k] > 0).length;
+  document.getElementById("ipoKpis").innerHTML = `
+    <div class="kpi"><span>Saut IPO → ouverture</span><b>${sgn(med(R.map(r => r.pop_pct)), 0)}</b><small>médiane · ${pos("pop_pct")}/${R.length} ont ouvert au-dessus du prix d'IPO</small></div>
+    <div class="kpi"><span>Ouverture → clôture J1</span><b>${sgn(med(R.map(r => r.j1_open_close_pct)))}</b><small>médiane · ${pos("j1_open_close_pct")}/${R.length} en hausse</small></div>
+    <div class="kpi"><span>Ouverture → J5</span><b>${sgn(med(R.map(r => r.j5_from_open_pct)))}</b><small>médiane · ${pos("j5_from_open_pct")}/${R.length} en hausse</small></div>
+    <div class="kpi"><span>Ouverture → J10</span><b>${sgn(med(R.map(r => r.j10_from_open_pct)))}</b><small>médiane · ${pos("j10_from_open_pct")}/${R.length} en hausse</small></div>
+    <div class="kpi"><span>Plus de 10 G$ levés</span><b>${sgn(med(R.filter(r => r.raised_b >= 10).map(r => r.j5_from_open_pct)))}</b><small>ouverture → J5, médiane des ${R.filter(r => r.raised_b >= 10).length} géantes</small></div>`;
+  const cols = [["IPO", r => `${r.name} <span class="stamp">${r.ticker}</span>`], ["1re séance", r => r.date],
+    ["Levé", r => gd(r.raised_b)], ["Valorisation", r => gd(r.valuation_b)],
+    ["Prix vs fourchette", r => r.vs_range_pct == null ? "—" : `${r.ipo_price} $ (${sgn(r.vs_range_pct, 0)})`],
+    ["Saut", r => sgn(r.pop_pct)], ["Ouv. → clô. J1", r => sgn(r.j1_open_close_pct)],
+    ["Ouv. → J5", r => sgn(r.j5_from_open_pct)], ["Ouv. → J10", r => sgn(r.j10_from_open_pct)]];
+  const cls = (i, r) => { const v = [null, null, null, null, null, r.pop_pct, r.j1_open_close_pct, r.j5_from_open_pct, r.j10_from_open_pct][i]; return v == null ? "" : v >= 0 ? "pos" : "neg"; };
+  document.getElementById("ipoTable").innerHTML = `<thead><tr>${cols.map(c => `<th>${c[0]}</th>`).join("")}</tr></thead><tbody>` +
+    R.map(r => `<tr title="${r.note}">${cols.map((c, i) => `<td class="${cls(i, r)}">${c[1](r)}</td>`).join("")}</tr>`).join("") + "</tbody>";
+}
+
+function ipoCharts() {
+  const R = IPO.ipos, fg = css("--fg"), muted = css("--muted"), line = css("--line"), acc = css("--accent"), good = css("--good"), bad = css("--bad");
+  const bc = [css("--warn"), acc, bad];
+  const base = r => state.base === "open" ? r.bars[0].o : r.ipo_price;
+  const X = ["Ouv. J1", "Clô. J1", ...Array.from({ length: IPO.sessions - 1 }, (_, i) => "J" + (i + 2))];
+  const font = { family: "Instrument Sans, system-ui, sans-serif", color: muted, size: 11 };
+  const ax = { gridcolor: line, linecolor: line, zerolinecolor: muted, tickfont: { color: muted } };
+  const shown = new Set();
+  const paths = R.map(r => {
+    const b = base(r), y = [r.bars[0].o, ...r.bars.map(x => x.c)].map(v => (v / b - 1) * 100), k = bucket(r);
+    const first = !shown.has(k); shown.add(k);
+    return { type: "scatter", mode: "lines+markers", x: X.slice(0, y.length), y, name: r.name, legendgroup: "b" + k,
+      line: { color: bc[k], width: r.ticker === "SPCX" ? 3.5 : 1.8 }, marker: { size: 4 }, opacity: 0.9,
+      hovertemplate: `<b>${r.name}</b> %{x}<br>%{y:+.1f} %<extra></extra>` };
+  });
+  const legend = BUCKETS.map((n, k) => ({ type: "scatter", mode: "lines", x: [null], y: [null], name: n, line: { color: bc[k], width: 3 }, hoverinfo: "skip" }));
+  Plotly.react("ipoPaths", [...paths.map(p => ({ ...p, showlegend: false })), ...legend], {
+    paper_bgcolor: "rgba(0,0,0,0)", plot_bgcolor: "rgba(0,0,0,0)", font, margin: { l: 55, r: 10, t: 10, b: 40 },
+    legend: { orientation: "h", y: 1.08, font: { color: muted } }, hovermode: "closest",
+    xaxis: { ...ax, type: "category" },
+    yaxis: { ...ax, ticksuffix: " %", title: { text: state.base === "open" ? "Variation depuis l'ouverture J1" : "Variation depuis le prix d'IPO", font: { color: muted } } },
+    shapes: [{ type: "line", xref: "paper", x0: 0, x1: 1, y0: 0, y1: 0, line: { color: muted, width: 1, dash: "dot" } }]
+  }, { responsive: true, displaylogo: false });
+
+  const lab = R.map(r => r.name);
+  const sc = (x, y, xt, yt, extra = {}, shapes = []) => [[{ type: "scatter", mode: "markers+text", x, y, text: lab, textposition: "top center",
+    textfont: { color: fg, size: 10 }, marker: { size: 10, color: R.map(r => bc[bucket(r)]) },
+    hovertemplate: "%{text}<br>%{x}<br>%{y:+.1f} %<extra></extra>" }],
+    { paper_bgcolor: "rgba(0,0,0,0)", plot_bgcolor: "rgba(0,0,0,0)", font, margin: { l: 50, r: 10, t: 10, b: 45 }, showlegend: false,
+      xaxis: { ...ax, title: { text: xt, font: { color: muted } }, ...extra }, yaxis: { ...ax, ticksuffix: " %", title: { text: yt, font: { color: muted } } }, shapes }];
+  const A = IPO.ant;
+  const [d1, l1] = sc(R.map(r => r.raised_b), R.map(r => r.j5_from_open_pct), "Montant levé (G$ US)", "Ouverture → J5", { type: "log", tickvals: [0.2, 0.5, 1, 2, 5, 10, 20, 50, 100], ticktext: ["0,2", "0,5", "1", "2", "5", "10", "20", "50", "100"] },
+    [{ type: "rect", xref: "x", yref: "paper", x0: A.raise_low, x1: A.raise_high, y0: 0, y1: 1, fillcolor: acc, opacity: 0.18, line: { width: 0 } },
+     { type: "line", xref: "paper", x0: 0, x1: 1, y0: 0, y1: 0, line: { color: muted, width: 1, dash: "dot" } }]);
+  l1.annotations = [{ x: Math.log10(Math.sqrt(A.raise_low * A.raise_high)), y: 1, yref: "paper", text: "ANT", showarrow: false, yanchor: "top", xanchor: "right", font: { color: acc, size: 11 } }];
+  Plotly.react("ipoSize", d1, l1, { responsive: true, displaylogo: false });
+  const H = R.filter(r => r.vs_range_pct != null);
+  const [d2, l2] = sc(H.map(r => r.vs_range_pct), H.map(r => r.pop_pct), "Prix final vs milieu de la fourchette initiale (%)", "Saut prix IPO → ouverture", { ticksuffix: " %" },
+    [{ type: "line", xref: "paper", x0: 0, x1: 1, y0: 0, y1: 0, line: { color: muted, width: 1, dash: "dot" } }]);
+  d2[0].text = H.map(r => r.name); d2[0].marker.color = H.map(r => bc[bucket(r)]);
+  Plotly.react("ipoDemand", d2, l2, { responsive: true, displaylogo: false });
+
+  const r = R.find(x => x.ticker === state.pick) || R[R.length - 1], B = r.bars;
+  const xs = B.map((b, i) => "J" + (i + 1) + " · " + b.d.slice(5));
+  Plotly.react("ipoCandles", [
+    { type: "candlestick", x: xs, open: B.map(b => b.o), high: B.map(b => b.h), low: B.map(b => b.l), close: B.map(b => b.c), yaxis: "y",
+      increasing: { line: { color: good, width: 1 }, fillcolor: good }, decreasing: { line: { color: bad, width: 1 }, fillcolor: bad }, name: r.name },
+    { type: "bar", x: xs, y: B.map(b => b.v), yaxis: "y2", marker: { color: B.map(b => b.c >= b.o ? good : bad), opacity: 0.5 }, hovertemplate: "Volume %{y:,}<extra></extra>" }
+  ], {
+    paper_bgcolor: "rgba(0,0,0,0)", plot_bgcolor: "rgba(0,0,0,0)", font, showlegend: false, margin: { l: 55, r: 10, t: 10, b: 30 },
+    xaxis: { ...ax, type: "category", rangeslider: { visible: false } },
+    yaxis: { ...ax, domain: [0.3, 1], title: { text: "Prix $ US", font: { color: muted } } },
+    yaxis2: { ...ax, domain: [0, 0.22], title: { text: "Volume", font: { color: muted } } },
+    shapes: [{ type: "line", xref: "paper", x0: 0, x1: 1, yref: "y", y0: r.ipo_price, y1: r.ipo_price, line: { color: acc, width: 1.5, dash: "dash" } }],
+    annotations: [{ xref: "paper", x: 0.01, y: r.ipo_price, yref: "y", text: `Prix d'IPO ${r.ipo_price} $`, showarrow: false, yanchor: "bottom", xanchor: "left", font: { color: acc, size: 11 } }]
+  }, { responsive: true, displaylogo: false });
+}
+
+chips("ipoBase", ["open", "ipo"], "base", v => v === "open" ? "Ouverture J1" : "Prix d'IPO");
+chips("ipoPick", IPO.ipos.map(r => r.ticker), "pick", v => IPO.ipos.find(r => r.ticker === v).name);
+ipoStatic();
+
+function render() { sync(); plot(); card(); liq(); ipoCharts(); }
 render(); verdict();
-const repaint = () => { plot(); liq(); };
+const repaint = () => { plot(); liq(); ipoCharts(); };
 matchMedia("(prefers-color-scheme: dark)").addEventListener("change", repaint);
 new MutationObserver(repaint).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
 </script>

@@ -30,3 +30,7 @@ GBM (brownien géométrique), GARCH(1,1) avec queues Student, modèle de Markov 
 Résultat du test du 2026-11-12 : aucun modèle ne prévoit la direction mieux que le hasard (45 à 49 % de bonnes directions à 5 séances),
 mais les intervalles à 90 % sont bien calibrés (87 à 89 %). La simulation sert donc à mesurer le risque, pas à choisir le sens.
 Elle n'alimente pas les alertes du bot.
+
+## Premières séances des grosses IPO tech (`ipo_study.py`)
+
+`python ipo_study.py` récupère les 10 premières séances de 15 grosses IPO tech (Google 2004 → SpaceX 2026) et les écrit dans `simulation/ipos.json` ; la page `atelier.html` les affiche (trajectoires, taille vs performance, demande vs saut à l'ouverture, bougies, tableau) avec les faits connus sur l'IPO d'Anthropic (ANT). Faits historiques seulement, aucun avis sur ANT.
