@@ -1,9 +1,19 @@
 {
  "equity": 99.7189,
- "day": "2026-11-17",
+ "day": "2026-11-18",
  "day_state": {
   "BTCC-B.TO": {
-   "position": null,
+   "position": {
+    "setup": "Retour vers le VWAP",
+    "entry": 12.369999885559082,
+    "t": "2026-11-18T11:15:00-05:00",
+    "stop": 12.12,
+    "t1": 12.52,
+    "t2": 12.52,
+    "t1_done": false,
+    "vwap": 12.52,
+    "or_high": 12.710000038146973
+   },
    "entries": 1,
    "orb_used": false,
    "prev_close_below_vwap": true
@@ -12,13 +22,13 @@
    "position": null,
    "entries": 0,
    "orb_used": false,
-   "prev_close_below_vwap": false
+   "prev_close_below_vwap": true
   },
   "FBTC.TO": {
    "position": null,
    "entries": 0,
    "orb_used": false,
-   "prev_close_below_vwap": false
+   "prev_close_below_vwap": true
   },
   "ENB.TO": {
    "position": null,
@@ -36,23 +46,23 @@
    "position": null,
    "entries": 0,
    "orb_used": false,
-   "prev_close_below_vwap": true
+   "prev_close_below_vwap": false
   },
   "AMZN.NE": {
    "position": null,
    "entries": 0,
    "orb_used": false,
-   "prev_close_below_vwap": true
+   "prev_close_below_vwap": false
   }
  },
  "last_bar": {
-  "BTCX-B.TO": "2026-11-17T15:55:00-05:00",
-  "FBTC.TO": "2026-11-17T15:55:00-05:00",
-  "ENB.TO": "2026-11-17T15:55:00-05:00",
-  "TSLA.NE": "2026-11-17T15:55:00-05:00",
-  "MSFT.NE": "2026-11-17T15:55:00-05:00",
-  "AMZN.NE": "2026-11-17T15:50:00-05:00",
-  "BTCC-B.TO": "2026-11-17T15:55:00-05:00"
+  "BTCC-B.TO": "2026-11-18T14:15:00-05:00",
+  "BTCX-B.TO": "2026-11-18T14:08:45-05:00",
+  "FBTC.TO": "2026-11-18T14:14:58-05:00",
+  "ENB.TO": "2026-11-18T14:15:00-05:00",
+  "TSLA.NE": "2026-11-18T14:14:28-05:00",
+  "MSFT.NE": "2026-11-18T13:45:42-05:00",
+  "AMZN.NE": "2026-11-18T14:12:50-05:00"
  },
  "journal": [
   {
@@ -6167,6 +6177,314 @@
    "alerted": false,
    "reason": "fin_de_seance",
    "ret_pct": -13.03
+  },
+  {
+   "date": "2026-11-18",
+   "time": "09:36",
+   "symbol": "TTWO",
+   "currency": "USD",
+   "change_pct": 5.6,
+   "rel_volume": 27.3,
+   "entry": 215.3075,
+   "exit": null,
+   "alerted": true
+  },
+  {
+   "date": "2026-11-18",
+   "time": "09:36",
+   "symbol": "PRVA",
+   "currency": "USD",
+   "change_pct": 4.6,
+   "rel_volume": 26.6,
+   "entry": 26.14,
+   "exit": null,
+   "alerted": true
+  },
+  {
+   "date": "2026-11-18",
+   "time": "09:36",
+   "symbol": "TGT",
+   "currency": "USD",
+   "change_pct": 4.4,
+   "rel_volume": 15.6,
+   "entry": 166.56,
+   "exit": null,
+   "alerted": true
+  },
+  {
+   "date": "2026-11-18",
+   "time": "09:36",
+   "symbol": "TJX",
+   "currency": "USD",
+   "change_pct": 7.6,
+   "rel_volume": 12.4,
+   "entry": 139.7451,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-18",
+   "time": "09:36",
+   "symbol": "ANGX",
+   "currency": "USD",
+   "change_pct": 12.3,
+   "rel_volume": 12.1,
+   "entry": 4.658,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-18",
+   "time": "09:36",
+   "symbol": "BLSH",
+   "currency": "USD",
+   "change_pct": 10.7,
+   "rel_volume": 11.1,
+   "entry": 21.325,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-18",
+   "time": "09:36",
+   "symbol": "IIIV",
+   "currency": "USD",
+   "change_pct": 12.5,
+   "rel_volume": 10.4,
+   "entry": 21.055,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-18",
+   "time": "09:36",
+   "symbol": "CSHR",
+   "currency": "USD",
+   "change_pct": 11.7,
+   "rel_volume": 8.3,
+   "entry": 3.52,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-18",
+   "time": "09:36",
+   "symbol": "KLAR",
+   "currency": "USD",
+   "change_pct": 5.2,
+   "rel_volume": 6.9,
+   "entry": 15.02,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-18",
+   "time": "09:36",
+   "symbol": "OPEN",
+   "currency": "USD",
+   "change_pct": 9.2,
+   "rel_volume": 5.8,
+   "entry": 1.2882,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-18",
+   "time": "09:36",
+   "symbol": "CALM",
+   "currency": "USD",
+   "change_pct": 6.7,
+   "rel_volume": 5.7,
+   "entry": 69.602,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-18",
+   "time": "09:36",
+   "symbol": "BORR",
+   "currency": "USD",
+   "change_pct": 5.6,
+   "rel_volume": 5.1,
+   "entry": 3.38,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-18",
+   "time": "09:36",
+   "symbol": "RGEN",
+   "currency": "USD",
+   "change_pct": 4.9,
+   "rel_volume": 4.7,
+   "entry": 170.11,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-18",
+   "time": "09:36",
+   "symbol": "VIA",
+   "currency": "USD",
+   "change_pct": 4.2,
+   "rel_volume": 4.5,
+   "entry": 45.585,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-18",
+   "time": "09:38",
+   "symbol": "SRRK",
+   "currency": "USD",
+   "change_pct": 4.9,
+   "rel_volume": 5.3,
+   "entry": 47.29,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-18",
+   "time": "09:38",
+   "symbol": "CRSP",
+   "currency": "USD",
+   "change_pct": 4.4,
+   "rel_volume": 4.1,
+   "entry": 41.92,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-18",
+   "time": "09:40",
+   "symbol": "PRAA",
+   "currency": "USD",
+   "change_pct": 7.4,
+   "rel_volume": 5.4,
+   "entry": 12.0,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-18",
+   "time": "09:40",
+   "symbol": "IRTC",
+   "currency": "USD",
+   "change_pct": 6.2,
+   "rel_volume": 4.9,
+   "entry": 95.255,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-18",
+   "time": "09:40",
+   "symbol": "CAPR",
+   "currency": "USD",
+   "change_pct": 7.0,
+   "rel_volume": 4.8,
+   "entry": 8.995,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-18",
+   "time": "09:40",
+   "symbol": "LAES",
+   "currency": "USD",
+   "change_pct": 6.5,
+   "rel_volume": 4.5,
+   "entry": 1.155,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-18",
+   "time": "09:44",
+   "symbol": "SVRA",
+   "currency": "USD",
+   "change_pct": 5.9,
+   "rel_volume": 8.3,
+   "entry": 4.745,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-18",
+   "time": "09:54",
+   "symbol": "VIK",
+   "currency": "USD",
+   "change_pct": 4.3,
+   "rel_volume": 4.0,
+   "entry": 98.305,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-18",
+   "time": "10:02",
+   "symbol": "OFRM",
+   "currency": "USD",
+   "change_pct": 6.5,
+   "rel_volume": 4.5,
+   "entry": 12.42,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-18",
+   "time": "10:02",
+   "symbol": "USAR",
+   "currency": "USD",
+   "change_pct": 13.0,
+   "rel_volume": 4.0,
+   "entry": 7.4999,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-18",
+   "time": "10:04",
+   "symbol": "SMMT",
+   "currency": "USD",
+   "change_pct": 4.1,
+   "rel_volume": 7.3,
+   "entry": 11.11,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-18",
+   "time": "10:12",
+   "symbol": "SLS",
+   "currency": "USD",
+   "change_pct": 5.8,
+   "rel_volume": 11.1,
+   "entry": 20.27,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-18",
+   "time": "11:54",
+   "symbol": "BIPC",
+   "currency": "USD",
+   "change_pct": 4.5,
+   "rel_volume": 4.7,
+   "entry": 41.975,
+   "exit": null,
+   "alerted": false
+  },
+  {
+   "date": "2026-11-18",
+   "time": "12:34",
+   "symbol": "MDLN",
+   "currency": "USD",
+   "change_pct": 4.1,
+   "rel_volume": 6.3,
+   "entry": 39.21,
+   "exit": null,
+   "alerted": false
   }
  ]
 }
